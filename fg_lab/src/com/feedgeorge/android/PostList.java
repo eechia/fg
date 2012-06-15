@@ -68,7 +68,7 @@ public class PostList extends ListActivity implements OnItemSelectedListener {
 			 
 			if(v.equals(homeBtn)){
 				
-				Log.i(TAG,">>> homeBtn");
+				Log.i(TAG,">>> homeBtn...........");
 				
 			}else if(v.equals(placesBtn)){
 				
