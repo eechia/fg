@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fadingEdgeLength="0sp" >
+
+    
+    
+    <RelativeLayout 
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    
+    <Button
+        android:id="@+id/button1"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="43dp"
+        android:text="Button" />
+    
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/homeBtn"
+        android:layout_below="@+id/button1"
+        >
+    </ListView>
+    
+ <Button
+        android:id="@+id/homeBtn"
+        
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="14dp"
+        android:text="Home" 
+        />
+    
+</RelativeLayout>
+</FrameLayout>

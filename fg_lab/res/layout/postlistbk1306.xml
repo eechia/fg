@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:isScrollContainer="true"
+        android:transcriptMode="normal" 
+        android:layout_above="@+id/homeBtn"
+        >
+    </ListView>
+
+    <Button
+        android:id="@+id/homeBtn"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="14dp"
+        android:text="Home" 
+        />
+
+    <Button
+        android:id="@+id/PlacesBtn"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/homeBtn"
+        android:text="Places" />
+
+    <Button
+        android:id="@+id/AddBtn"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/PlacesBtn"
+        android:text="Add" />
+
+    <Button
+        android:id="@+id/SearchBtn"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="22dp"
+        android:layout_toRightOf="@+id/AddBtn"
+        android:text="Search" />
+
+    <Button
+        android:id="@+id/SettingBtn"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/SearchBtn"
+        android:text="Settings" />
+
+</RelativeLayout>
