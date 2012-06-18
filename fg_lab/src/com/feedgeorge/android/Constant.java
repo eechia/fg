@@ -53,4 +53,10 @@ public class Constant {
 	static final String LNG = "lng";
 	static final String LAST_UPDATE = "lastUpdate";
 	
+	//group
+	static final String GROUPS = "groups";
+	static final String NAME = "name";
+	static final String DESC = "description";
+	static final String ROLE = "role";
+	
 }

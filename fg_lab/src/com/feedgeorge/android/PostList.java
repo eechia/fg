@@ -27,6 +27,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -48,6 +49,9 @@ public class PostList extends ListActivity implements OnItemSelectedListener {
 	//populate content
 	 List<Post> postQueue = new ArrayList<Post>();
 	 
+	 //pupulate joined groups
+	 public static ArrayList<Group> joinedGroupsList;
+	 
 	 String[] filterByStr = {"All", "Posts","Events","Surveys"};
 	 Button homeBtn, placesBtn, addBtn, searchBtn, settingsBtn;
 	 Spinner filterSpin;
@@ -62,6 +66,7 @@ public class PostList extends ListActivity implements OnItemSelectedListener {
 
 
 		
+		@SuppressWarnings("unchecked")
 		public void onClick(View v) {
 			
 			Log.i(TAG,">>> myBtnClickListener!!!!!!: onClick");
@@ -72,9 +77,19 @@ public class PostList extends ListActivity implements OnItemSelectedListener {
 				
 			}else if(v.equals(placesBtn)){
 				
+				
 				Log.i(TAG,">>> placesBtn");
+				Intent placesIntent = new Intent();
 				
+				placesIntent.setClass(context, PlacesList.class);
+				//placesIntent.putParcelableArrayListExtra(Constant.GROUPS, joinedGroupsList);
 				
+				startActivity(placesIntent);
+			
+				
+		
+				
+				/*
 				final CharSequence[] items = {"Red", "Green", "Blue"};
 
 				AlertDialog.Builder builder = new AlertDialog.Builder(PostList.this);
@@ -90,35 +105,8 @@ public class PostList extends ListActivity implements OnItemSelectedListener {
 				//alert.setOwnerActivity(context.ACTIVITY_SERVICE);
 				alert.show();
 				//AlertDialog dialog;
-
-				/*
-		         final CharSequence[] items = { "Item1", "Item2" };
-		        
-		         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-		       
-		        builder.setTitle("test");
-		        
-		        builder.setItems(items, new DialogInterface.OnClickListener() {
-		        	
-		            public void onClick(DialogInterface dialog, int pos) {
-		            switch (pos) {
-		                case 0:
-		                {
-		                    Toast.makeText(context,"Clicked on:"+items[pos],Toast.LENGTH_SHORT).show();
-		                	Log.i(TAG,"Clicked on:"+items[pos]);
-		                }break;
-		            case 1:
-		              		{
-		                            	  Log.i(TAG,"Clicked on:"+items[pos]);        	  //Toast.makeText(this,"Clicked on:"+items[pos],Toast.LENGTH_SHORT).show();
-
-		                      }break;
-		        }
-		        }});
-		        
-		        AlertDialog dialog= builder.create();
-		        dialog.show();
-			*/
-			}else if(v.equals(addBtn)){
+				 */
+					}else if(v.equals(addBtn)){
 				
 				Log.i(TAG,">>> addBtn");
 				
@@ -146,6 +134,9 @@ public class PostList extends ListActivity implements OnItemSelectedListener {
 	        
 	        getContentList();
 	        getJoinedGroups();
+	        getNearbyGroups();
+	        
+	        
 	        context = this.getApplicationContext();
 	        
 	        filterSpin = (Spinner) findViewById(R.id.filterSpinner);
@@ -397,7 +388,12 @@ public class PostList extends ListActivity implements OnItemSelectedListener {
 			//selection.setText("");
 		}
 		
-		//list joined groups
+		
+		
+		
+		/*
+		 * list joined groups 
+		 */
 		
 		 public void getJoinedGroups(){
 				
@@ -422,10 +418,9 @@ public class PostList extends ListActivity implements OnItemSelectedListener {
 
 		        	
 		            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-		            //nameValuePairs.add(new BasicNameValuePair("cmd", "login"));
-		           // nameValuePairs.add(new BasicNameValuePair("groupId", groupID)); 
+		           
 		            nameValuePairs.add(new BasicNameValuePair("apiKey", "f3f0f6dbc5e442f6afc6687e59912f23"));
-		            //nameValuePairs.add(new BasicNameValuePair("page", page));
+		         
 		            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
 		                    
@@ -437,7 +432,7 @@ public class PostList extends ListActivity implements OnItemSelectedListener {
 		             
 		          
 		           String posts = inputStreamToString(response.getEntity().getContent());
-		           
+		           parseJoinedGroups(posts);
 		          
 		            
 		        } catch (ClientProtocolException e) {
@@ -448,5 +443,127 @@ public class PostList extends ListActivity implements OnItemSelectedListener {
 		        	Log.i(TAG, "IOException:" +e.toString());
 		        }
 			}
+		 
+		 
+		 public void parseJoinedGroups(String groupsStr){
+				
+				Log.i(TAG, "---- parseJoinedGroups()");
+	
+				
+				joinedGroupsList = new ArrayList<Group>();
+					
+				Group currentGrp;
+				
+				try {
+				
+					JSONObject jsonResponse = new JSONObject(groupsStr.trim());
+					
+					String query_status, query_error, query_reason,result,groups;
+					
+					query_status = jsonResponse.getString(Constant.SUCCESS);
+					query_error = jsonResponse.getString(Constant.ERROR);
+					query_reason = jsonResponse.getString(Constant.REASON);
+					result = jsonResponse.getString(Constant.RESULT);
+					
+					Log.i(TAG, "query_status: "+query_status);
+					Log.i(TAG, "query_error: "+query_error);
+					Log.i(TAG, "query_reason: "+query_reason);
+					Log.i(TAG, "result: "+result);
+					
+					JSONObject resultObject = new JSONObject(result);
+					
+					groups = resultObject.getString(Constant.GROUPS);
+					
+					//JSONObject contentObject = new JSONObject(content);
+					
+					JSONArray contentArray = new JSONArray(groups);
+					
+					String title;
+					
+					for(int i=0; i<contentArray.length();i++)
+					{
+						currentGrp = new Group();
+						JSONObject item = contentArray.getJSONObject(i);
+						
+						
+						currentGrp.setId(item.getString(Constant.ID));
+						currentGrp.setName(item.getString(Constant.NAME));
+						currentGrp.setDescription(item.getString(Constant.DESC));
+						currentGrp.setRole(item.getString(Constant.ROLE));
+	
+						
+						Log.i(TAG, "group: "+currentGrp.getName());
+						joinedGroupsList.add(currentGrp);
+						
+						
+						
+						
+					
+					}
+					
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				//readPost();
+				
+			}
+		 
+		 
+		 
+		 /*
+			 * list joined groups 
+			 */
+			
+			 public void getNearbyGroups(){
+					
+					String page = "1";
+					String groupID = "2";
+					 //apiKey = "f3f0f6dbc5e442f6afc6687e59912f23"; 
+				
+					 HttpParams params = new BasicHttpParams();
+			        params.setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
+			          
+			          
+			       // HttpClient httpclient = new DefaultHttpClient(params);
+			        String contentURL = "http://developer.feedgeorge.com/group/search";
+			        
+			        HttpPost httppost = new HttpPost(contentURL);
+			        Log.i(TAG, ">>>>>> getNearbyGroups");
+			        
+			       
+			        
+			        try {
+			            // Add your data
+
+			        	
+			            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+			           
+			            nameValuePairs.add(new BasicNameValuePair("apiKey", "f3f0f6dbc5e442f6afc6687e59912f23"));
+			            nameValuePairs.add(new BasicNameValuePair(Constant.LAT, "-1")); 
+			            nameValuePairs.add(new BasicNameValuePair(Constant.LNG, "-1")); 
+			            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+			                    
+			            HttpResponse response = PostPhotoActivity.mHttpClient.execute(httppost, PostPhotoActivity.mHttpContext);
+			            
+			 
+			      
+			            Log.i(TAG, ">>>>>>>>>>>>>>>>>>>>>>>");
+			             
+			          
+			           String posts = inputStreamToString(response.getEntity().getContent());
+			           //parseJoinedGroups(posts);
+			          
+			            
+			        } catch (ClientProtocolException e) {
+			            // TODO Auto-generated catch block
+			        	Log.i(TAG, "Protocol exception: "+e.toString());
+			        } catch (IOException e) {
+			            // TODO Auto-generated catch block
+			        	Log.i(TAG, "IOException:" +e.toString());
+			        }
+				}
 		 
 }

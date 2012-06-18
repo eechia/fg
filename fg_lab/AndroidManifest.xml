@@ -22,6 +22,10 @@
         <activity android:name=".postListAdapter"/>
         <activity android:name=".PostList"/>
         <activity android:name=".postView"/>
+        <activity android:name=".PlacesList"/>
+        <activity android:name=".PlacesListAdapter"/>
+        
+        
         
         
         <uses-library android:name="com.google.android.maps" />
