@@ -31,6 +31,13 @@ public class Constant {
 	//public String groupID = "2";
 	static final String apiKey = "f3f0f6dbc5e442f6afc6687e59912f23"; 
 	
+	static final String URL_USER = "http://developer.feedgeorge.com/user/";
+	static final String URL_GROUP = "http://developer.feedgeorge.com/group/";
+	static final String URL_CONTENT= "http://developer.feedgeorge.com/content/";
+	//
+	
+	
+	
 	static final String API_KEY = "apiKey";
 	
 	static final String SUCCESS = "success";
@@ -38,7 +45,6 @@ public class Constant {
 	static final String REASON = "reason";
 	static final String RESULT = "result";
 	
-	static final String CONTENT = "content";
 	
 	static final String ID = "id";
 	static final String TYPE = "type";
@@ -58,6 +64,6 @@ public class Constant {
 	static final String NAME = "name";
 	static final String DESC = "description";
 	static final String ROLE = "role";
-	
-	
+	static final String POLYGON = "polygon";
+	static final String ICON = "icon";
 }

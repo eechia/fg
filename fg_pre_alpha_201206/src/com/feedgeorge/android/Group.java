@@ -15,6 +15,10 @@ public class Group implements Parcelable{
 	String id, name, description, role;
 	String lat, lng, polygon, icon;
 	
+	public Group(){
+		
+	}
+	
 	public String getIcon() {
 		return icon;
 	}
@@ -22,11 +26,6 @@ public class Group implements Parcelable{
 
 	public void setIcon(String icon) {
 		this.icon = icon;
-	}
-
-
-	public Group(){
-		
 	}
 
 	
