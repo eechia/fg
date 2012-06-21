@@ -66,4 +66,7 @@ public class Constant {
 	static final String ROLE = "role";
 	static final String POLYGON = "polygon";
 	static final String ICON = "icon";
+	
+	
+	static final int RESUME = 0;
 }

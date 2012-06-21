@@ -21,6 +21,10 @@
             </intent-filter>
         </activity>
         
+        
+        <activity android:name=".LoginSignUpPage"/>
+        
+        
         <uses-library android:name="com.google.android.maps" />
         
         

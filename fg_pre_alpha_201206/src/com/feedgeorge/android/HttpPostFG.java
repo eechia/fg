@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpVersion;
 import org.apache.http.NameValuePair;
@@ -26,7 +27,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
+import android.widget.Toast;
 
 public class HttpPostFG {
 	
@@ -36,8 +41,8 @@ public class HttpPostFG {
 	public static BasicHttpContext mHttpContext;
 	CookieStore mCookieStore;
 	
-	public static String  TAG = "FG";
-	
+	public static String  TAG = "FG-1";
+	Context context;
 	
 	 //pupulate nearby groups
 	 public static ArrayList<Group> nearbyGroupsList;
@@ -48,6 +53,7 @@ public class HttpPostFG {
 		mHttpContext = new BasicHttpContext();
 		mCookieStore      = new BasicCookieStore();        
 		mHttpContext.setAttribute(ClientContext.COOKIE_STORE, mCookieStore);
+		context = PlacesList.context;
 		
 	}
 	
@@ -197,11 +203,115 @@ public class HttpPostFG {
 				
 			}
 		 
-		 public ArrayList getNearbyGroups(){
+		 public ArrayList getNearbyGroupsList(){
 			 
 			 return nearbyGroupsList;
 			 
 		 }
+		 
+		 public void postLogin(String email, String password) {
+		        // Create a new HttpClient and Post Header
+		    	
+				email = "chfoo@feedgeorge.com";
+		    	password = "adm123m";
+		    	
+		    	//apiKey = "f8343c8ebd00438983353f03a4ada999";;
+				
+				Log.i(	TAG, "postLogin()");
+		    	
+				
+				
+		    	
+		    	HttpParams params = new BasicHttpParams();
+		        params.setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
+		          
+
+		        HttpPost httppost = new HttpPost(Constant.URL_USER+"login");
+		        Log.i(TAG, "sending response");
+		        
+		        try {
+		            // Add your data
+
+		        	
+		            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+		            nameValuePairs.add(new BasicNameValuePair("email", email));
+		            nameValuePairs.add(new BasicNameValuePair("password", password));
+		            nameValuePairs.add(new BasicNameValuePair("apiKey", "f3f0f6dbc5e442f6afc6687e59912f23"));    
+		            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+		            // Execute HTTP Post Request
+    
+		            HttpResponse response = mHttpClient.execute(httppost, mHttpContext);
+            
+		            Log.i(TAG, ">>>>>>>>>>>>>>>>>>>>>>>");
+   
+		            inputStreamToString(response.getEntity().getContent());
+		            Toast.makeText(PlacesList.context, "Successfully logged in", Toast.LENGTH_LONG).show();
+		            //Intent myIntent = new Intent(PlacesList.context, PlacesList.class);
+		            //((Activity) context).startActivityForResult(myIntent, Constant.RESUME);
+	    			 //finish();
+		            
+		        } catch (ClientProtocolException e) {
+		            // TODO Auto-generated catch block
+		        	Log.i(TAG, "Protocol exception: "+e.toString());
+		        } catch (IOException e) {
+		            // TODO Auto-generated catch block
+		        	Log.i(TAG, "IOException:" +e.toString());
+		        }
+		    }
+		 
+		 
+		 public void postAddUser(String email, String password) {
+		        // Create a new HttpClient and Post Header
+		    	
+				//email = "chfoo@feedgeorge.com";
+		    	//password = "adm123m";
+		    	
+		    	//apiKey = "f8343c8ebd00438983353f03a4ada999";;
+				
+				Log.i(	TAG, "postAddUser()");
+		    	
+				
+				
+		    	
+		    	HttpParams params = new BasicHttpParams();
+		        params.setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
+		          
+
+		        HttpPost httppost = new HttpPost(Constant.URL_USER+"add");
+		        Log.i(TAG, "sending response");
+		        
+		        try {
+		            // Add your data
+
+		        	
+		            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+		            nameValuePairs.add(new BasicNameValuePair("email", email));
+		            nameValuePairs.add(new BasicNameValuePair("password", password));
+		            nameValuePairs.add(new BasicNameValuePair("apiKey", "f3f0f6dbc5e442f6afc6687e59912f23"));    
+		            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+		            // Execute HTTP Post Request
+ 
+		            HttpResponse response = mHttpClient.execute(httppost, mHttpContext);
+         
+		            Log.i(TAG, ">>>>>>>>>>>>>>>>>>>>>>>");
+
+		            inputStreamToString(response.getEntity().getContent());
+		            
+		            //Intent myIntent = new Intent(PlacesList.context, PlacesList.class);
+	    			 //startActivityForResult(myIntent, 0);
+	    			 //finish();
+
+		            
+		        } catch (ClientProtocolException e) {
+		            // TODO Auto-generated catch block
+		        	Log.i(TAG, "Protocol exception: "+e.toString());
+		        } catch (IOException e) {
+		            // TODO Auto-generated catch block
+		        	Log.i(TAG, "IOException:" +e.toString());
+		        }
+		    }
 
 
 }
