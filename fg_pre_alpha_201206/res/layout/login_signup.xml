@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/btnCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="Cancel" />
+
+    <TextView
+        android:id="@+id/txtEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/btnCancel"
+        android:text="Email"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+         android:layout_marginTop="15dp" />
+
+    <EditText
+        android:id="@+id/editEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/txtEmail"
+        android:layout_alignBottom="@+id/txtEmail"
+        android:layout_marginLeft="15dp"
+        android:layout_toRightOf="@+id/txtEmail"
+         android:layout_alignParentRight="true"
+        android:ems="10"
+        android:inputType="textEmailAddress" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/textPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/editEmail"
+        android:text="Password"
+        android:layout_marginTop="18dp"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <EditText
+        android:id="@+id/editPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editEmail"
+        android:layout_toRightOf="@+id/textPassword"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:layout_marginTop="15dp"
+        android:layout_alignBaseline="@+id/textPassword" />
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editPassword"
+        android:text="Login" />
+
+    <TextView
+        android:id="@+id/txtScreenName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/btnLogin"
+        android:layout_marginTop="25dp"
+        android:text="Screen Name"
+        android:textAppearance="?android:attr/textAppearanceLarge" 
+        />
+
+   
+
+    <EditText
+        android:id="@+id/editScreenName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/txtScreenName"
+       
+        android:layout_toRightOf="@+id/txtScreenName"
+        android:layout_alignBaseline="@+id/txtScreenName"
+        
+        android:ems="10" />
+
+     <TextView
+         android:id="@+id/txtEmailSU"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_below="@+id/editScreenName"
+         android:layout_toLeftOf="@+id/editEmail"
+         android:text="Email"
+         android:textAppearance="?android:attr/textAppearanceLarge" />
+
+     <EditText
+         android:id="@+id/editEmailSU"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignBaseline="@+id/txtEmailSU"
+         android:layout_alignBottom="@+id/txtEmailSU"
+         android:layout_alignLeft="@+id/editEmail"
+         android:ems="10"
+         android:inputType="textEmailAddress" />
+
+     <TextView
+         android:id="@+id/textPassworSU"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_below="@+id/editEmailSU"
+         android:layout_toLeftOf="@+id/editPassword"
+         android:text="Password"
+         android:textAppearance="?android:attr/textAppearanceLarge" 
+          android:layout_marginTop="20dp"/>
+
+     <EditText
+         android:id="@+id/editPasswordSU"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentRight="true"
+         android:layout_below="@+id/editEmailSU"
+         android:ems="10"
+         android:inputType="textPassword" 
+         android:layout_alignBaseline="@+id/textPassworSU"/>
+
+     <Button
+         android:id="@+id/btnSignUp"
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"
+         android:layout_alignParentLeft="true"
+         android:layout_below="@+id/editPasswordSU"
+         android:layout_marginTop="26dp"
+         android:text="Sign Up" />
+   
+</RelativeLayout>
