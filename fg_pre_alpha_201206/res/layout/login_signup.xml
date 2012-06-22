@@ -54,7 +54,7 @@
         android:layout_below="@+id/editEmail"
         android:layout_toRightOf="@+id/textPassword"
         android:ems="10"
-        android:inputType="textEmailAddress"
+        android:inputType="textPassword"
         android:layout_marginTop="15dp"
         android:layout_alignBaseline="@+id/textPassword" />
 

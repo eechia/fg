@@ -36,7 +36,11 @@ public class Constant {
 	static final String URL_CONTENT= "http://developer.feedgeorge.com/content/";
 	//
 	
+	//POST 
+	static final int LOGIN = 0;
 	
+	//POST MESSAGE
+	static final String NO_ERROR = "200";
 	
 	static final String API_KEY = "apiKey";
 	

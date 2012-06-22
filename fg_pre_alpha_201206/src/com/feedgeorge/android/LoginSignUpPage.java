@@ -14,7 +14,7 @@ public class LoginSignUpPage extends Activity {
 	Button mLoginBtn, mSignUpBtn, mCancelBtn;
 	TextView mEmailTxt, mPwdTxt, mScreenNameTxt, mEmailSUTxt, mPwdSUTxt; 
 	EditText mEmailEdit, mPwdEdit, mScreenNameEdit, mEmailSUEdit, mPwdSUEdit;
-	HttpPostFG httpPostFG = HttpPostFG.getInstance();
+	HttpPostFG httpPostFG;
 	
 	public static String  TAG = "FG-1";
 	
@@ -24,12 +24,14 @@ public class LoginSignUpPage extends Activity {
 			if(v.equals(mLoginBtn)){
 				
 				//addPost();
-				httpPostFG.postLogin(mEmailEdit.getText().toString(),mPwdEdit.getText().toString());
+				httpPostFG.postLogin(mEmailEdit.getText().toString(), mPwdEdit.getText().toString());
+				//httpPostFG.postLogin("test","test");
 				
 				
 			}
 			else if(v.equals(mSignUpBtn)){
 				
+				httpPostFG.postAddUser(mEmailSUEdit.getText().toString(),mPwdSUEdit.getText().toString());
 				
 			}else if(v.equals(mCancelBtn)){
 				
@@ -50,6 +52,8 @@ public class LoginSignUpPage extends Activity {
 	        super.onCreate(savedInstanceState);
 	        setContentView(R.layout.login_signup);
 	        
+	        httpPostFG = HttpPostFG.getInstance();
+	        
 	        mLoginBtn = (Button) this.findViewById(R.id.btnLogin);
 	        mSignUpBtn = (Button) this.findViewById(R.id.btnSignUp);
 	        mCancelBtn = (Button) this.findViewById(R.id.btnCancel);
@@ -66,10 +70,12 @@ public class LoginSignUpPage extends Activity {
 	        mPwdSUTxt = (TextView) this.findViewById(R.id.textPassworSU);
 	        
 	        mEmailEdit = (EditText) this.findViewById(R.id.editEmail);
-	        mPwdEdit = (EditText) this.findViewById(R.id.editEmail);
-	        mScreenNameEdit = (EditText) this.findViewById(R.id.editEmail);
-	        mEmailSUEdit = (EditText) this.findViewById(R.id.editEmail);
-	        mPwdSUEdit = (EditText) this.findViewById(R.id.editEmail);
+	        mPwdEdit = (EditText) this.findViewById(R.id.editPassword);
+	        mScreenNameEdit = (EditText) this.findViewById(R.id.editScreenName);
+	        mEmailSUEdit = (EditText) this.findViewById(R.id.editEmailSU);
+	        mPwdSUEdit = (EditText) this.findViewById(R.id.editPasswordSU);
+	        
+	        
 	       
 	     
 		}

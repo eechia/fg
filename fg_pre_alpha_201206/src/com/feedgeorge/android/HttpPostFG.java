@@ -53,7 +53,8 @@ public class HttpPostFG {
 		mHttpContext = new BasicHttpContext();
 		mCookieStore      = new BasicCookieStore();        
 		mHttpContext.setAttribute(ClientContext.COOKIE_STORE, mCookieStore);
-		context = PlacesList.context;
+		context = PlacesList.getAppContext();
+		Log.i(TAG,"creating instance: HttpPostFG()");
 		
 	}
 	
@@ -64,7 +65,12 @@ public class HttpPostFG {
 	      return instance;
 	   }
 	
-	 
+	
+	public void getApplicationContext(Context c){
+		context = c;
+	}
+	
+	
 	 /*
 		 * list joined groups 
 		 */
@@ -217,17 +223,18 @@ public class HttpPostFG {
 		    	
 		    	//apiKey = "f8343c8ebd00438983353f03a4ada999";;
 				
-				Log.i(	TAG, "postLogin()");
+				Log.i(	TAG, "---------postLogin()");
 		    	
 				
-				
+				Log.i(	TAG, "------email: "+email);
+				Log.i(	TAG, "------password: "+password);
 		    	
 		    	HttpParams params = new BasicHttpParams();
 		        params.setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
 		          
 
 		        HttpPost httppost = new HttpPost(Constant.URL_USER+"login");
-		        Log.i(TAG, "sending response");
+		        //Log.i(TAG, "sending response");
 		        
 		        try {
 		            // Add your data
@@ -245,11 +252,10 @@ public class HttpPostFG {
             
 		            Log.i(TAG, ">>>>>>>>>>>>>>>>>>>>>>>");
    
-		            inputStreamToString(response.getEntity().getContent());
-		            Toast.makeText(PlacesList.context, "Successfully logged in", Toast.LENGTH_LONG).show();
-		            //Intent myIntent = new Intent(PlacesList.context, PlacesList.class);
-		            //((Activity) context).startActivityForResult(myIntent, Constant.RESUME);
-	    			 //finish();
+		            String post = inputStreamToString(response.getEntity().getContent());
+		            parseResponse(Constant.LOGIN, post );
+		            
+		         
 		            
 		        } catch (ClientProtocolException e) {
 		            // TODO Auto-generated catch block
@@ -272,7 +278,8 @@ public class HttpPostFG {
 				Log.i(	TAG, "postAddUser()");
 		    	
 				
-				
+				Log.i(	TAG, "------email: "+email);
+				Log.i(	TAG, "------password: "+password);
 		    	
 		    	HttpParams params = new BasicHttpParams();
 		        params.setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
@@ -297,11 +304,11 @@ public class HttpPostFG {
          
 		            Log.i(TAG, ">>>>>>>>>>>>>>>>>>>>>>>");
 
-		            inputStreamToString(response.getEntity().getContent());
+		            //inputStreamToString(response.getEntity().getContent());
+		            String post = inputStreamToString(response.getEntity().getContent());
+		            parseResponse(Constant.LOGIN, post );
 		            
-		            //Intent myIntent = new Intent(PlacesList.context, PlacesList.class);
-	    			 //startActivityForResult(myIntent, 0);
-	    			 //finish();
+		           
 
 		            
 		        } catch (ClientProtocolException e) {
@@ -312,6 +319,113 @@ public class HttpPostFG {
 		        	Log.i(TAG, "IOException:" +e.toString());
 		        }
 		    }
+		 
+		 
+		 
+		 public void parseResponse(int action, String post){
+			 
+			 Log.i(TAG, "---- parseResponse()-----------------!!!!!");
+				
+				
+				//nearbyGroupsList = new ArrayList<Group>();
+					
+				//Group currentGrp;
+				
+				try {
+				
+					JSONObject jsonResponse = new JSONObject(post.trim());
+					
+					String query_status, query_error, query_reason,result;
+					
+					query_status = jsonResponse.getString(Constant.SUCCESS);
+					query_error = jsonResponse.getString(Constant.ERROR);
+					query_reason = jsonResponse.getString(Constant.REASON);
+					
+					
+					Log.i(TAG, "query_status: "+query_status);
+					Log.i(TAG, "query_error: "+query_error);
+					Log.i(TAG, "query_reason: "+query_reason);
+					
+					
+					
+					
+					boolean noerror = query_error.equals(Constant.NO_ERROR);
+					
+					Log.i(TAG, "noerror: "+noerror);
+					
+					if(noerror){
+						
+						Log.i(TAG, ">>>> EQUAL");
+						
+						result = jsonResponse.getString(Constant.RESULT);
+						JSONObject resultObject = new JSONObject(result);
+						Log.i(TAG, "result: "+result);
+						
+						switch(action){
+						
+						case Constant.LOGIN:
+							
+							 String id = resultObject.getString(Constant.ID);
+							 Log.i(TAG, "ID:"+id);
+							 
+							  Intent intent = new Intent();
+							  intent.setClass(this.context ,PlacesList.class);
+							  intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+							  context.startActivity(intent);
+							 
+							  Toast.makeText(PlacesList.context, "Successfully logged in", Toast.LENGTH_SHORT).show();
+						
+						/*
+						 groups = resultObject.getString(Constant.GROUPS);
+						
+						
+						
+						JSONArray contentArray = new JSONArray(groups);
+						
+						String title;
+						
+						for(int i=0; i<contentArray.length();i++)
+						{
+							currentGrp = new Group();
+							JSONObject item = contentArray.getJSONObject(i);
+							
+							
+							currentGrp.setId(item.getString(Constant.ID));
+							currentGrp.setName(item.getString(Constant.NAME));
+							currentGrp.setDescription(item.getString(Constant.DESC));
+							currentGrp.setLat(item.getString(Constant.LAT));
+							currentGrp.setLng(item.getString(Constant.LNG));
+							currentGrp.setPolygon(item.getString(Constant.POLYGON));
+							currentGrp.setIcon(item.getString(Constant.ICON));
+		
+							
+							Log.i(TAG, "group: "+currentGrp.getName());
+							nearbyGroupsList.add(currentGrp);
+							
+							
+
+						}
+						 */
+							
+						}
+						
+					}else{
+						
+						Log.i(TAG, ">>>> NOT EQUAL");
+						Toast.makeText(context, query_reason, Toast.LENGTH_SHORT).show();
+					}
+	
+					
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				//readPost();
+				
+			}
+			 
+		 }
 
 
-}
+

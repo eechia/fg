@@ -79,6 +79,7 @@ public class PlacesList extends ListActivity {
         
         context = this.getApplicationContext();
         
+        httpPostFG.getApplicationContext(context);
         
     	/*
         String email = "chfoo@feedgeorge.com";
@@ -134,6 +135,11 @@ public class PlacesList extends ListActivity {
     	}	
     }
 
+    public static Context getAppContext(){
+    	
+    	//context = getApplicationContext();
+    	 return context; 
+    }
 
     
     
