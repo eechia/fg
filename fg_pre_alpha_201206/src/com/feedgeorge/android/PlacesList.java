@@ -12,12 +12,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemSelectedListener;
 
-public class PlacesList extends ListActivity {
+public class PlacesList extends ListActivity implements OnItemSelectedListener{
     /** Called when the activity is first created. */
 	
 	HttpPostFG httpPostFG = HttpPostFG.getInstance();
@@ -90,6 +93,7 @@ public class PlacesList extends ListActivity {
         httpPostFG.getNearbyGroup();
         nearbyGroupList = httpPostFG.getNearbyGroupsList();
         setListAdapter(new PlacesListMainAdapter(this, R.layout.nearby_grouprow, nearbyGroupList));
+        ((BaseAdapter) getListAdapter()).notifyDataSetChanged();
         /*
         nearbyGrouplistAdapter = new ArrayAdapter<String>(this, R.layout.nearby_grouprow, httpPostFG.getNearbyGroups());
         
@@ -140,6 +144,40 @@ public class PlacesList extends ListActivity {
     	//context = getApplicationContext();
     	 return context; 
     }
+
+
+
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+		
+		
+    	super.onListItemClick(l, v, position, id);
+    	Log.i(TAG, "!!!!onListItemClick: "+nearbyGroupList.get(position).getName());
+    	
+    	GroupPage.setSelectedGroup(nearbyGroupList.get(position));
+    	Intent intent = new Intent();
+	    intent.setClass(context,GroupPage.class);
+	    startActivity(intent);
+		
+    }
+
+    public void onItemSelected(AdapterView<?> parent, View v, int position,
+			long id) {
+		//selection.setText(items[position]);
+    	Log.i(TAG, "!!!!!!!item selected: "+nearbyGroupList.get(position).getName());
+    	/*
+    	Log.i(TAG, "item selected: "+nearbyGroupList.get(position).getName());
+    	
+    	GroupPage.setSelectedGroup(nearbyGroupList.get(position));
+    	Intent intent = new Intent();
+	    intent.setClass(context,GroupPage.class);
+	    startActivity(intent);
+	    */
+	}
+
+	public void onNothingSelected(AdapterView<?> parent) {
+		//selection.setText("");
+		Log.i(TAG, "onNothingSelected()");
+	}
 
     
     

@@ -13,8 +13,24 @@ import android.os.Parcelable;
 public class Group implements Parcelable{
 	
 	String id, name, description, role;
-	String lat, lng, polygon, icon;
+	String lat, lng, polygon, icon, memberCount, postCount;
 	
+	public String getMemberCount() {
+		return memberCount;
+	}
+
+	public void setMemberCount(String memberCount) {
+		this.memberCount = memberCount;
+	}
+
+	public String getPostCount() {
+		return postCount;
+	}
+
+	public void setPostCount(String postCount) {
+		this.postCount = postCount;
+	}
+
 	public Group(){
 		
 	}

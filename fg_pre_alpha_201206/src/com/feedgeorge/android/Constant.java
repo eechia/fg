@@ -38,6 +38,7 @@ public class Constant {
 	
 	//POST 
 	static final int LOGIN = 0;
+	static final int JOIN_GROUP = 1;
 	
 	//POST MESSAGE
 	static final String NO_ERROR = "200";
@@ -70,6 +71,12 @@ public class Constant {
 	static final String ROLE = "role";
 	static final String POLYGON = "polygon";
 	static final String ICON = "icon";
+	static final String POST_COUNT = "postCount";
+	static final String MEMBER_COUNT = "memberCount";
+	
+	//login
+	static final String DISPLAY_NAME = "displayName";
+	static final String PROFILE_PIC = "pic";
 	
 	
 	static final int RESUME = 0;

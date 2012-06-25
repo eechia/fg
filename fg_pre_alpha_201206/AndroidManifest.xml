@@ -23,6 +23,8 @@
         
         
         <activity android:name=".LoginSignUpPage"/>
+        <activity android:name=".GroupPage"/>
+        
         
         
         <uses-library android:name="com.google.android.maps" />

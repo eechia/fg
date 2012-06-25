@@ -191,9 +191,11 @@ public class HttpPostFG {
 						currentGrp.setLng(item.getString(Constant.LNG));
 						currentGrp.setPolygon(item.getString(Constant.POLYGON));
 						currentGrp.setIcon(item.getString(Constant.ICON));
+						currentGrp.setMemberCount(item.getString(Constant.MEMBER_COUNT));
+						currentGrp.setPostCount(item.getString(Constant.POST_COUNT));
 	
 						
-						Log.i(TAG, "group: "+currentGrp.getName());
+						Log.i(TAG, "group: "+currentGrp.getName() +" post count: "+currentGrp.getPostCount());
 						nearbyGroupsList.add(currentGrp);
 						
 						
@@ -321,111 +323,198 @@ public class HttpPostFG {
 		    }
 		 
 		 
+		 public void postToServer(int action, ArrayList<String> keyList, ArrayList<String> valueList) {
+		        // Create a new HttpClient and Post Header
+		    	
+				//email = "chfoo@feedgeorge.com";
+		    	//password = "adm123m";
+		    	
+		    	//apiKey = "f8343c8ebd00438983353f03a4ada999";;
+				
+				Log.i(	TAG, "postToServer()");
+				
+				if(keyList == null){
+					keyList = new ArrayList<String>();
+					valueList = new ArrayList<String>();
+				}
+				
+				keyList.add("apiKey");
+				valueList.add("f8343c8ebd00438983353f03a4ada999");
+				
+				//Log.i(	TAG, "------email: "+email);
+				//Log.i(	TAG, "------password: "+password);
+		    	
+		    	HttpParams httpparams = new BasicHttpParams();
+		    	httpparams.setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
+		          
+		    	HttpPost httppost = null;
+		        int count = keyList.size();
+		        
+		        try {
+		            // Add your data
+
+		        	
+		        	switch(action){
+		        	
+		        		case Constant.JOIN_GROUP:
+		        			httppost = new HttpPost(Constant.URL_GROUP+"join");
+						     Log.i(TAG, "JOIN_GROUP");
+						     
+				           
+				            
+				           
+		        	
+		        	}
+		        	
+		        	 List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(count);
+		        	
+		        	 for(int i=0;i<count;i++){
+			            	nameValuePairs.add(new BasicNameValuePair( keyList.get(i).toString(),valueList.get(i).toString()));
+			            }
+			            
+			                
+			            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+			            // Execute HTTP Post Request
+
+			            HttpResponse response = mHttpClient.execute(httppost, mHttpContext);
+	      
+			            Log.i(TAG, ">>>>>>>>>>>>>>>>>>>>>>>");
+
+			            //inputStreamToString(response.getEntity().getContent());
+			            String post = inputStreamToString(response.getEntity().getContent());
+			            parseResponse(action, post );
+		            
+		           
+
+		            
+		        } catch (ClientProtocolException e) {
+		            // TODO Auto-generated catch block
+		        	Log.i(TAG, "Protocol exception: "+e.toString());
+		        } catch (IOException e) {
+		            // TODO Auto-generated catch block
+		        	Log.i(TAG, "IOException:" +e.toString());
+		        }
+		    }
+		 
+		 
+		 
 		 
 		 public void parseResponse(int action, String post){
 			 
-			 Log.i(TAG, "---- parseResponse()-----------------!!!!!");
+			 Log.i(TAG, "---- parseResponse() FOR : " +action);
 				
 				
 				//nearbyGroupsList = new ArrayList<Group>();
 					
 				//Group currentGrp;
-				
-				try {
-				
-					JSONObject jsonResponse = new JSONObject(post.trim());
-					
-					String query_status, query_error, query_reason,result;
-					
-					query_status = jsonResponse.getString(Constant.SUCCESS);
-					query_error = jsonResponse.getString(Constant.ERROR);
-					query_reason = jsonResponse.getString(Constant.REASON);
-					
-					
-					Log.i(TAG, "query_status: "+query_status);
-					Log.i(TAG, "query_error: "+query_error);
-					Log.i(TAG, "query_reason: "+query_reason);
-					
-					
-					
-					
-					boolean noerror = query_error.equals(Constant.NO_ERROR);
-					
-					Log.i(TAG, "noerror: "+noerror);
-					
-					if(noerror){
-						
-						Log.i(TAG, ">>>> EQUAL");
-						
-						result = jsonResponse.getString(Constant.RESULT);
-						JSONObject resultObject = new JSONObject(result);
-						Log.i(TAG, "result: "+result);
-						
-						switch(action){
-						
-						case Constant.LOGIN:
-							
-							 String id = resultObject.getString(Constant.ID);
-							 Log.i(TAG, "ID:"+id);
-							 
-							  Intent intent = new Intent();
-							  intent.setClass(this.context ,PlacesList.class);
-							  intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-							  context.startActivity(intent);
-							 
-							  Toast.makeText(PlacesList.context, "Successfully logged in", Toast.LENGTH_SHORT).show();
-						
-						/*
-						 groups = resultObject.getString(Constant.GROUPS);
-						
-						
-						
-						JSONArray contentArray = new JSONArray(groups);
-						
-						String title;
-						
-						for(int i=0; i<contentArray.length();i++)
-						{
-							currentGrp = new Group();
-							JSONObject item = contentArray.getJSONObject(i);
-							
-							
-							currentGrp.setId(item.getString(Constant.ID));
-							currentGrp.setName(item.getString(Constant.NAME));
-							currentGrp.setDescription(item.getString(Constant.DESC));
-							currentGrp.setLat(item.getString(Constant.LAT));
-							currentGrp.setLng(item.getString(Constant.LNG));
-							currentGrp.setPolygon(item.getString(Constant.POLYGON));
-							currentGrp.setIcon(item.getString(Constant.ICON));
-		
-							
-							Log.i(TAG, "group: "+currentGrp.getName());
-							nearbyGroupsList.add(currentGrp);
-							
-							
-
-						}
-						 */
-							
-						}
-						
-					}else{
-						
-						Log.i(TAG, ">>>> NOT EQUAL");
-						Toast.makeText(context, query_reason, Toast.LENGTH_SHORT).show();
-					}
-	
-					
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-				//readPost();
-				
-			}
 			 
-		 }
+			
+				 try {
+						
+						JSONObject jsonResponse = new JSONObject(post.trim());
+						
+						String query_status, query_error, query_reason,result;
+						
+						query_status = jsonResponse.getString(Constant.SUCCESS);
+						query_error = jsonResponse.getString(Constant.ERROR);
+						query_reason = jsonResponse.getString(Constant.REASON);
+						
+						
+						Log.i(TAG, "query_status: "+query_status);
+						Log.i(TAG, "query_error: "+query_error);
+						Log.i(TAG, "query_reason: "+query_reason);
+						
+						
+						
+						
+						boolean noerror = query_error.equals(Constant.NO_ERROR);
+						
+						Log.i(TAG, "noerror: "+noerror);
+						
+						if(noerror){
+							
+							Log.i(TAG, ">>>> EQUAL");
+							
+							result = jsonResponse.getString(Constant.RESULT);
+							JSONObject resultObject = new JSONObject(result);
+							Log.i(TAG, "result: "+result);
+							
+							switch(action){
+							
+							case Constant.LOGIN:
+								
+								 String displayName, pic;
+								 String id = resultObject.getString(Constant.ID);
+								 
+								 displayName = resultObject.getString(Constant.DISPLAY_NAME);
+								 pic = resultObject.getString(Constant.PROFILE_PIC);
+								 
+								 Log.i(TAG, "ID:"+id + " displayName: "+ displayName +"pic: " +pic);
+								 
+								  Intent intent = new Intent();
+								  intent.setClass(this.context ,PlacesList.class);
+								  intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+								  context.startActivity(intent);
+								 
+								  Toast.makeText(PlacesList.context, "Successfully logged in", Toast.LENGTH_SHORT).show();
+								  
+						
+							case Constant.JOIN_GROUP:	  	
+								Toast.makeText(PlacesList.context, "Successfully JOIN GROUP", Toast.LENGTH_LONG).show();
+							/*
+							 groups = resultObject.getString(Constant.GROUPS);
+							
+							
+							
+							JSONArray contentArray = new JSONArray(groups);
+							
+							String title;
+							
+							for(int i=0; i<contentArray.length();i++)
+							{
+								currentGrp = new Group();
+								JSONObject item = contentArray.getJSONObject(i);
+								
+								
+								currentGrp.setId(item.getString(Constant.ID));
+								currentGrp.setName(item.getString(Constant.NAME));
+								currentGrp.setDescription(item.getString(Constant.DESC));
+								currentGrp.setLat(item.getString(Constant.LAT));
+								currentGrp.setLng(item.getString(Constant.LNG));
+								currentGrp.setPolygon(item.getString(Constant.POLYGON));
+								currentGrp.setIcon(item.getString(Constant.ICON));
+			
+								
+								Log.i(TAG, "group: "+currentGrp.getName());
+								nearbyGroupsList.add(currentGrp);
+								
+								
+
+							}
+							 */
+								
+							}
+							
+						}else{
+							
+							Log.i(TAG, ">>>> NOT EQUAL");
+							Toast.makeText(context, query_reason, Toast.LENGTH_SHORT).show();
+						}
+		
+						
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+					//readPost();
+					
+				}
+			}
+				
+							 
+		 
 
 
 
