@@ -40,7 +40,8 @@ public class PlacesList extends ListActivity implements OnItemSelectedListener{
 				//addPost();
 				Intent intent = new Intent();
 			    intent.setClass(context,LoginSignUpPage.class);
-			    startActivity(intent);
+			    startActivityForResult(intent, Constant.LOGIN);
+			   // startActivity(intent);
 				
 				
 			}/*
@@ -114,6 +115,10 @@ public class PlacesList extends ListActivity implements OnItemSelectedListener{
                 // to the user.
                 //startActivity(new Intent(Intent.ACTION_VIEW, data));
             	Log.i(TAG,">>>>>>>>>>RESUME!!!!!!!!!");
+            	onResume();
+            	
+            }else if(resultCode == Constant.LOGIN){
+            	Log.i(TAG,">>>>>>>>>>onActivityResult - Login!!!!!!!!!");
             	onResume();
             }
         }

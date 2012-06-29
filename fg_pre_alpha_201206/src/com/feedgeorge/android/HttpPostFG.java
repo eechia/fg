@@ -41,11 +41,15 @@ public class HttpPostFG {
 	public static BasicHttpContext mHttpContext;
 	CookieStore mCookieStore;
 	
+	String newUserEmail, newUserPwd = null;
+	
 	public static String  TAG = "FG-1";
 	Context context;
 	
+	boolean newSignedUp=false;
+	
 	 //pupulate nearby groups
-	 public static ArrayList<Group> nearbyGroupsList;
+	 public static ArrayList<Group> nearbyGroupsList, joinedGroupList;
 	
 	protected HttpPostFG(){
 		
@@ -220,8 +224,8 @@ public class HttpPostFG {
 		 public void postLogin(String email, String password) {
 		        // Create a new HttpClient and Post Header
 		    	
-				email = "chfoo@feedgeorge.com";
-		    	password = "adm123m";
+				//email = "chfoo@feedgeorge.com";
+		    	//password = "adm123m";
 		    	
 		    	//apiKey = "f8343c8ebd00438983353f03a4ada999";;
 				
@@ -255,7 +259,7 @@ public class HttpPostFG {
 		            Log.i(TAG, ">>>>>>>>>>>>>>>>>>>>>>>");
    
 		            String post = inputStreamToString(response.getEntity().getContent());
-		            parseResponse(Constant.LOGIN, post );
+		            parseResponse(Constant.LOGIN, post);
 		            
 		         
 		            
@@ -282,6 +286,9 @@ public class HttpPostFG {
 				
 				Log.i(	TAG, "------email: "+email);
 				Log.i(	TAG, "------password: "+password);
+				
+				newUserEmail = email; 
+				newUserPwd = password;
 		    	
 		    	HttpParams params = new BasicHttpParams();
 		        params.setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
@@ -308,7 +315,7 @@ public class HttpPostFG {
 
 		            //inputStreamToString(response.getEntity().getContent());
 		            String post = inputStreamToString(response.getEntity().getContent());
-		            parseResponse(Constant.LOGIN, post );
+		            parseResponse(Constant.SIGN_UP, post );
 		            
 		           
 
@@ -359,8 +366,13 @@ public class HttpPostFG {
 		        		case Constant.JOIN_GROUP:
 		        			httppost = new HttpPost(Constant.URL_GROUP+"join");
 						     Log.i(TAG, "JOIN_GROUP");
+						     break;
 						     
-				           
+		        		case Constant.GET_JOINED_GROUP:       			
+		        			httppost = new HttpPost(Constant.URL_USER+"listgroups");
+						    Log.i(TAG, "GET_JOINED_GROUP");
+						    break;
+						    
 				            
 				           
 		        	
@@ -434,67 +446,115 @@ public class HttpPostFG {
 						
 						if(noerror){
 							
-							Log.i(TAG, ">>>> EQUAL");
+							JSONObject resultObject = null;
 							
-							result = jsonResponse.getString(Constant.RESULT);
-							JSONObject resultObject = new JSONObject(result);
-							Log.i(TAG, "result: "+result);
-							
-							switch(action){
-							
-							case Constant.LOGIN:
-								
-								 String displayName, pic;
-								 String id = resultObject.getString(Constant.ID);
-								 
-								 displayName = resultObject.getString(Constant.DISPLAY_NAME);
-								 pic = resultObject.getString(Constant.PROFILE_PIC);
-								 
-								 Log.i(TAG, "ID:"+id + " displayName: "+ displayName +"pic: " +pic);
-								 
-								  Intent intent = new Intent();
-								  intent.setClass(this.context ,PlacesList.class);
-								  intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-								  context.startActivity(intent);
-								 
-								  Toast.makeText(PlacesList.context, "Successfully logged in", Toast.LENGTH_SHORT).show();
-								  
-						
-							case Constant.JOIN_GROUP:	  	
-								Toast.makeText(PlacesList.context, "Successfully JOIN GROUP", Toast.LENGTH_LONG).show();
-							/*
-							 groups = resultObject.getString(Constant.GROUPS);
-							
-							
-							
-							JSONArray contentArray = new JSONArray(groups);
-							
-							String title;
-							
-							for(int i=0; i<contentArray.length();i++)
+							if(action != Constant.JOIN_GROUP)
 							{
-								currentGrp = new Group();
-								JSONObject item = contentArray.getJSONObject(i);
+								result = jsonResponse.getString(Constant.RESULT);
+								resultObject = new JSONObject(result);
+								Log.i(TAG, "result: "+result);
+							}
+							
+							
+							
+							switch( action){
+							
+								case Constant.LOGIN:
+									
+									Log.i(TAG, ">>>> LOGIN!!!");
+									 String displayName, pic;
+									 String id = resultObject.getString(Constant.ID);
+									 
+									 displayName = resultObject.getString(Constant.DISPLAY_NAME);
+									 pic = resultObject.getString(Constant.PROFILE_PIC);
+									 
+									 Log.i(TAG, "ID:"+id + " displayName: "+ displayName +"pic: " +pic);
+									 
+									 Toast.makeText(PlacesList.context, "Successfully logged in... ", Toast.LENGTH_SHORT).show();
+									 
+									 postToServer(Constant.GET_JOINED_GROUP, null, null);
+									 
+									 if(newSignedUp)
+									 {
+		 
+										  Intent intent = new Intent();
+										  intent.setClass(this.context ,PlacesList.class);
+										  intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+										  context.startActivity(intent);
+										  newSignedUp = false;
+			 
+									 }
+									 
+									 break;
+									  
+						
+								case Constant.JOIN_GROUP:	
+									Log.i(TAG, ">>>> JOIN GROUP");
+									Toast.makeText(PlacesList.context, "Successfully JOIN GROUP", Toast.LENGTH_LONG).show();
+									break;
 								
-								
-								currentGrp.setId(item.getString(Constant.ID));
-								currentGrp.setName(item.getString(Constant.NAME));
-								currentGrp.setDescription(item.getString(Constant.DESC));
-								currentGrp.setLat(item.getString(Constant.LAT));
-								currentGrp.setLng(item.getString(Constant.LNG));
-								currentGrp.setPolygon(item.getString(Constant.POLYGON));
-								currentGrp.setIcon(item.getString(Constant.ICON));
+								case Constant.SIGN_UP:
+											 
+									Log.i(TAG, ">>>> SIGNUP");
+									newSignedUp = true;
+									Toast.makeText(PlacesList.context, "Successfully signed up. Loggin in..", Toast.LENGTH_SHORT).show();
+									 postLogin(newUserEmail,newUserPwd);
+									break;
+									
+								case Constant.GET_JOINED_GROUP:  
+									
+									
+									String groups = resultObject.getString(Constant.GROUPS);
+									
+									//JSONObject contentObject = new JSONObject(content);
+									
+									JSONArray contentArray = new JSONArray(groups);
+									
+									int count = contentArray.length();
+									Intent placesIntent = new Intent();
+									
+									if(count == 0){
+										
+										placesIntent.setClass(context, PlacesList.class);
+										placesIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+										context.startActivity(placesIntent);
+										
+									}else{
 			
-								
-								Log.i(TAG, "group: "+currentGrp.getName());
-								nearbyGroupsList.add(currentGrp);
-								
-								
-
-							}
-							 */
-								
-							}
+										Group currentGrp;
+										String title;
+										joinedGroupList = new ArrayList<Group>();
+										for(int i=0; i<count;i++)
+										{
+											currentGrp = new Group();
+											JSONObject item = contentArray.getJSONObject(i);
+											
+											
+											currentGrp.setId(item.getString(Constant.ID));
+											currentGrp.setName(item.getString(Constant.NAME));
+											currentGrp.setDescription(item.getString(Constant.DESC));
+											currentGrp.setRole(item.getString(Constant.ROLE));
+						
+											
+											Log.i(TAG, "group: "+currentGrp.getName());
+											joinedGroupList.add(currentGrp);
+											
+											placesIntent.setClass(context, PlacesList.class);
+											placesIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+											context.startActivity(placesIntent);
+											
+											//Intent placesIntent = new Intent();
+											/*
+											placesIntent.setClass(context, MyGroupPage.class);
+											placesIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+											context.startActivity(placesIntent);
+											*/	
+										
+										}
+			
+									}
+									
+														}
 							
 						}else{
 							
@@ -511,7 +571,14 @@ public class HttpPostFG {
 					//readPost();
 					
 				}
-			}
+		 
+		 
+		 public static ArrayList getJoinedGroupList(){
+			 
+			 return joinedGroupList;
+		 }
+		 
+}
 				
 							 
 		 

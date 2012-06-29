@@ -1,7 +1,10 @@
 package com.feedgeorge.android;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -15,6 +18,8 @@ public class LoginSignUpPage extends Activity {
 	TextView mEmailTxt, mPwdTxt, mScreenNameTxt, mEmailSUTxt, mPwdSUTxt; 
 	EditText mEmailEdit, mPwdEdit, mScreenNameEdit, mEmailSUEdit, mPwdSUEdit;
 	HttpPostFG httpPostFG;
+	
+	Context context = null;
 	
 	public static String  TAG = "FG-1";
 	
@@ -37,9 +42,16 @@ public class LoginSignUpPage extends Activity {
 				
 				/*
 				Intent intent = new Intent();
-			    intent.setClass(context,PostList.class);
+			    intent.setClass(context, PlacesList.class);
 			    startActivity(intent);
 				*/
+				Log.i(TAG,">>> CANCEL PRESSED");
+				//finishActivity(Constant.LOGIN);
+				
+				//Intent intent = new Intent();
+				//intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				
+				onBackPressed();
 				
 			}
 			
@@ -75,8 +87,19 @@ public class LoginSignUpPage extends Activity {
 	        mEmailSUEdit = (EditText) this.findViewById(R.id.editEmailSU);
 	        mPwdSUEdit = (EditText) this.findViewById(R.id.editPasswordSU);
 	        
-	        
+	        context = getApplicationContext();
 	       
 	     
+		}
+	 
+	 public void setContext(Context c){
+		 context = c;
+	 }
+	 
+	 public void onBackPressed() {
+		    // do something on back.
+		 Log.i(TAG,">>> onBackPressed");
+		 super.onBackPressed();
+		    return;
 		}
 }

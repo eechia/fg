@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -27,7 +28,7 @@ public class GroupPage extends Activity {
 			
 			if(v.equals(backBtn)){
 				
-				
+				onBackPressed();
 				
 				
 			}
@@ -80,5 +81,12 @@ public class GroupPage extends Activity {
 		 return currentgroup = g;
 	 }
 
+	 
+	 public void onBackPressed() {
+		    // do something on back.
+		 Log.i(TAG,">>> onBackPressed");
+		 super.onBackPressed();
+		    return;
+		}
 	
 }

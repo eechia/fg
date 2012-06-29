@@ -38,9 +38,11 @@ public class Constant {
 	
 	//POST 
 	static final int LOGIN = 0;
-	static final int JOIN_GROUP = 1;
+	static final int SIGN_UP = 1;
+	static final int JOIN_GROUP = 2;
+	static final int GET_JOINED_GROUP = 3;
 	
-	//POST MESSAGE
+	//POST MESSAG
 	static final String NO_ERROR = "200";
 	
 	static final String API_KEY = "apiKey";
