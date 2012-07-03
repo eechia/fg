@@ -156,7 +156,7 @@ public class PlacesList extends ListActivity implements OnItemSelectedListener{
 		
 		
     	super.onListItemClick(l, v, position, id);
-    	Log.i(TAG, "!!!!onListItemClick: "+nearbyGroupList.get(position).getName());
+    	Log.i(TAG, ">>>>>>>>>>>>>>>!!!!onListItemClick: "+nearbyGroupList.get(position).getName());
     	
     	GroupPage.setSelectedGroup(nearbyGroupList.get(position));
     	Intent intent = new Intent();

@@ -47,6 +47,10 @@ public class HttpPostFG {
 	Context context;
 	
 	boolean newSignedUp=false;
+	String defaultGroupID = null;
+	
+	static int getContentcount = 0;
+	ArrayList<Post> postQueue = new ArrayList<Post>();
 	
 	 //pupulate nearby groups
 	 public static ArrayList<Group> nearbyGroupsList, joinedGroupList;
@@ -226,6 +230,9 @@ public class HttpPostFG {
 		    	
 				//email = "chfoo@feedgeorge.com";
 		    	//password = "adm123m";
+			 
+			 	email = "a@b.com";
+		    	password = "abc";
 		    	
 		    	//apiKey = "f8343c8ebd00438983353f03a4ada999";;
 				
@@ -365,13 +372,21 @@ public class HttpPostFG {
 		        	
 		        		case Constant.JOIN_GROUP:
 		        			httppost = new HttpPost(Constant.URL_GROUP+"join");
-						     Log.i(TAG, "JOIN_GROUP");
+						     Log.i(TAG, ">>>>>>>POST: JOIN_GROUP");
 						     break;
 						     
 		        		case Constant.GET_JOINED_GROUP:       			
 		        			httppost = new HttpPost(Constant.URL_USER+"listgroups");
-						    Log.i(TAG, "GET_JOINED_GROUP");
+						    Log.i(TAG, ">>>>>>>POST: GET_JOINED_GROUP");
 						    break;
+						    
+		        		case Constant.GET_GRP_CONTENT:
+		        			 
+		        			 httppost = new HttpPost(Constant.URL_CONTENT+"list");
+							 
+		        			 Log.i(TAG, ">>>>>>>POST: GET_GRP_CONTENT");
+	 
+							 break;
 						    
 				            
 				           
@@ -395,7 +410,7 @@ public class HttpPostFG {
 
 			            //inputStreamToString(response.getEntity().getContent());
 			            String post = inputStreamToString(response.getEntity().getContent());
-			            parseResponse(action, post );
+			            parseResponse(action, post);
 		            
 		           
 
@@ -426,7 +441,7 @@ public class HttpPostFG {
 						
 						JSONObject jsonResponse = new JSONObject(post.trim());
 						
-						String query_status, query_error, query_reason,result;
+						String query_status, query_error, query_reason,result = null;
 						
 						query_status = jsonResponse.getString(Constant.SUCCESS);
 						query_error = jsonResponse.getString(Constant.ERROR);
@@ -498,11 +513,11 @@ public class HttpPostFG {
 									Log.i(TAG, ">>>> SIGNUP");
 									newSignedUp = true;
 									Toast.makeText(PlacesList.context, "Successfully signed up. Loggin in..", Toast.LENGTH_SHORT).show();
-									 postLogin(newUserEmail,newUserPwd);
+									postLogin(newUserEmail,newUserPwd);
 									break;
 									
 								case Constant.GET_JOINED_GROUP:  
-									
+									Log.i(TAG, ">>>> GET_JOINED_GROUP");
 									
 									String groups = resultObject.getString(Constant.GROUPS);
 									
@@ -534,27 +549,95 @@ public class HttpPostFG {
 											currentGrp.setName(item.getString(Constant.NAME));
 											currentGrp.setDescription(item.getString(Constant.DESC));
 											currentGrp.setRole(item.getString(Constant.ROLE));
-						
+											
+											if(i==0)
+												defaultGroupID = item.getString(Constant.ID);
 											
 											Log.i(TAG, "group: "+currentGrp.getName());
 											joinedGroupList.add(currentGrp);
 											
+											
+											
+											/*
 											placesIntent.setClass(context, PlacesList.class);
 											placesIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 											context.startActivity(placesIntent);
-											
+											*/
 											//Intent placesIntent = new Intent();
-											/*
-											placesIntent.setClass(context, MyGroupPage.class);
-											placesIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-											context.startActivity(placesIntent);
-											*/	
-										
 										}
-			
+										
+										//display the content of the first group
+										ArrayList<String> keys = new ArrayList<String>();
+										ArrayList<String> values = new ArrayList<String>();
+										
+										
+										Log.i(TAG, "defaultGroupID: "+defaultGroupID);
+										keys.add(Constant.GROUP_ID);
+										values.add(defaultGroupID);
+										
+										postToServer(Constant.GET_GRP_CONTENT, keys, values);
+										
+										//DISPLAY A LIST OF JOINED GROUPS
+										/*
+										placesIntent.setClass(context, MyGroupPage.class);
+										placesIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+										context.startActivity(placesIntent);
+										*/
 									}
 									
-														}
+									break;
+							
+								case Constant.GET_GRP_CONTENT:
+	
+				        			 Log.i(TAG, " RESPONSE : GET_GRP_CONTENT: ");
+				        			 Log.i(TAG, "result: "+result);
+				        			 
+				        			 Post currentPost;
+				        			 resultObject = new JSONObject(result);
+				     				
+				     				String content = resultObject.getString(Constant.CONTENT);
+				     				
+				     				//JSONObject contentObject = new JSONObject(content);
+				     				
+				     				 contentArray = new JSONArray(content);
+				     				
+				     				String title;
+				     				
+				     				for(int i=0; i<contentArray.length();i++)
+				     				{
+				     					currentPost = new Post();
+				     					JSONObject item = contentArray.getJSONObject(i);
+				     					
+				     					
+				     					currentPost.setId(item.getString(Constant.ID));
+				     					currentPost.setAuthorId(item.getString(Constant.AUTHOR_ID));
+				     					currentPost.setAuthorName(item.getString(Constant.AUTHOR_NAME));
+				     					currentPost.setGroupId(item.getString(Constant.GROUP_ID));
+				     					currentPost.setImage(item.getString(Constant.IMAGE));
+				     					currentPost.setLastUpdate(item.getString(Constant.LAST_UPDATE));
+				     					currentPost.setLat(item.getString(Constant.LAT)); 
+				     					currentPost.setLng(item.getString(Constant.LNG));				
+				     					currentPost.setText(item.getString(Constant.TEXT));
+				     					currentPost.setType(item.getString(Constant.TYPE));
+				     					
+				     					Log.i(TAG, "title: "+item.getString(Constant.TEXT));
+				     					
+										postQueue.add(currentPost);
+				     					
+				     				
+				     				}
+				     				PostList.setPostQueue(postQueue);
+				     				
+				     				 Intent intent = new Intent();
+									  intent.setClass(this.context ,PostList.class);
+									  intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+									  context.startActivity(intent);
+									  
+									 
+									 break;
+							
+							
+							}
 							
 						}else{
 							
@@ -575,6 +658,7 @@ public class HttpPostFG {
 		 
 		 public static ArrayList getJoinedGroupList(){
 			 
+			 Log.i(TAG, "----------- getJoinedGroupList()");
 			 return joinedGroupList;
 		 }
 		 

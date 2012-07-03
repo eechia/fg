@@ -41,6 +41,7 @@ public class Constant {
 	static final int SIGN_UP = 1;
 	static final int JOIN_GROUP = 2;
 	static final int GET_JOINED_GROUP = 3;
+	static final int GET_GRP_CONTENT = 4;
 	
 	//POST MESSAG
 	static final String NO_ERROR = "200";
@@ -51,6 +52,9 @@ public class Constant {
 	static final String ERROR = "error";
 	static final String REASON = "reason";
 	static final String RESULT = "result";
+	static final String CONTENT = "content";
+	
+	
 	
 	
 	static final String ID = "id";

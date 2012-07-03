@@ -1,27 +1,35 @@
 package com.feedgeorge.android;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
+import android.content.Context;
+import android.database.DataSetObserver;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class MyGroupAdapter extends ArrayAdapter<Group> {
+public class postListAdapter extends ArrayAdapter<Post> {
 
-	MyGroupPage context = null;
-	List<Group> groupQueue = null;
+	PostList context = null;
+	List<Post> postQueue = null;
 	
-	public static String  TAG = "FG";
+	public static String  TAG = "FG-1";
 	
-	public MyGroupAdapter(MyGroupPage context,int resource, List<Group> postQueue) 
+	public postListAdapter(PostList context,int resource, List<Post> postQueue) 
 	{
 		super(context, resource, postQueue);
-		this.groupQueue = postQueue;
-		 Log.i(TAG,"^^^MyGroupAdapter: groupQueue length: "+groupQueue.size());
+		this.postQueue = postQueue;
 		this.context = context;
 	}
 
@@ -31,13 +39,13 @@ public class MyGroupAdapter extends ArrayAdapter<Group> {
 		
 		if(rowView == null) {
 			LayoutInflater inflater = context.getLayoutInflater();
-			rowView = inflater.inflate(R.layout.mygroups_row, parent, false);
+			rowView = inflater.inflate(R.layout.postrow, parent, false);
 		}
 
-		TextView label = (TextView)rowView.findViewById(R.id.joinedGroupText);
-		label.setText(groupQueue.get(position).getName());
+		TextView label = (TextView)rowView.findViewById(R.id.postText);
+		label.setText(postQueue.get(position).getText());
 		
-		/*
+		
 		ImageView imagePost = (ImageView) rowView.findViewById(R.id.imagePost);
 		String photo_url = postQueue.get(position).getImage();
 		URL newurl;
@@ -56,7 +64,7 @@ public class MyGroupAdapter extends ArrayAdapter<Group> {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
-		*/
+		
 		
 		
 		/*
@@ -76,8 +84,43 @@ public class MyGroupAdapter extends ArrayAdapter<Group> {
 	
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		//selection.setText("You have selected " + newsChannel[position]);
-		Log.i(TAG,"Group:" +groupQueue.get(position).getName());
+		Log.i(TAG,"TITLE:" +postQueue.get(position).getText() + "long:  "+postQueue.get(position).getLng()
+				+ "lat: "+postQueue.get(position).getLat());
 		
-		//Toast.makeText(context, "+Group:" +groupQueue.get(position).getName()));
+		Toast.makeText(context, "+TITLE:" +postQueue.get(position).getText(), Toast.LENGTH_SHORT);
 	}
+		
+
+	
+	public void getImage(){
+		
+	}
+
+	public int getViewTypeCount() {
+		// TODO Auto-generated method stub
+		return 1;
+	}
+
+	public boolean hasStableIds() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean isEmpty() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public void registerDataSetObserver(DataSetObserver observer) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void unregisterDataSetObserver(DataSetObserver observer) {
+		// TODO Auto-generated method stub
+
+	}
+
 }
+
+

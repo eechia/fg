@@ -12,73 +12,22 @@
         
          
         />
-    
-	
-
+    
     <ListView
         android:id="@android:id/list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/homeBtn"
-        android:layout_below="@+id/Map"
         android:layout_alignParentLeft="true"
-   >
+        android:layout_below="@+id/Map" >
 
     </ListView>
-
-    <Button
-        android:id="@+id/homeBtn"
-        
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="14dp"
-        android:text="Home" 
-        />
-
-    <Button
-        android:id="@+id/PlacesBtn"
-       
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/homeBtn"
-        android:text="Places" />
-
-    <Button
-        android:id="@+id/AddBtn"
-        
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/PlacesBtn"
-        android:text="Add" />
-
-    <Button
-        android:id="@+id/SearchBtn"
-       
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-       
-        android:layout_toRightOf="@+id/AddBtn"
-        android:text="Search" />
-
-    <Button
-        android:id="@+id/SettingBtn"
-        
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/SearchBtn"
-        android:text="Settings" />
-
+
     <Spinner
         android:id="@+id/filterSpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/SettingBtn" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true" />
 
     <TextView
         android:id="@+id/feedgeorgeLogo"
@@ -86,8 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/filterSpinner"
         android:layout_alignBottom="@+id/filterSpinner"
-        android:layout_toLeftOf="@+id/SearchBtn"
-        android:text="feedgeorge" 
-        android:layout_alignParentTop="true"/>
+        android:layout_centerHorizontal="true"
+        android:text="feedgeorge" />
 
 </RelativeLayout>

@@ -25,6 +25,8 @@
         <activity android:name=".LoginSignUpPage"/>
         <activity android:name=".GroupPage"/>
         <activity android:name=".MyGroupPage"/>
+        <activity android:name=".PostList"/>
+        
         
         
         
