@@ -26,8 +26,8 @@
         <activity android:name=".GroupPage"/>
         <activity android:name=".MyGroupPage"/>
         <activity android:name=".PostList"/>
-        
-        
+        <!--  <activity android:name=".FGDashboard"/> -->
+        <activity android:name="FGDashboard"/>
         
         
         <uses-library android:name="com.google.android.maps" />

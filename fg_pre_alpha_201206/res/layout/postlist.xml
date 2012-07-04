@@ -3,7 +3,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
-	<Button
+
+	<Button
         android:id="@+id/Map"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -12,7 +13,8 @@
         
          
         />
-    
+    
+
     <ListView
         android:id="@android:id/list"
         android:layout_width="wrap_content"
@@ -21,7 +23,9 @@
         android:layout_below="@+id/Map" >
 
     </ListView>
-
+
+
+
     <Spinner
         android:id="@+id/filterSpinner"
         android:layout_width="wrap_content"
@@ -29,13 +33,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true" />
 
-    <TextView
-        android:id="@+id/feedgeorgeLogo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/filterSpinner"
-        android:layout_alignBottom="@+id/filterSpinner"
-        android:layout_centerHorizontal="true"
-        android:text="feedgeorge" />
+   
+
 
 </RelativeLayout>

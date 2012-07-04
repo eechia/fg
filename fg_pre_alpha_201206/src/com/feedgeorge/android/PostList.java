@@ -120,6 +120,7 @@ public class PostList extends ListActivity implements OnItemSelectedListener {
 	        //getJoinedGroups();
 	        context = this.getApplicationContext();
 	        
+	        
 	        filterSpin = (Spinner) findViewById(R.id.filterSpinner);
 	        filterSpin.setOnItemSelectedListener(this);
 	        
@@ -201,6 +202,7 @@ public class PostList extends ListActivity implements OnItemSelectedListener {
 		}
 		
 		public static void setPostQueue(ArrayList<Post> postQ){
+			Log.i(TAG, "PostList.setPostQueue()");
 			postQueue = postQ;
 			//readPost();
 		}

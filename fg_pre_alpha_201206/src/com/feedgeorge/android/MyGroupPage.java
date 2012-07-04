@@ -11,12 +11,14 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
+
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.AdapterView.OnItemSelectedListener;
+
 import android.widget.Toast;
 
 public class MyGroupPage extends ListActivity implements OnItemSelectedListener{
@@ -72,12 +74,8 @@ public class MyGroupPage extends ListActivity implements OnItemSelectedListener{
 	        addBtn = (Button) findViewById(R.id.addPlaceBtn);
 	        addBtn.setOnClickListener(myBtnClickListener);
 	        
-	        /*
-	        filterSpin = (Spinner) findViewById(R.id.filterSpinner);
-	        filterSpin.setOnItemSelectedListener(this);
+	    
 	        
-	        
-	        */
 	       
 	       
 	        groupQueue = HttpPostFG.getJoinedGroupList(); //PostList.joinedGroupsList;
@@ -92,52 +90,52 @@ public class MyGroupPage extends ListActivity implements OnItemSelectedListener{
 	       
 	       
 	 }
+
+
+
+	@Override
+	public void onItemSelected(AdapterView<?> aparent, View v, int position,
+			long id) {
+		// TODO Auto-generated method stub
+		Log.i(TAG," MyGroupPage::: onItemSelected!!!  ");
+		Log.i(TAG, "item selected: "+groupQueue.get(position).getName());
+		 Toast.makeText(this,"selected: " +groupQueue.get(position).getName(), Toast.LENGTH_LONG).show();
+	}
+
+
+
+	@Override
+	public void onNothingSelected(AdapterView<?> arg0) {
+		// TODO Auto-generated method stub
+		
+	}
 	 
+	@Override
+	protected void onListItemClick(ListView l, View v, int position, long id) {
+		super.onListItemClick(l, v, position, id);
+		Log.i(TAG," MyGroupPage::: onListItemClick!!!  ");
+		Log.i(TAG, "item selected: "+groupQueue.get(position).getName());
+		 Toast.makeText(this,"selected: " +groupQueue.get(position).getName(), Toast.LENGTH_LONG).show();
+		
+		/*
+		Intent intent = new Intent();
+	    
+		intent.setClass(this,postView.class);
+	    
+	    
+	    intent.putExtra(Constant.LAT, postQueue.get(position).getLat());
+	    intent.putExtra(Constant.LNG, postQueue.get(position).getLng());
+	    intent.putExtra(Constant.TEXT, postQueue.get(position).getText());
+	    intent.putExtra(Constant.AUTHOR_NAME, postQueue.get(position).getAuthorName());
+	    
+	    startActivity(intent);
+		*/
+		
+		//Toast.makeText(this, "TITLE:" +postQueue.get(position).getText(), Toast.LENGTH_LONG).show();
+	}	
 
 
-		/*
-		protected void onListItemClick(ListView l, View v, int position, long id) {
-			
-			
-			super.onListItemClick(l, v, position, id);
-			String selectedID = groupQueue.get(position).getId();
-			String selectedName = groupQueue.get(position).getName();
-		
-	    	Log.i(TAG, ">>>>MYGROUPPAGE--onListItemClick: "+selectedName);
-			
-			/*
-			Log.i(TAG,"--TITLE:" +postQueue.get(position).getText() + "long:  "+postQueue.get(position).getLng()
-					+ "lat: "+postQueue.get(position).getLat());
-			
-			Intent intent = new Intent();
-		    intent.setClass(this,postView.class);
-		    
-		    
-		    intent.putExtra(Constant.LAT, postQueue.get(position).getLat());
-		    intent.putExtra(Constant.LNG, postQueue.get(position).getLng());
-		    intent.putExtra(Constant.TEXT, postQueue.get(position).getText());
-		    intent.putExtra(Constant.AUTHOR_NAME, postQueue.get(position).getAuthorName());
-		    
-		    startActivity(intent);
-			*/
-			
-			//Toast.makeText(this, "TITLE:" +postQueue.get(position).getText(), Toast.LENGTH_LONG).show();
-		//}	
-		/*
-		 protected void onListItemClick(ListView l, View v, int position, long id) {
-			
-		    	super.onListItemClick(l, v, position, id);
-		    	
-				 Log.i(TAG," MyGroupPage::: ^^^onListItemClick!!!  ");
-		    	Log.i(TAG, "mygrouppage >>>>>>>>>>>>>>>!!!!onListItemClick: "+groupQueue.get(position).getName());
-		    	/*
-		    	GroupPage.setSelectedGroup(nearbyGroupList.get(position));
-		    	Intent intent = new Intent();
-			    intent.setClass(context,GroupPage.class);
-			    startActivity(intent);
-				*/
-		//    }
-		
+	/*
 		
 		public void onItemSelected(AdapterView<?> parent, View v, int position,
 				long id) {
@@ -151,18 +149,6 @@ public class MyGroupPage extends ListActivity implements OnItemSelectedListener{
 			 Log.i(TAG," MyGroupPage::: onNothingSelected!!!  ");
 		}
 
-
-
-
-		/*
-		public void onItemClick(AdapterView<?> parent, View v, int position,
-				long id) {
-			// TODO Auto-generated method stub
-			Log.i(TAG," MyGroupPage::: ^^^onItemClick!!!  ");
-	    	Log.i(TAG, "mygrouppage >>>>>>>>>>>>>>>!!!!onItemClick: "+groupQueue.get(position).getName());
-			
-		}
-		*/
 		@Override
 		protected void onListItemClick(ListView l, View v, int position, long id) {
 			 // TODO Auto-generated method stub
@@ -172,5 +158,5 @@ public class MyGroupPage extends ListActivity implements OnItemSelectedListener{
 			 Toast.makeText(this, selection, Toast.LENGTH_LONG).show();
 			}
 		
-		
+		*/
 }

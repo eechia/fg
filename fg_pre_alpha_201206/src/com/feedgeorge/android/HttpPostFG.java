@@ -629,7 +629,8 @@ public class HttpPostFG {
 				     				PostList.setPostQueue(postQueue);
 				     				
 				     				 Intent intent = new Intent();
-									  intent.setClass(this.context ,PostList.class);
+				     				 intent.setClass(context ,FGDashboard.class);
+									 // intent.setClass(this.context ,PostList.class);
 									  intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 									  context.startActivity(intent);
 									  

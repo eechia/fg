@@ -38,11 +38,18 @@ public class PlacesList extends ListActivity implements OnItemSelectedListener{
 			if(v.equals(loginAndSignUpBtn)){
 				
 				//addPost();
+				
 				Intent intent = new Intent();
 			    intent.setClass(context,LoginSignUpPage.class);
+			    
 			    startActivityForResult(intent, Constant.LOGIN);
+			   
 			   // startActivity(intent);
-				
+				/*
+				Intent intent = new Intent();
+			    intent.setClass(context,FGDashboard.class);			    
+			    startActivityForResult(intent, Constant.LOGIN);
+				*/
 				
 			}/*
 			else if(v.equals(buttonLoadImage)){
