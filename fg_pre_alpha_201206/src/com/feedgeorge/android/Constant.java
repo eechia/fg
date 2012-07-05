@@ -1,5 +1,7 @@
 package com.feedgeorge.android;
 
+import android.widget.TabHost;
+
 public class Constant {
 	
 	/*
@@ -28,8 +30,13 @@ public class Constant {
 	
 //static final String GROUP_ID = "groupId";
 	
+	
+	//public static TabHost tabHost;
+	
+	public static boolean LOGGED_IN = false;
+	
 	//public String groupID = "2";
-	static final String apiKey = "f3f0f6dbc5e442f6afc6687e59912f23"; 
+	static final String apiKey_value = "f3f0f6dbc5e442f6afc6687e59912f23"; 
 	
 	static final String URL_USER = "http://developer.feedgeorge.com/user/";
 	static final String URL_GROUP = "http://developer.feedgeorge.com/group/";
@@ -42,6 +49,7 @@ public class Constant {
 	static final int JOIN_GROUP = 2;
 	static final int GET_JOINED_GROUP = 3;
 	static final int GET_GRP_CONTENT = 4;
+	static final int ADD_POST = 5;
 	
 	//POST MESSAG
 	static final String NO_ERROR = "200";

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/AddPostBtn"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="88dp"
+        android:text="Post  " />
+
+    <Button
+        android:id="@+id/AddEventBtn"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/AddPostBtn"
+        android:layout_below="@+id/AddPostBtn"
+        android:layout_marginTop="42dp"
+        android:text="Event" />
+
+    <Button
+        android:id="@+id/AddSurveyBtn"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/AddEventBtn"
+        android:layout_below="@+id/AddEventBtn"
+        android:layout_marginTop="39dp"
+        android:text="Survey" />
+
+</RelativeLayout>

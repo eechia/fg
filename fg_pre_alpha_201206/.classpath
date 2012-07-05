@@ -4,5 +4,11 @@
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+	<classpathentry kind="lib" path="D:/android/Libs/httpcomponents-client-4.2/libs/httpmime-4.2.jar"/>
+	<classpathentry kind="lib" path="D:/android/installers/android-sdk_r16-windows/android-sdk-windows/add-ons/addon-google_apis-google_inc_-7/libs/maps.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/D:/android/installers/android-sdk_r16-windows/android-sdk-windows/add-ons/addon-google_apis-google_inc_-7/docs/reference"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

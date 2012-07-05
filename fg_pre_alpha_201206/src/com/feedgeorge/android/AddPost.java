@@ -67,7 +67,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
-	public class PostPhotoActivity extends Activity{
+	public class AddPost extends Activity{
+		
+		HttpPostFG httppostFG;
 
 		TextView textTargetUri;
 		ImageView targetImage;
@@ -81,7 +83,7 @@ import android.widget.TextView;
     	
     	EditText captionText;
     	
-    	public static String  TAG = "FG";
+    	public static String  TAG = "FG-1";
     	
     	 Bitmap bitmap;
     	 
@@ -110,9 +112,21 @@ import android.widget.TextView;
     				if(v.equals(mSendBtn)){
     					
     					//addPost();
+    					
+    					groupID = HttpPostFG.defaultGroupID;
+    					
+    					
+    					lat = loc.getLat();
+    					lng = loc.getLong();
+    					
+    					Log.i(TAG, "lat: " +lat + "  lng:"+lng);
+    					
+    					caption = captionText.getText().toString();
     				
     					try {
-							executeMultipartPost();
+							//executeMultipartPost();
+    						httppostFG.AddPost(groupID, lng, lat, bitmap, caption);
+    					
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -145,10 +159,11 @@ import android.widget.TextView;
 		 @Override
 		 public void onCreate(Bundle savedInstanceState) {
 		     super.onCreate(savedInstanceState);
-		     setContentView(R.layout.main);
+		     setContentView(R.layout.add_post);
 		     
 		     context = this.getApplicationContext();
 		     
+		     httppostFG = HttpPostFG.getInstance();
 		     
 		     buttonLoadImage = (Button)findViewById(R.id.loadimage);
 		     textTargetUri = (TextView)findViewById(R.id.targeturi);
@@ -193,7 +208,7 @@ import android.widget.TextView;
 			 
 			 //testJson();
 			 
-		     postData();
+		     //postData();
 		     //addPost();
 		  
 		     /*
@@ -241,8 +256,8 @@ import android.widget.TextView;
 		public void postData() {
 	        // Create a new HttpClient and Post Header
 	    	
-			email = "a@b.com";
-	    	password = "abc";
+			email = "chfoo@feedgeorge.com";
+	    	password = "adm123m";
 	    	
 	    	//apiKey = "f8343c8ebd00438983353f03a4ada999";;
 			
@@ -305,6 +320,9 @@ import android.widget.TextView;
 	               securitykey = cookie[length-1].substring(start+1, end);
 	               
 	               Log.i(TAG,"securitykey:" +securitykey);
+	               
+	               
+	               
 	            
 	            //Log.i(TAG,"HEADER:" + response.getAllHeaders);
 	            //Log.i(TAG,"HEADER:" + response.getAllHeaders() + EntityUtils.toString(response .getEntity()));
@@ -540,7 +558,7 @@ import android.widget.TextView;
 				reqEntity.addPart("groupId", new StringBody(groupID));
 				reqEntity.addPart("lng", new StringBody(lng));
 				reqEntity.addPart("lat", new StringBody(lat));
-				reqEntity.addPart("photo", bab);
+				reqEntity.addPart("photo", bab); //BITMAP
 				reqEntity.addPart("text", new StringBody(caption));
 				reqEntity.addPart("apiKey", new StringBody(apiKey));
 				
@@ -587,7 +605,7 @@ import android.widget.TextView;
 		public void getContentList(){
 			
 			String page = "1";
-			groupID = "1";
+			groupID = "2";
 			 apiKey = "f3f0f6dbc5e442f6afc6687e59912f23"; 
 		
 			 HttpParams params = new BasicHttpParams();
@@ -800,74 +818,9 @@ import android.widget.TextView;
 		}
 		
 		
-		public void testJson() {
-	        // Create a new HttpClient and Post Header
-	    	
-	    	Log.i(TAG, "postData()");
-	    	
-	    	
-	    	HttpParams params = new BasicHttpParams();
-	        params.setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
-	          
-	          
-	        HttpClient httpclient = new DefaultHttpClient(params);
-	        HttpPost httppost = new HttpPost("http://api.s.malaysiakini.com/mobile/service2.php");
-	        Log.i("POST-TEST", "sending response");
-	        
-	        try {
-	            // Add your data
-	        	
-	        	String username = "wkkor";
-	        	String password = "1234";
-	        	Log.i(TAG, username+" / "+password);
-	        	String reversed_u = new StringBuffer(username).reverse().toString();
-	        	
-	        	String secure = MD5(reversed_u+"loq7D12T"+password);
-	        	
-	        	Log.i(TAG, reversed_u+" / "+secure);
-	        	
-	            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-	            nameValuePairs.add(new BasicNameValuePair("cmd", "login"));
-	            nameValuePairs.add(new BasicNameValuePair("u", username));
-	            nameValuePairs.add(new BasicNameValuePair("p", password));
-	            nameValuePairs.add(new BasicNameValuePair("secure", secure));
-	            nameValuePairs.add(new BasicNameValuePair("debug", "1" ));
-	            
-	            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
-	           
-
-	          
-
-	            // Execute HTTP Post Request
-	            HttpResponse response = httpclient.execute(httppost);
-	            inputStreamToString(response.getEntity().getContent());
-	            //response.
-	            
-	           // inputStreamToString();
-	            
-	        } catch (ClientProtocolException e) {
-	            // TODO Auto-generated catch block
-	        	Log.i("POST-TEST", "Protocol exception: "+e.toString());
-	        } catch (IOException e) {
-	            // TODO Auto-generated catch block
-	        	Log.i("POST-TEST", "IOException:" +e.toString());
-	        }
-	    } 
 		
-	    public String MD5(String md5) {
-	    	   try {
-	    	        java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
-	    	        byte[] array = md.digest(md5.getBytes());
-	    	        StringBuffer sb = new StringBuffer();
-	    	        for (int i = 0; i < array.length; ++i) {
-	    	          sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1,3));
-	    	       }
-	    	        return sb.toString();
-	    	    } catch (java.security.NoSuchAlgorithmException e) {
-	    	    }
-	    	    return null;
-	    	}
+	  
 
 		
 		}

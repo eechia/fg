@@ -30,6 +30,8 @@ public class PlacesList extends ListActivity implements OnItemSelectedListener{
 	Button loginAndSignUpBtn;
 	static Context context;
 	
+	
+	
 	public static String  TAG = "FG-1";
 	
 	private OnClickListener myClickListener = new OnClickListener() {
@@ -83,10 +85,13 @@ public class PlacesList extends ListActivity implements OnItemSelectedListener{
        
         //allPlaceslist = (ListView) findViewById( R.id);
         
+        
+        
         loginAndSignUpBtn = (Button) findViewById(R.id.loginSignUpBtn);
         loginAndSignUpBtn.setOnClickListener(myClickListener);
         
-       
+        if(Constant.LOGGED_IN )
+        	loginAndSignUpBtn.setVisibility(View.GONE);
         
         context = this.getApplicationContext();
         
@@ -102,9 +107,9 @@ public class PlacesList extends ListActivity implements OnItemSelectedListener{
         nearbyGroupList = httpPostFG.getNearbyGroupsList();
         setListAdapter(new PlacesListMainAdapter(this, R.layout.nearby_grouprow, nearbyGroupList));
         ((BaseAdapter) getListAdapter()).notifyDataSetChanged();
-        /*
-        nearbyGrouplistAdapter = new ArrayAdapter<String>(this, R.layout.nearby_grouprow, httpPostFG.getNearbyGroups());
         
+        /*
+        nearbyGrouplistAdapter = new ArrayAdapter<String>(this, R.layout.nearby_grouprow, httpPostFG.getNearbyGroups()); 
         allPlaceslist.setAdapter(nearbyGrouplistAdapter);
         */
         //nearbyGroupList = httpPostFG.getNearbyGroups();

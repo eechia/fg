@@ -51,6 +51,10 @@ public class MyGroupPage extends ListActivity implements OnItemSelectedListener{
 			if(v.equals(addBtn)){
 				
 				Log.i(TAG,">>> addBtn...........");
+				Intent intent = new Intent();
+				  intent.setClass(context ,PlacesList.class);
+				  intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				  context.startActivity(intent);
 				
 			}
 			

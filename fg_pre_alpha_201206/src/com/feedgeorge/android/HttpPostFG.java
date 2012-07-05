@@ -1,6 +1,7 @@
 package com.feedgeorge.android;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -16,6 +17,10 @@ import org.apache.http.client.CookieStore;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.protocol.ClientContext;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.ByteArrayBody;
+import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
@@ -30,6 +35,8 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -47,7 +54,7 @@ public class HttpPostFG {
 	Context context;
 	
 	boolean newSignedUp=false;
-	String defaultGroupID = null;
+	static public String defaultGroupID = null;
 	
 	static int getContentcount = 0;
 	ArrayList<Post> postQueue = new ArrayList<Post>();
@@ -405,6 +412,8 @@ public class HttpPostFG {
 			            // Execute HTTP Post Request
 
 			            HttpResponse response = mHttpClient.execute(httppost, mHttpContext);
+			            
+			            
 	      
 			            Log.i(TAG, ">>>>>>>>>>>>>>>>>>>>>>>");
 
@@ -487,7 +496,10 @@ public class HttpPostFG {
 									 
 									 Toast.makeText(PlacesList.context, "Successfully logged in... ", Toast.LENGTH_SHORT).show();
 									 
+									 
 									 postToServer(Constant.GET_JOINED_GROUP, null, null);
+									 
+									 Constant.LOGGED_IN = true;
 									 
 									 if(newSignedUp)
 									 {
@@ -550,9 +562,11 @@ public class HttpPostFG {
 											currentGrp.setDescription(item.getString(Constant.DESC));
 											currentGrp.setRole(item.getString(Constant.ROLE));
 											
-											if(i==0)
+											if(i==1){
 												defaultGroupID = item.getString(Constant.ID);
-											
+												Log.i(TAG, "*****defaultGroupID: "+defaultGroupID +" name: "+currentGrp.getName());
+												
+											}
 											Log.i(TAG, "group: "+currentGrp.getName());
 											joinedGroupList.add(currentGrp);
 											
@@ -637,8 +651,24 @@ public class HttpPostFG {
 									 
 									 break;
 							
+								case Constant.ADD_POST:
+									/*
+									 * {"success":true,"error":200,"reason":"Success","result":{"id":"62"}}
+									 */
 							
+									Toast.makeText(PlacesList.context, "New post successfully added!", Toast.LENGTH_SHORT).show();
+									
+									
+									FGDashboard.tabHost.setCurrentTab(1);
+									Intent intent1 = new Intent();
+				     				 intent1.setClass(context ,FGDashboard.class);
+									 // intent.setClass(this.context ,PostList.class);
+									  intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+									  context.startActivity(intent1);
+									//Constant.tabHost.set
 							}
+							
+							
 							
 						}else{
 							
@@ -662,6 +692,90 @@ public class HttpPostFG {
 			 Log.i(TAG, "----------- getJoinedGroupList()");
 			 return joinedGroupList;
 		 }
+		 
+		 /*
+		  * ADD POST
+		  * reqEntity.addPart("groupId", new StringBody(groupID));
+				reqEntity.addPart("lng", new StringBody(lng));
+				reqEntity.addPart("lat", new StringBody(lat));
+				reqEntity.addPart("photo", bab); //BITMAP
+				reqEntity.addPart("text", new StringBody(caption));
+				reqEntity.addPart("apiKey", new StringBody(apiKey));
+		  */
+		 
+		 public void AddPost(String groupID, String lng, String lat, Bitmap photo, String caption) throws Exception {
+				
+				
+				//String lng, lat, ;
+				
+				
+				
+				//groupID = "2";
+				
+				
+				
+				//lat = "3.137875";
+				//lng = "101.68644";
+				
+				
+				Log.i(TAG, "lat: " +lat + "  lng:"+lng + " groupID: "+groupID +" caption: "+caption);
+				
+				//caption = captionText.getText().toString();
+				
+				try {
+					ByteArrayOutputStream bos = new ByteArrayOutputStream();
+					
+					photo.compress(CompressFormat.JPEG, 75, bos);
+					
+					
+					//bitmap.compress(CompressFormat.PNG , 100, bos);
+					
+					byte[] data = bos.toByteArray();
+					
+					//HttpClient httpClient = new DefaultHttpClient();
+					HttpPost httppost = new HttpPost(
+							"http://developer.feedgeorge.com/content/addpost");
+					 
+					
+					//postRequest.setHeader("Set-Cookie", securitykey);
+					
+					ByteArrayBody bab = new ByteArrayBody(data, "test.jpg");
+					
+					// File file= new File("/mnt/sdcard/forest.png");
+					// FileBody bin = new FileBody(file);
+					MultipartEntity reqEntity = new MultipartEntity(
+							HttpMultipartMode.BROWSER_COMPATIBLE);
+					reqEntity.addPart("groupId", new StringBody(groupID));
+					reqEntity.addPart("lng", new StringBody(lng));
+					reqEntity.addPart("lat", new StringBody(lat));
+					reqEntity.addPart("photo", bab);
+					reqEntity.addPart("text", new StringBody(caption));
+					reqEntity.addPart(Constant.API_KEY, new StringBody(Constant.apiKey_value));
+					
+					httppost.setEntity(reqEntity);
+					
+					
+					
+					
+					HttpResponse response = mHttpClient.execute(httppost, mHttpContext );
+					
+					BufferedReader reader = new BufferedReader(new InputStreamReader(
+							response.getEntity().getContent(), "UTF-8"));
+					String sResponse;
+					StringBuilder s = new StringBuilder();
+
+					while ((sResponse = reader.readLine()) != null) {
+						s = s.append(sResponse);
+					}
+					//System.out.println("Response: " + s);
+					Log.i(TAG, "Response: " + s);
+					parseResponse(Constant.ADD_POST,s.toString());
+					
+				} catch (Exception e) {
+					// handle exception here
+					Log.e(e.getClass().getName(), e.getMessage());
+				}
+			}
 		 
 }
 				

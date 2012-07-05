@@ -31,7 +31,7 @@ public class FGDashboard extends TabActivity implements OnTabChangeListener{
     TabSpec settingsTabSpec;
     Resources res;
     
-    TabHost tabHost;
+    static TabHost tabHost;
     Context context;
     
     Spinner filterSpin;
@@ -61,10 +61,15 @@ public class FGDashboard extends TabActivity implements OnTabChangeListener{
         Intent placesIntent = new Intent();
         placesIntent.setClass(context ,MyGroupPage.class);
         placesIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        
+        
+        Intent addIntent = new Intent();
+        addIntent.setClass(context ,AddPage.class);
+        addIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         firstTabSpec.setIndicator("Home", res.getDrawable(R.drawable.taba_home)).setContent(homeIntent);
         secondTabSpec.setIndicator("Places", res.getDrawable(R.drawable.taba_places)).setContent(placesIntent);
-        addTabSpec.setIndicator("Add", res.getDrawable(R.drawable.taba_add)).setContent(new Intent(context,LoginSignUpPage.class));
+        addTabSpec.setIndicator("Add", res.getDrawable(R.drawable.taba_add)).setContent(new Intent(addIntent));
         settingsTabSpec.setIndicator("Settings", res.getDrawable(R.drawable.taba_settings)).setContent(new Intent(context,LoginSignUpPage.class));
         
         
