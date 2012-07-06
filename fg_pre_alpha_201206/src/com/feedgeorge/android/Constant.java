@@ -31,6 +31,10 @@ public class Constant {
 //static final String GROUP_ID = "groupId";
 	
 	
+	static public String defaultGroupID = null;
+	static public String currentGroupName = null;
+	static public String currentGroupIcon = null;
+	
 	//public static TabHost tabHost;
 	
 	public static boolean LOGGED_IN = false;
@@ -77,6 +81,8 @@ public class Constant {
 	static final String LAT = "lat";
 	static final String LNG = "lng";
 	static final String LAST_UPDATE = "lastUpdate";
+	
+	static final String COMMENT_COUNT = "commentCount";
 	
 	//group
 	static final String GROUPS = "groups";

@@ -17,12 +17,18 @@ package com.feedgeorge.android;
 public class Post {
 	
 	String id, type, text, groupId, authorId;
-	String authorName, image, lat, lng, lastUpdate;
+	String authorName, image, lat, lng, lastUpdate, commentCount;
 	
 	
 	
 	
 	
+	public String getCommentCount() {
+		return commentCount;
+	}
+	public void setCommentCount(String commentCount) {
+		this.commentCount = commentCount;
+	}
 	public String getId() {
 		return id;
 	}

@@ -1,6 +1,7 @@
 package com.feedgeorge.android;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.app.Activity;
 import android.app.ListActivity;
@@ -17,32 +18,38 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
 
-public class PlacesList extends ListActivity implements OnItemSelectedListener{
+public class MyGroupPageList extends ListActivity implements OnItemSelectedListener{
     /** Called when the activity is first created. */
 	
 	HttpPostFG httpPostFG = HttpPostFG.getInstance();
 	ListView allPlaceslist;
-	private ArrayAdapter<String> nearbyGrouplistAdapter ;
-	ArrayList<Group> nearbyGroupList;
-	Button loginAndSignUpBtn;
+	
+	
 	static Context context;
 	
-	
+	String[] filterByStr = {"All", "Posts","Events","Surveys"};
+	 Button addBtn;
+	 Spinner filterSpin;
+	 
+	 List<Group> groupQueue = new ArrayList<Group>();
+	 ArrayList<Group> myGroupList;
 	
 	public static String  TAG = "FG-1";
 	
 	private OnClickListener myClickListener = new OnClickListener() {
 		public void onClick(View v) {
 			
-			if(v.equals(loginAndSignUpBtn)){
+			if(v.equals(addBtn)){
 				
 				//addPost();
 				
 				Intent intent = new Intent();
-			    intent.setClass(context,LoginSignUpPage.class);
+			    intent.setClass(context,PlacesList.class);
 			    
 			    startActivityForResult(intent, Constant.LOGIN);
 			   
@@ -79,22 +86,22 @@ public class PlacesList extends ListActivity implements OnItemSelectedListener{
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.mygroups);
         
-      
+        addBtn = (Button) findViewById(R.id.addPlaceBtn);
+        addBtn.setOnClickListener(myClickListener);
+        
+    
+        
        
-        //allPlaceslist = (ListView) findViewById( R.id);
+       
+        groupQueue = HttpPostFG.getJoinedGroupList(); //PostList.joinedGroupsList;
         
+        Log.i(TAG,"^^^groupQueue length: "+groupQueue.size());
+     
         
-        
-        loginAndSignUpBtn = (Button) findViewById(R.id.loginSignUpBtn);
-        loginAndSignUpBtn.setOnClickListener(myClickListener);
-        
-        if(Constant.LOGGED_IN )
-        	loginAndSignUpBtn.setVisibility(View.GONE);
-        
-        context = this.getApplicationContext();
-        
+        context = PlacesList.getAppContext();
+        		
         httpPostFG.getApplicationContext(context);
         
     	/*
@@ -103,12 +110,16 @@ public class PlacesList extends ListActivity implements OnItemSelectedListener{
         httpPostFG.postLogin(email,password);
        */
         
-        httpPostFG.getNearbyGroup();
-        nearbyGroupList = httpPostFG.getNearbyGroupsList();
-        setListAdapter(new PlacesListMainAdapter(this, R.layout.nearby_grouprow, nearbyGroupList));
+        //httpPostFG.getNearbyGroup();
+        myGroupList = httpPostFG.getJoinedGroupList();
+        setListAdapter(new MyGroupListAdapter(this, R.layout.mygroups_row, myGroupList));
         ((BaseAdapter) getListAdapter()).notifyDataSetChanged();
         
-       
+        /*
+        nearbyGrouplistAdapter = new ArrayAdapter<String>(this, R.layout.nearby_grouprow, httpPostFG.getNearbyGroups()); 
+        allPlaceslist.setAdapter(nearbyGrouplistAdapter);
+        */
+        //nearbyGroupList = httpPostFG.getNearbyGroups();
        
 	}
 
@@ -117,7 +128,6 @@ public class PlacesList extends ListActivity implements OnItemSelectedListener{
     
     protected void onActivityResult(int requestCode, int resultCode,
             Intent data) {
-    	/*
         if (requestCode == Constant.RESUME) {
             if (resultCode == RESULT_OK) {
                 // A contact was picked.  Here we will just display it
@@ -131,25 +141,39 @@ public class PlacesList extends ListActivity implements OnItemSelectedListener{
             	onResume();
             }
         }
-        */
     }
 	
     
-    class PlacesListMainAdapter extends ArrayAdapter<Group> {
-    	public PlacesListMainAdapter(PlacesList placesList, int nearbyGrouprow, ArrayList<Group> nearbyGroupList) {
-    		super(PlacesList.this, R.layout.nearby_grouprow, nearbyGroupList );
+    class MyGroupListAdapter extends ArrayAdapter<Group> {
+    	public MyGroupListAdapter(MyGroupPageList placesList, int nearbyGrouprow, ArrayList<Group> nearbyGroupList) {
+    		super(MyGroupPageList.this, R.layout.mygroups_row, nearbyGroupList );
     	}
 
     	@Override
-    	public View getView(int position, View convertView, ViewGroup parent) {
+    	public View getView(final int position, View convertView, ViewGroup parent) {
     		View rowView = convertView;				
     		if(rowView == null) {
     			LayoutInflater inflater = getLayoutInflater();
-    			rowView = inflater.inflate(R.layout.nearby_grouprow, parent, false);
+    			rowView = inflater.inflate(R.layout.mygroups_row, parent, false);
     		}
-    		TextView label = (TextView)rowView.findViewById(R.id.groupText);	
-    		label.setText(nearbyGroupList.get(position).getName());				
+    		TextView label = (TextView)rowView.findViewById(R.id.joinedGroupText);	
+    		label.setText(myGroupList.get(position).getName());		
     		
+    		/*
+    		Button leaveGrpBtn = (Button)rowView.findViewById(R.id.leaveGrpBtn);
+    		
+    		leaveGrpBtn.setOnClickListener(new Button.OnClickListener(){
+
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					//Toast.makeText(this,"onclicked: " +myGroupList.get(position).getName(), Toast.LENGTH_LONG).show();
+					Log.i(TAG, "^^^^^LEAVE GROUP: "+myGroupList.get(position).getName());
+				}
+    			
+    			
+    		} );
+    		*/
     		return(rowView);
     	}	
     }
@@ -166,19 +190,23 @@ public class PlacesList extends ListActivity implements OnItemSelectedListener{
 		
 		
     	super.onListItemClick(l, v, position, id);
-    	Log.i(TAG, ">>>>>>>>>>>>>>>!!!!onListItemClick: "+nearbyGroupList.get(position).getName());
+    	Log.i(TAG, ">>>>>>>>>>>>>>>!!!!onListItemClick: "+myGroupList.get(position).getName());
     	
-    	GroupPage.setSelectedGroup(nearbyGroupList.get(position));
+    	Toast.makeText(this,"onclicked: " +myGroupList.get(position).getName(), Toast.LENGTH_LONG).show();
+    	/*
+    	GroupPage.setSelectedGroup(myGroupList.get(position));
     	Intent intent = new Intent();
 	    intent.setClass(context,GroupPage.class);
 	    startActivity(intent);
-		
+		*/
     }
 
     public void onItemSelected(AdapterView<?> parent, View v, int position,
 			long id) {
 		//selection.setText(items[position]);
-    	Log.i(TAG, "!!!!!!!item selected: "+nearbyGroupList.get(position).getName());
+    	Log.i(TAG, "!!!!!!!item selected: "+myGroupList.get(position).getName());
+    	
+    	Toast.makeText(this,"onItemSelected: " +myGroupList.get(position).getName(), Toast.LENGTH_LONG).show();
     	/*
     	Log.i(TAG, "item selected: "+nearbyGroupList.get(position).getName());
     	

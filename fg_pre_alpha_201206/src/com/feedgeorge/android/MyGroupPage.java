@@ -18,6 +18,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import android.widget.Toast;
 
@@ -34,6 +35,10 @@ public class MyGroupPage extends ListActivity implements OnItemSelectedListener{
 	 Context context;
 	 
 	 ArrayList<Group> myGroupList;
+	 
+	 HttpPostFG httppostFG;
+	 
+	 TextView groupNameTxt;
 	
 	/*
 	 * Listen to the option selected by the users.
@@ -77,10 +82,10 @@ public class MyGroupPage extends ListActivity implements OnItemSelectedListener{
 	        
 	        addBtn = (Button) findViewById(R.id.addPlaceBtn);
 	        addBtn.setOnClickListener(myBtnClickListener);
-	        
+	        httppostFG = HttpPostFG.getInstance();
 	    
 	        
-	       
+	        //
 	       
 	        groupQueue = HttpPostFG.getJoinedGroupList(); //PostList.joinedGroupsList;
 	        
@@ -104,6 +109,9 @@ public class MyGroupPage extends ListActivity implements OnItemSelectedListener{
 		Log.i(TAG," MyGroupPage::: onItemSelected!!!  ");
 		Log.i(TAG, "item selected: "+groupQueue.get(position).getName());
 		 Toast.makeText(this,"selected: " +groupQueue.get(position).getName(), Toast.LENGTH_LONG).show();
+
+		
+		
 	}
 
 
@@ -118,9 +126,26 @@ public class MyGroupPage extends ListActivity implements OnItemSelectedListener{
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
 		Log.i(TAG," MyGroupPage::: onListItemClick!!!  ");
-		Log.i(TAG, "item selected: "+groupQueue.get(position).getName());
-		 Toast.makeText(this,"selected: " +groupQueue.get(position).getName(), Toast.LENGTH_LONG).show();
 		
+		Log.i(TAG, "item selected: "+groupQueue.get(position).getName());
+		Toast.makeText(this,"selected: " +groupQueue.get(position).getName(), Toast.LENGTH_LONG).show();
+		
+		
+		String gid = groupQueue.get(position).getId();
+		Constant.defaultGroupID = gid;
+		Constant.currentGroupName = groupQueue.get(position).getName();
+		
+		Log.i(TAG, "item selected GID: "+gid);
+		 //Log.i(TAG, "defaultGroupID: "+Constant.defaultGroupID);
+			
+			ArrayList<String> keys = new ArrayList<String>();
+			ArrayList<String> values = new ArrayList<String>();
+			
+			keys.add(Constant.GROUP_ID);
+			values.add(gid);
+				
+			httppostFG.postToServer(Constant.GET_GRP_CONTENT, keys, values);
+		 
 		/*
 		Intent intent = new Intent();
 	    

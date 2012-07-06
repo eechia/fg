@@ -113,7 +113,7 @@ import android.widget.TextView;
     					
     					//addPost();
     					
-    					groupID = HttpPostFG.defaultGroupID;
+    					groupID = Constant.defaultGroupID;
     					
     					
     					lat = loc.getLat();

@@ -1,19 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
-
-    <TextView
-        android:id="@+id/postText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
 
     <ImageView
         android:id="@+id/imagePost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
         android:src="@android:drawable/alert_dark_frame" />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/postText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imagePost"
+        android:layout_toRightOf="@+id/imagePost" />
+
+    <TextView
+        android:id="@+id/timePostTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/imagePost"
+        android:layout_marginTop="2dp"
+        android:text="Timestamp"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/commentPostTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text="0 comments"
+        android:layout_below="@+id/imagePost"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/authorPostTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/timePostTxt"
+        android:layout_alignBottom="@+id/timePostTxt"
+        android:layout_toRightOf="@+id/timePostTxt"
+        android:layout_marginLeft="5dp"
+        android:text="Posted by"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+</RelativeLayout>

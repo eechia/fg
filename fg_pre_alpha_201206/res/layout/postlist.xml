@@ -16,11 +16,11 @@
     
 
     <ListView
-        android:id="@android:id/list"
+        android:id="@android:id/list" 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/Map" >
+        android:layout_below="@+id/groupIconImg" >
 
     </ListView>
 
@@ -34,6 +34,31 @@
         android:layout_alignParentTop="true" />
 
    
+    <ImageView
+        android:id="@+id/groupIconImg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/Map"
+        android:src="@drawable/default_userpic" />
+
+    <TextView
+        android:id="@+id/groupNameTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/groupIconImg"
+        android:layout_toRightOf="@+id/groupIconImg"
+        android:text="Group Name"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/wecareTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/groupNameTxt"
+        android:layout_below="@+id/groupNameTxt"
+        android:text="by wecare.my"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
 
 </RelativeLayout>

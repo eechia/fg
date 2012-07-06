@@ -21,6 +21,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
+import android.app.ActivityGroup;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Context;
@@ -31,15 +33,18 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
-public class PostList extends ListActivity implements OnItemSelectedListener {
+public class PostList extends ActivityGroup implements OnItemSelectedListener {
+//ListActivity implements OnItemSelectedListener {
 	
 	
 	
@@ -52,6 +57,11 @@ public class PostList extends ListActivity implements OnItemSelectedListener {
 	 Button homeBtn, placesBtn, addBtn, searchBtn, settingsBtn;
 	 Spinner filterSpin;
 	  Context context;
+	  TextView groupNameTxt ;
+	  
+	  ListView postListview;
+	  ListActivity postListAct;
+	  postListAdapter PLAdapter;
 	
 	/*
 	 * Listen to the option selected by the users.
@@ -125,6 +135,11 @@ public class PostList extends ListActivity implements OnItemSelectedListener {
 	        filterSpin.setOnItemSelectedListener(this);
 	        
 	       
+	        groupNameTxt = (TextView) findViewById(R.id.groupNameTxt);
+	        groupNameTxt.setText(Constant.currentGroupName);
+	        
+	        
+	        
 
 			@SuppressWarnings({ "rawtypes", "unchecked" })
 			ArrayAdapter aa = new ArrayAdapter(
@@ -137,10 +152,20 @@ public class PostList extends ListActivity implements OnItemSelectedListener {
 			filterSpin.setAdapter(aa);
 	        
 			readPost();
-	        
+			
+			postListview = (ListView) findViewById(android.R.id.list);
+			postListview.setOnItemClickListener(myListItemListener);
+			
+			PLAdapter = new postListAdapter(this,R.layout.postrow, postQueue);
+			
+			postListview.setAdapter(PLAdapter);
+			PLAdapter.setNotifyOnChange(true);
+			
+			/*
 	       setListAdapter(new postListAdapter(this,R.layout.postrow, postQueue));
 			
 	       ((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+	       */
 	 }
 	 
 
@@ -168,12 +193,52 @@ public class PostList extends ListActivity implements OnItemSelectedListener {
 			
 		}
 		
+		
+		
+		private OnItemClickListener myListItemListener = new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> l, View v, int position, long id) {
+				// TODO Auto-generated method stub
+				Log.i(TAG,"--TITLE:" +postQueue.get(position).getText() + "long:  "+postQueue.get(position).getLng()
+						+ "lat: "+postQueue.get(position).getLat());
+				
+				//Toast.makeText(this, "TITLE:" +postQueue.get(position).getText(), Toast.LENGTH_LONG).show();
+				
+				Intent intent = new Intent();
+			    
+				intent.setClass(context,postView.class);
+			    
+			    
+			    intent.putExtra(Constant.LAT, postQueue.get(position).getLat());
+			    intent.putExtra(Constant.LNG, postQueue.get(position).getLng());
+			    intent.putExtra(Constant.TEXT, postQueue.get(position).getText());
+			    intent.putExtra(Constant.AUTHOR_NAME, postQueue.get(position).getAuthorName());
+			    
+			   // startActivity(intent);
+			    replaceContentView("activity3", intent);
+				
+			}
+			
+		};
+		
+		
+		
+		    
+		
+
+		
+		
+		
+		
+		/*
 		protected void onListItemClick(ListView l, View v, int position, long id) {
 			super.onListItemClick(l, v, position, id);
 			Log.i(TAG,"--TITLE:" +postQueue.get(position).getText() + "long:  "+postQueue.get(position).getLng()
 					+ "lat: "+postQueue.get(position).getLat());
 			
-			/*
+			Toast.makeText(this, "TITLE:" +postQueue.get(position).getText(), Toast.LENGTH_LONG).show();
+			
 			Intent intent = new Intent();
 		    
 			intent.setClass(this,postView.class);
@@ -185,11 +250,11 @@ public class PostList extends ListActivity implements OnItemSelectedListener {
 		    intent.putExtra(Constant.AUTHOR_NAME, postQueue.get(position).getAuthorName());
 		    
 		    startActivity(intent);
-			*/
+			
 			
 			//Toast.makeText(this, "TITLE:" +postQueue.get(position).getText(), Toast.LENGTH_LONG).show();
 		}	
-		
+		*/
 		
 		public void onItemSelected(AdapterView<?> parent, View v, int position,
 				long id) {
@@ -207,6 +272,39 @@ public class PostList extends ListActivity implements OnItemSelectedListener {
 			//readPost();
 		}
 		
+		
+		public void replaceContentView(String id, Intent newIntent) {
+			View view1 = getLocalActivityManager().startActivity
+					(id,newIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)) .getDecorView(); this.setContentView(view1);
+					//(id,newIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)) .getDecorView(); this.setContentView(view);
+		
+			/*
+			View view = ((ActivityGroup) context)
+					.getLocalActivityManager()
+					.startActivity(id,
+					newIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
+					.getDecorView();
+					((Activity) context).setContentView(view);
+	*/
+		
+		}   
+		
+		/*
+		@Override
+		public void onBackPressed() {
+		// TODO Auto-generated method stub
+		super.onBackPressed();
+		if (MathHelper.SHOW_DETAILS) {
+		Log.e("back", "pressed accepted");
+		Constants.LIST_ACTIVITY = 1;
+		Constants.SHOW_DETAILS = false;
+		Intent intent = new Intent(this, Tab_widget.class);
+		startActivity(intent);
+		finish();
+		}
+		
+		}
+		*/
 	
 		 
 }

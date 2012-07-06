@@ -26,6 +26,8 @@ public class postListAdapter extends ArrayAdapter<Post> {
 	
 	public static String  TAG = "FG-1";
 	
+	TextView timestampTxt, authorTxt, commentsTxt;
+	
 	public postListAdapter(PostList context,int resource, List<Post> postQueue) 
 	{
 		super(context, resource, postQueue);
@@ -45,9 +47,21 @@ public class postListAdapter extends ArrayAdapter<Post> {
 		TextView label = (TextView)rowView.findViewById(R.id.postText);
 		label.setText(postQueue.get(position).getText());
 		
+		TextView timestampTxt = (TextView)rowView.findViewById(R.id.timePostTxt);
+		TextView authorTxt = (TextView)rowView.findViewById(R.id.authorPostTxt);
+		TextView commentsTxt = (TextView)rowView.findViewById(R.id.commentPostTxt);
+		
+		//timestampTxt.setText(postQueue.get(position).getAuthorName()); 
+		authorTxt.setText("Posted by " +postQueue.get(position).getAuthorName()); 
+		commentsTxt.setText(postQueue.get(position).getCommentCount() + " comments");
+		
+		
 		
 		ImageView imagePost = (ImageView) rowView.findViewById(R.id.imagePost);
 		String photo_url = postQueue.get(position).getImage();
+		
+		
+		
 		URL newurl;
 		try {
 			

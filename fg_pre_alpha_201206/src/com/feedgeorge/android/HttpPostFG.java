@@ -54,7 +54,7 @@ public class HttpPostFG {
 	Context context;
 	
 	boolean newSignedUp=false;
-	static public String defaultGroupID = null;
+	
 	
 	static int getContentcount = 0;
 	ArrayList<Post> postQueue = new ArrayList<Post>();
@@ -238,9 +238,12 @@ public class HttpPostFG {
 				//email = "chfoo@feedgeorge.com";
 		    	//password = "adm123m";
 			 
-			 	email = "a@b.com";
-		    	password = "abc";
+			 	//email = "a@b.com";
+		    	//password = "abc";
 		    	
+			 	email = "apple@b.com";
+		    	password = "abc";
+			 
 		    	//apiKey = "f8343c8ebd00438983353f03a4ada999";;
 				
 				Log.i(	TAG, "---------postLogin()");
@@ -562,9 +565,10 @@ public class HttpPostFG {
 											currentGrp.setDescription(item.getString(Constant.DESC));
 											currentGrp.setRole(item.getString(Constant.ROLE));
 											
-											if(i==1){
-												defaultGroupID = item.getString(Constant.ID);
-												Log.i(TAG, "*****defaultGroupID: "+defaultGroupID +" name: "+currentGrp.getName());
+											if(i==0){
+												Constant.defaultGroupID = item.getString(Constant.ID);
+												Constant.currentGroupName = currentGrp.getName();
+												Log.i(TAG, "*****defaultGroupID: "+Constant.defaultGroupID +" name: "+currentGrp.getName());
 												
 											}
 											Log.i(TAG, "group: "+currentGrp.getName());
@@ -580,14 +584,15 @@ public class HttpPostFG {
 											//Intent placesIntent = new Intent();
 										}
 										
+										//GET GROUP CONTENT
 										//display the content of the first group
 										ArrayList<String> keys = new ArrayList<String>();
 										ArrayList<String> values = new ArrayList<String>();
 										
 										
-										Log.i(TAG, "defaultGroupID: "+defaultGroupID);
+										Log.i(TAG, "defaultGroupID: "+Constant.defaultGroupID);
 										keys.add(Constant.GROUP_ID);
-										values.add(defaultGroupID);
+										values.add(Constant.defaultGroupID);
 										
 										postToServer(Constant.GET_GRP_CONTENT, keys, values);
 										
@@ -614,7 +619,7 @@ public class HttpPostFG {
 				     				//JSONObject contentObject = new JSONObject(content);
 				     				
 				     				 contentArray = new JSONArray(content);
-				     				
+				     				postQueue.clear();
 				     				String title;
 				     				
 				     				for(int i=0; i<contentArray.length();i++)
@@ -633,6 +638,8 @@ public class HttpPostFG {
 				     					currentPost.setLng(item.getString(Constant.LNG));				
 				     					currentPost.setText(item.getString(Constant.TEXT));
 				     					currentPost.setType(item.getString(Constant.TYPE));
+				     					currentPost.setCommentCount(item.getString(Constant.COMMENT_COUNT));
+				     					
 				     					
 				     					Log.i(TAG, "title: "+item.getString(Constant.TEXT));
 				     					
