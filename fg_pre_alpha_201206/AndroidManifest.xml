@@ -31,8 +31,9 @@
         <activity android:name=".AddPage"/>
         <activity android:name=".AddPost"/>
         <activity android:name=".MyGroupPageList"/>
-         <activity android:name=".postView"/>
-        
+        <activity android:name=".PostMapView"/>
+        <activity android:name=".TabGroupActivity"/>
+        <activity android:name=".TabGroup1Activity"/>
         
         
         <uses-library android:name="com.google.android.maps" />

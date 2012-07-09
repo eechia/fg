@@ -12,13 +12,13 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
-public class postView extends MapActivity {
+public class PostMapView extends MapActivity {
 	Bundle bundle;
 	String lat,lng, title, author;
 	
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
-	    setContentView(R.layout.postview);
+	    setContentView(R.layout.post_mapview);
 	    
 	    MapView mapView = (MapView) findViewById(R.id.mapview);
 	    mapView.setBuiltInZoomControls(true);

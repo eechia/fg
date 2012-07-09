@@ -62,15 +62,23 @@ public class postListAdapter extends ArrayAdapter<Post> {
 		
 		
 		
-		URL newurl;
+		URL newurl = null;
 		try {
 			
-			newurl = new URL(photo_url);
+			
+			if(photo_url != null){
+				newurl = new URL(photo_url);
+				Bitmap mIcon_val = BitmapFactory.decodeStream(newurl.openConnection().getInputStream()); 
+				imagePost.setImageBitmap(mIcon_val);
+			}
+			
+			/*
 			if(newurl != null){
+				
 				Bitmap mIcon_val = BitmapFactory.decodeStream(newurl.openConnection().getInputStream()); 
 				imagePost.setImageBitmap(mIcon_val);	
 			}
-			
+			*/
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

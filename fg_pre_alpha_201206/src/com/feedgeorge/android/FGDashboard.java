@@ -55,7 +55,8 @@ public class FGDashboard extends TabActivity implements OnTabChangeListener{
         
         
         Intent homeIntent = new Intent();
-        homeIntent.setClass(context ,PostList.class);
+        //homeIntent.setClass(context ,PostList.class);
+        homeIntent.setClass(context ,TabGroup1Activity.class);
         homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         
         Intent placesIntent = new Intent();
