@@ -54,6 +54,7 @@ public class Constant {
 	static final int GET_JOINED_GROUP = 3;
 	static final int GET_GRP_CONTENT = 4;
 	static final int ADD_POST = 5;
+	static final int GET_COMMENTS = 6;
 	
 	//POST MESSAG
 	static final String NO_ERROR = "200";
@@ -97,6 +98,17 @@ public class Constant {
 	//login
 	static final String DISPLAY_NAME = "displayName";
 	static final String PROFILE_PIC = "pic";
+	
+	//comment
+	
+	static final String COMMENTER_ID = "commenterId";
+	static final String COMMENT_ID = "id";
+	//static final String LAST_UPDATE = "lastUpdate";
+	static final String COMMENTER_NAME = "commenterName";
+	static final String COMMENT = "comment";
+	static final String COMMENTS = "comments";
+	static final String MORE = "more";
+	
 	
 	
 	static final int RESUME = 0;

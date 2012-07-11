@@ -34,6 +34,7 @@
         <activity android:name=".PostMapView"/>
         <activity android:name=".TabGroupActivity"/>
         <activity android:name=".TabGroup1Activity"/>
+        <activity android:name=".PostView"/>
         
         
         <uses-library android:name="com.google.android.maps" />

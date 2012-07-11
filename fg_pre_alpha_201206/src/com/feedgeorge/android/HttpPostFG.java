@@ -59,6 +59,8 @@ public class HttpPostFG {
 	static int getContentcount = 0;
 	ArrayList<Post> postQueue = new ArrayList<Post>();
 	
+	ArrayList<Comment> commentList = new ArrayList<Comment>(); 
+	
 	 //pupulate nearby groups
 	 public static ArrayList<Group> nearbyGroupsList, joinedGroupList;
 	
@@ -397,6 +399,10 @@ public class HttpPostFG {
 		        			 Log.i(TAG, ">>>>>>>POST: GET_GRP_CONTENT");
 	 
 							 break;
+							 
+		        		case Constant.GET_COMMENTS:
+		        			httppost = new HttpPost(Constant.URL_CONTENT+"listcomments");
+		        			break;
 						    
 				            
 				           
@@ -673,6 +679,59 @@ public class HttpPostFG {
 									  intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 									  context.startActivity(intent1);
 									//Constant.tabHost.set
+									  break;
+									  
+								case Constant.GET_COMMENTS:
+									
+									Log.i(TAG, " RESPONSE : GET_COMMENTS: ");
+				        			 Log.i(TAG, "result: "+result);
+				        			 
+				        			 Comment currentComment;
+				        			 resultObject = new JSONObject(result);
+				     				
+				     				String comments = resultObject.getString(Constant.COMMENTS);
+				     				String more = resultObject.getString(Constant.MORE);
+				     				
+				     				Log.i(TAG, "comments: "+comments);
+				     				Log.i(TAG, "more: "+more);
+				     				
+				     				JSONArray commentArray = new JSONArray(comments);
+				     				commentList.clear();
+				     				
+				     				
+				     				for(int i=0; i<commentArray.length();i++)
+				     				{
+				     					currentComment = new Comment();
+				     					JSONObject item = commentArray.getJSONObject(i);
+				     					
+				     					
+				     					currentComment.setId(item.getString(Constant.ID));
+				     					currentComment.setComment(item.getString(Constant.COMMENT));
+				     					currentComment.setCommentID(item.getString(Constant.COMMENT_ID));
+				     					currentComment.setCommenterName(item.getString(Constant.COMMENTER_NAME));
+				     					currentComment.setLastUpdate(item.getString(Constant.LAST_UPDATE));
+				     					
+				     					if(i==0)
+				     						PostView.setLastComment(currentComment);
+				     					
+				     					Log.i(TAG, "comment: "+currentComment.getComment());
+				     					
+				     					commentList.add(currentComment);
+				     					
+				     				
+				     				}
+				     				
+				     				PostView.setCommentQueue(commentList);
+				     				
+				     				/*
+				     				PostList.setPostQueue(postQueue);
+				     				
+				     				 Intent intent = new Intent();
+				     				 intent.setClass(context ,FGDashboard.class);
+									 // intent.setClass(this.context ,PostList.class);
+									  intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+									  context.startActivity(intent);
+									*/
 							}
 							
 							

@@ -68,14 +68,16 @@ public class PostList extends TabGroupActivity  implements OnItemSelectedListene
 	  postListAdapter PLAdapter;
 	  
 	  ArrayList<String> mIdList;
+	  
+	  ArrayList<String> keyList, valueList;
+	  String postID;
+	  HttpPostFG httppostFG;
 	
 	/*
 	 * Listen to the option selected by the users.
 	 */
 
 	private OnClickListener myBtnClickListener = new OnClickListener() {
-	
-
 
 		
 		public void onClick(View v) {
@@ -141,7 +143,7 @@ public class PostList extends TabGroupActivity  implements OnItemSelectedListene
 	        //getContentList();
 	        //getJoinedGroups();
 	        context = this.getApplicationContext();
-	        
+	        httppostFG = HttpPostFG.getInstance();
 	        
 	        filterSpin = (Spinner) findViewById(R.id.filterSpinner);
 	        filterSpin.setOnItemSelectedListener(this);
@@ -233,21 +235,48 @@ public class PostList extends TabGroupActivity  implements OnItemSelectedListene
 			    replaceContentView("activity3", intent);
 				*/
 				
+				/*
 				 Intent intent = new Intent(getParent(), PostMapView.class);
 				 
 				 intent.putExtra(Constant.LAT, postQueue.get(position).getLat());
-				    intent.putExtra(Constant.LNG, postQueue.get(position).getLng());
-				    intent.putExtra(Constant.TEXT, postQueue.get(position).getText());
+				 intent.putExtra(Constant.LNG, postQueue.get(position).getLng());
+				 intent.putExtra(Constant.TEXT, postQueue.get(position).getText());
 				    
-		            TabGroupActivity parentActivity = (TabGroupActivity)getParent();
-		            parentActivity.startChildActivity("ViewPost", intent);
+		         TabGroupActivity parentActivity = (TabGroupActivity)getParent();
+		         parentActivity.startChildActivity("ViewPost", intent);
+		         */
+				postID = postQueue.get(position).getId();
+				getComments();
+				
+				Intent intent = new Intent(getParent(), PostView.class);
+				 
+				 intent.putExtra(Constant.LAT, postQueue.get(position).getLat());
+				 intent.putExtra(Constant.LNG, postQueue.get(position).getLng());
+				 intent.putExtra(Constant.TEXT, postQueue.get(position).getText());
+				 intent.putExtra(Constant.AUTHOR_NAME, postQueue.get(position).getAuthorName());
+				 intent.putExtra(Constant.IMAGE, postQueue.get(position).getImage());
+				 intent.putExtra(Constant.ID,postID );
+				 
+		         TabGroupActivity parentActivity = (TabGroupActivity)getParent();
+		         parentActivity.startChildActivity("ViewPost", intent);
 			}
 			
 		};
 		
 		
 		
-		    
+		public void getComments(){
+			keyList = new ArrayList<String>();
+			valueList = new ArrayList<String>();
+			
+			Log.i(TAG, "POSTid: "+postID);
+			keyList.add("contentId");
+			valueList.add(postID);
+			keyList.add("page");
+			valueList.add("1");
+			
+			httppostFG.postToServer(Constant.GET_COMMENTS, keyList, valueList);
+		}
 		
 
 		

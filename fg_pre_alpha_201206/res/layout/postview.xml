@@ -4,22 +4,144 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-  
-
     <Button
         android:id="@+id/backBtn"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Back" />
-    
-      <Button
+
+    <Button
         android:id="@+id/shareBtn"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Share" 
         android:layout_alignParentRight="true"
-        />
+        android:text="Share" />
+
+    <ImageView
+        android:id="@+id/postImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/backBtn"
+        android:src="@drawable/default_userpic" />
+
+    <TextView
+        android:id="@+id/timestampPostTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/postImage"
+        android:text="Timestamp"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/authorPostTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/timestampPostTxt"
+        android:layout_alignBottom="@+id/timestampPostTxt"
+        android:layout_marginLeft="16dp"
+        android:layout_toRightOf="@+id/timestampPostTxt"
+        android:text="Posted by"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/descPostTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/timestampPostTxt"
+        android:text="Post description"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Button
+        android:id="@+id/mapPostBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/descPostTxt"
+        android:text="Show Map" />
+
+    <Button
+        android:id="@+id/commentPostBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/mapPostBtn"
+        android:layout_alignBottom="@+id/mapPostBtn"
+        android:layout_toRightOf="@+id/postImage"
+        android:text="Comments" />
+
+    <TextView
+        android:id="@+id/commentLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:text="Comment"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ImageView
+        android:id="@+id/userAvatarPost"
+        android:layout_width="55dip"
+        android:layout_height="55dip"
+        android:layout_below="@+id/commentLabel"
+        android:src="@drawable/default_userpic" />
+
+    <TextView
+        android:id="@+id/commentName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/userAvatarPost"
+        android:layout_toRightOf="@+id/userAvatarPost"
+        android:text="Name"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/commentTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/commentName"
+        android:layout_below="@+id/commentName"
+        android:text="Comment"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/commentTimestamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/commentTxt"
+        android:layout_below="@+id/commentTxt"
+        android:text="Timestamp"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/moreCmtLink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/commentTimestamp"
+        android:clickable="true"
+        android:text="More comments"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/editComment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/moreCmtLink"
+        android:ems="10"
+        android:text="Comment here" />
+
+    <Button
+        android:id="@+id/postCommentBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/editComment"
+        android:text="Post" />
 
 </RelativeLayout>
