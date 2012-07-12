@@ -28,12 +28,12 @@ import android.widget.TextView;
 public class PostView extends Activity {
 	protected static final String TAG = "FG-1";
 	Bundle bundle;
-	String lat,lng, title, author, photo_url, postID;
+	String lat,lng, title, author, photo_url, postID, commentstr;
 	TextView timestamp, authorTxt, descTxt;
 	ImageView imagePost;
 	URL newurl = null;
 	
-	Button showMapBtn, backBtn, shareBtn, commentBtn;
+	Button showMapBtn, backBtn, shareBtn, commentBtn, postCommentBtn;
 	
 	HttpPostFG httppostFG;
 	static Comment lastComment;
@@ -69,6 +69,23 @@ public class PostView extends Activity {
 				
 				
 				
+			}else if(v.equals(postCommentBtn)){
+				
+				keyList = new ArrayList<String>();
+				valueList =  new ArrayList<String>();
+				
+				//commentstr = new String();
+				
+				keyList.add("contentId");
+				valueList.add(postID);
+				
+				keyList.add("comment");
+				valueList.add(commentTxt.getText().toString());
+				
+				httppostFG.postToServer(Constant.ADD_COMMENT, keyList, valueList);
+				
+				
+				
 			}
 			
 		}
@@ -91,8 +108,15 @@ public class PostView extends Activity {
         photo_url = bundle.getString(Constant.IMAGE);
         postID = bundle.getString(Constant.ID);
         
+        
+        
         getComments();
         
+        backBtn = (Button) findViewById(R.id.backBtn);
+        backBtn.setOnClickListener(myBtnClickListener);
+        
+        shareBtn = (Button) findViewById(R.id.shareBtn);
+        shareBtn.setOnClickListener(myBtnClickListener);
         
         showMapBtn = (Button) findViewById(R.id.mapPostBtn);
         showMapBtn.setOnClickListener(myBtnClickListener);
@@ -100,6 +124,11 @@ public class PostView extends Activity {
         
         commentBtn = (Button) findViewById(R.id.commentPostBtn);
         commentBtn.setOnClickListener(myBtnClickListener);
+        
+        
+        postCommentBtn = (Button) findViewById(R.id.postCommentBtn);
+        postCommentBtn.setOnClickListener(myBtnClickListener);
+        
         
         //setting UI
         descTxt = (TextView) findViewById(R.id.descPostTxt);
@@ -144,6 +173,7 @@ public class PostView extends Activity {
     		cmtTimestamp.setText(lastComment.getLastUpdate());
         }
 		
+        
 	 
 	}
 

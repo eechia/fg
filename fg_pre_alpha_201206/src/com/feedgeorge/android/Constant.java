@@ -55,6 +55,7 @@ public class Constant {
 	static final int GET_GRP_CONTENT = 4;
 	static final int ADD_POST = 5;
 	static final int GET_COMMENTS = 6;
+	static final int ADD_COMMENT = 7;
 	
 	//POST MESSAG
 	static final String NO_ERROR = "200";

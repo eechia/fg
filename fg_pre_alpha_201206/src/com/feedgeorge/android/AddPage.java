@@ -39,11 +39,11 @@ public class AddPage extends Activity{
 			else if(v.equals(addEventBtn)){
 				
 				Toast.makeText(context, "Add EVENT", Toast.LENGTH_SHORT).show();
-				/*		
-				Intent intent = new Intent(Intent.ACTION_PICK,
-				android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-				startActivityForResult(intent, 0);
-				*/
+				Intent intent = new Intent();
+				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				intent.setClass(context,AddEvent.class);
+			    startActivity(intent);
+				
 			}else if(v.equals(addSurveyBtn)){
 				
 				Toast.makeText(context, "Add SURVEY", Toast.LENGTH_SHORT).show();

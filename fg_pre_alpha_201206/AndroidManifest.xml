@@ -27,7 +27,9 @@
         <activity android:name=".MyGroupPage"/>
         <activity android:name=".PostList"/>
         <!--  <activity android:name=".FGDashboard"/> -->
-        <activity android:name=".FGDashboard"/>
+        <activity android:name=".FGDashboard"
+            android:windowSoftInputMode="adjustPan|adjustResize"
+            />
         <activity android:name=".AddPage"/>
         <activity android:name=".AddPost"/>
         <activity android:name=".MyGroupPageList"/>
@@ -35,6 +37,7 @@
         <activity android:name=".TabGroupActivity"/>
         <activity android:name=".TabGroup1Activity"/>
         <activity android:name=".PostView"/>
+        <activity android:name=".AddEvent"/>
         
         
         <uses-library android:name="com.google.android.maps" />

@@ -403,6 +403,10 @@ public class HttpPostFG {
 		        		case Constant.GET_COMMENTS:
 		        			httppost = new HttpPost(Constant.URL_CONTENT+"listcomments");
 		        			break;
+		        			
+		        		case Constant.ADD_COMMENT:
+		        			httppost = new HttpPost(Constant.URL_CONTENT+"addcomment");
+		        			break;
 						    
 				            
 				           
@@ -732,6 +736,11 @@ public class HttpPostFG {
 									  intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 									  context.startActivity(intent);
 									*/
+				     				
+				     				break;
+				     				
+								case Constant.ADD_COMMENT:
+									Toast.makeText(PlacesList.context, "Comment successfully added!", Toast.LENGTH_SHORT).show();
 							}
 							
 							
