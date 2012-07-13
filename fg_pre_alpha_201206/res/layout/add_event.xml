@@ -3,8 +3,7 @@
 		android:layout_width="fill_parent" 
 		android:layout_height="fill_parent"
 		android:fadingEdgeLength="0sp"		>
- 
-
+ 
  <RelativeLayout
      android:layout_width="fill_parent"
      android:layout_height="fill_parent"
@@ -17,65 +16,103 @@
         android:text="Back" 
         />
 
-     <EditText
-         android:id="@+id/eventTxt"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_alignParentLeft="true"
-         android:layout_below="@+id/backButton"
-         android:ems="10" >
+   
 
-         <requestFocus />
-     </EditText>
+    <EditText
+        android:id="@+id/txtCaption"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" 
+        android:layout_below = "@+id/backButton"
+         >
 
-     <ToggleButton
-         android:id="@+id/toggleLocationEvent"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_alignParentLeft="true"
-         android:layout_below="@+id/eventTxt"
-         android:text="Location" />
+        <requestFocus />
+    </EditText>
 
-     <ImageView
-         android:id="@+id/eventImg"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_alignParentLeft="true"
-         android:layout_below="@+id/toggleLocationEvent"
-         android:src="@drawable/default_userpic" />
+    
 
-     <Button
-         android:id="@+id/uploadImgBtnEvent"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_alignBottom="@+id/eventImg"
-         android:layout_toRightOf="@+id/eventImg"
-         android:text="Upload image from gallery" />
+    <Button
+        android:id="@+id/loadimage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Upload Image from Gallery" 
+        android:layout_below = "@+id/toggleLocationBtn"
+       />
 
-     <Button
-         android:id="@+id/startDateBtn"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_alignParentLeft="true"
-         android:layout_below="@+id/eventImg"
-         android:text="Start Date" />
+    <ImageView
+        android:id="@+id/targetimage"
+        android:layout_width="132dp"
+        android:layout_height="122dp"
+        android:layout_weight="0.38" 
+        android:layout_below = "@+id/toggleLocationBtn" 
+         android:layout_toRightOf="@+id/loadimage">
+        
+    </ImageView>"
 
-     <Button
-         android:id="@+id/endDateBtn"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_alignParentLeft="true"
-         android:layout_below="@+id/startDateBtn"
-         android:text="End Date" />
+    
 
-     <Button
-         android:id="@+id/submitEventBtn"
-         android:layout_width="fill_parent"
-         android:layout_height="wrap_content"
-         android:layout_alignParentLeft="true"
-         android:layout_below="@+id/endDateBtn"
-         android:text="Submit" />
+    <Button
+        android:id="@+id/submitBtn"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Submit" 
+        android:layout_below = "@+id/endDateBtn"/>
 
-</RelativeLayout>
+    <Button
+        android:id="@+id/startDateBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        
+        android:layout_below="@+id/targetimage"
+        android:text="Start Date" />
+
+    <Button
+        android:id="@+id/endDateBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/startDateBtn"
+        android:layout_toLeftOf="@+id/toggleLocationBtn"
+        android:text="End Date" />
+
+    <TextView
+        android:id="@+id/locationTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtCaption"
+        android:layout_alignParentLeft="true"
+        android:layout_alignBaseline="@+id/toggleButton1"
+        android:text="Location"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ToggleButton
+        android:id="@+id/toggleLocationBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtCaption"
+        android:layout_toRightOf="@+id/locationTxt"
+        android:text="ToggleButton" />
+
+    <TextView
+        android:id="@+id/startDateTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/startDateBtn"
+        android:layout_alignBottom="@+id/startDateBtn"
+        android:layout_toRightOf="@+id/startDateBtn"
+        android:text="Start Date"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/endDateTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/endDateBtn"
+        android:layout_alignBottom="@+id/endDateBtn"
+        android:layout_toRightOf="@+id/endDateBtn"
+        android:text="End Date"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+	</RelativeLayout>
 
 </FrameLayout>

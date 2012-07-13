@@ -37,7 +37,10 @@
         <activity android:name=".TabGroupActivity"/>
         <activity android:name=".TabGroup1Activity"/>
         <activity android:name=".PostView"/>
+        <activity android:name=".AddEventOLD"
+            android:windowSoftInputMode="adjustPan|adjustResize"/>
         <activity android:name=".AddEvent"/>
+        
         
         
         <uses-library android:name="com.google.android.maps" />

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_width="fill_parent" 
+		android:layout_height="fill_parent"
+		android:fadingEdgeLength="0sp"		>
+ 
+
+ <RelativeLayout
+     android:layout_width="fill_parent"
+     android:layout_height="fill_parent"
+     android:layout_gravity="center" >
+     
+     <Button
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back" 
+        />
+
+     <EditText
+         android:id="@+id/eventCapTxt"
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"
+         android:layout_alignParentLeft="true"
+         android:layout_below="@+id/backButton"
+         android:ems="10" >
+
+         <requestFocus />
+     </EditText>
+
+     <ToggleButton
+         android:id="@+id/toggleLocationEvent"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentLeft="false"
+         android:layout_below="@+id/eventCapTxt"
+         android:layout_toRightOf="@+id/geoLocText"
+         android:text="Location" />
+
+     <ImageView
+         android:id="@+id/eventImg"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentLeft="false"
+         android:layout_below="@+id/toggleLocationEvent"
+         android:src="@drawable/default_userpic"
+         android:layout_toRightOf="@+id/uploadImgBtnEvent"
+          />
+
+     <Button
+         android:id="@+id/uploadImgBtnEvent"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignBottom="@+id/eventImg"
+         android:layout_alignParentLeft="true"
+         android:text="Upload image from gallery" />
+
+     <Button
+         android:id="@+id/startDateBtn"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentLeft="true"
+         android:layout_below="@+id/eventImg"
+         android:text="Start Date" />
+
+     <Button
+         android:id="@+id/endDateBtn"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentLeft="true"
+         android:layout_below="@+id/startDateBtn"
+         android:layout_toLeftOf="@+id/startDateEventTxt"
+         android:text="End Date" />
+
+     <Button
+         android:id="@+id/submitEventBtn"
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"
+         android:layout_alignParentLeft="true"
+         android:layout_below="@+id/endDateBtn"
+         android:text="Submit" />
+
+     <TextView
+         android:id="@+id/startDateEventTxt"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignBaseline="@+id/startDateBtn"
+         android:layout_alignBottom="@+id/startDateBtn"
+         android:layout_toRightOf="@+id/startDateBtn"
+         android:text="Start Date"
+         android:layout_below="@+id/eventImg"
+         android:textAppearance="?android:attr/textAppearanceLarge" />
+
+     <TextView
+         android:id="@+id/endDateEventTxt"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignBaseline="@+id/endDateBtn"
+         android:layout_alignBottom="@+id/endDateBtn"
+         android:layout_toRightOf="@+id/endDateBtn"
+         android:text="End Date"
+         android:textAppearance="?android:attr/textAppearanceLarge" />
+
+     <TextView
+         android:id="@+id/geoLocText"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentLeft="true"
+         android:layout_alignTop="@+id/toggleLocationEvent"
+         android:text="Geotagged"
+         android:textAppearance="?android:attr/textAppearanceLarge" />
+
+</RelativeLayout>
+
+</FrameLayout>
