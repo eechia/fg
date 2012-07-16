@@ -52,7 +52,7 @@ public class PostList extends TabGroupActivity  implements OnItemSelectedListene
 	
 	
 	
-	public static String  TAG = "FG-1";
+	public static String  TAG = "FG-1-PostList";
 	
 	static //populate content
 	 List<Post> postQueue = new ArrayList<Post>();

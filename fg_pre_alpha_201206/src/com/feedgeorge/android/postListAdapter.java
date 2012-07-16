@@ -24,7 +24,7 @@ public class postListAdapter extends ArrayAdapter<Post> {
 	PostList context = null;
 	List<Post> postQueue = null;
 	
-	public static String  TAG = "FG-1";
+	public static String  TAG = "FG-1-postListAdapter";
 	
 	TextView timestampTxt, authorTxt, commentsTxt;
 	
@@ -60,7 +60,7 @@ public class postListAdapter extends ArrayAdapter<Post> {
 		ImageView imagePost = (ImageView) rowView.findViewById(R.id.imagePost);
 		String photo_url = postQueue.get(position).getImage();
 		
-		Log.i(TAG, "@@@@@ photo_url: "+ photo_url);
+		//Log.i(TAG, "@@@@@ photo_url: "+ photo_url);
 		
 		
 		URL newurl = null;
@@ -69,7 +69,7 @@ public class postListAdapter extends ArrayAdapter<Post> {
 	
 			
 			if(photo_url.contains("http")){
-				Log.i(TAG, "@@@@@ TRUE: "+ photo_url);
+				//Log.i(TAG, "@@@@@ TRUE: "+ photo_url);
 				newurl = new URL(photo_url);
 				Bitmap mIcon_val = BitmapFactory.decodeStream(newurl.openConnection().getInputStream()); 
 				imagePost.setImageBitmap(mIcon_val);

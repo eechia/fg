@@ -677,12 +677,13 @@ public class HttpPostFG {
 									
 									
 									FGDashboard.tabHost.setCurrentTab(1);
+									/*
 									Intent intent1 = new Intent();
-				     				 intent1.setClass(context ,FGDashboard.class);
-									 // intent.setClass(this.context ,PostList.class);
-									  intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-									  context.startActivity(intent1);
-									//Constant.tabHost.set
+				     				intent1.setClass(context ,FGDashboard.class);
+									 
+									intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+									context.startActivity(intent1);
+									*/
 									  break;
 									  
 								case Constant.GET_COMMENTS:
@@ -778,7 +779,8 @@ public class HttpPostFG {
 				reqEntity.addPart("apiKey", new StringBody(apiKey));
 		  */
 		 
-		 public void AddPost(String groupID, String lng, String lat, Bitmap photo, String caption) throws Exception {
+		 public void AddPost(String groupID, String lng, String lat, Bitmap photo, String caption, 
+				 int option, String eventDate, String survey) throws Exception {
 				
 				
 				//String lng, lat, ;
@@ -808,9 +810,8 @@ public class HttpPostFG {
 					byte[] data = bos.toByteArray();
 					
 					//HttpClient httpClient = new DefaultHttpClient();
-					HttpPost httppost = new HttpPost(
-							"http://developer.feedgeorge.com/content/addpost");
-					 
+					
+					HttpPost httppost = null;
 					
 					//postRequest.setHeader("Set-Cookie", securitykey);
 					
@@ -827,6 +828,20 @@ public class HttpPostFG {
 					reqEntity.addPart("text", new StringBody(caption));
 					reqEntity.addPart(Constant.API_KEY, new StringBody(Constant.apiKey_value));
 					
+					
+					if(option == Constant.ADD_EVENT){
+						httppost = new HttpPost(
+							"http://developer.feedgeorge.com/content/addevent");
+						reqEntity.addPart("eventDate", new StringBody(eventDate));
+					
+					}else if(option == Constant.ADD_POST){
+						httppost = new HttpPost(
+								"http://developer.feedgeorge.com/content/addpost");
+					}
+					
+					
+						
+						
 					httppost.setEntity(reqEntity);
 					
 					

@@ -125,7 +125,7 @@ import android.widget.TextView;
     				
     					try {
 							//executeMultipartPost();
-    						httppostFG.AddPost(groupID, lng, lat, bitmap, caption);
+    						httppostFG.AddPost(groupID, lng, lat, bitmap, caption, Constant.ADD_POST, null, null);
     					
 						} catch (Exception e) {
 							// TODO Auto-generated catch block

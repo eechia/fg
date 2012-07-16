@@ -56,7 +56,8 @@ public class Constant {
 	static final int ADD_POST = 5;
 	static final int GET_COMMENTS = 6;
 	static final int ADD_COMMENT = 7;
-	
+	static final int ADD_EVENT = 8;
+	static final int ADD_SURVEY = 9;
 	//POST MESSAG
 	static final String NO_ERROR = "200";
 	

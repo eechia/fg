@@ -37,14 +37,13 @@ public class AddPage extends Activity{
 				
 			}
 			else if(v.equals(addEventBtn)){
-				
+				/*
 				Toast.makeText(context, "Add EVENT", Toast.LENGTH_SHORT).show();
 				Intent intent = new Intent();
 				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				intent.setClass(context,AddEventOLD.class);
 			    startActivity(intent);
-				
-			}else if(v.equals(addSurveyBtn)){
+				*/
 				
 				Toast.makeText(context, "Add SURVEY", Toast.LENGTH_SHORT).show();
 				Toast.makeText(context, "Add SURVEY", Toast.LENGTH_SHORT).show();
@@ -52,11 +51,10 @@ public class AddPage extends Activity{
 				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				intent.setClass(context,AddEvent.class);
 			    startActivity(intent);
-				/*
-				Intent intent = new Intent();
-			    intent.setClass(context,PostList.class);
-			    startActivity(intent);
-				*/
+			    
+			}else if(v.equals(addSurveyBtn)){
+				
+				
 				
 			}
 			

@@ -72,6 +72,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 
 	public class AddEvent extends Activity{
@@ -83,10 +84,15 @@ import android.widget.Toast;
 		Button startDateBtn, endDateBtn;
 		TextView startDateTxt, endDateTxt;
 		
+		CharSequence strDate;
+		String strDateTxt;
+		
 		HttpPostFG httppostFG;
 
 		TextView textTargetUri;
 		ImageView targetImage;
+		
+		ToggleButton location;
 		
 		String URL = "http://developer.feedgeorge.com/user/login";
     	String email,password, apiKey;
@@ -155,11 +161,34 @@ import android.widget.Toast;
     					
     				}else if(v.equals(mSubmitBtn)){
     					
+    					
+    					if(location.isChecked()){
+    						lat = loc.getLat();
+        					lng = loc.getLong();
+    					}else{
+    						lat = "-1";
+        					lng = "-1";
+    					}
+    						
+    					groupID = Constant.defaultGroupID;
+    					caption = captionText.getText().toString();
+    					
+    						try {
+								httppostFG.AddPost(groupID, lng, lat, bitmap, caption, Constant.ADD_EVENT, strDateTxt, null);
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						
+    					
+    					
     					//getContentList();
+    					
+    					/*
     					Intent intent = new Intent();
     				    intent.setClass(context,PostList.class);
     				    startActivity(intent);
-    					
+    					*/
     					
     				}else if(v.equals(startDateBtn)){
     					showDialog(START_DATE_DIALOG_ID);
@@ -211,25 +240,25 @@ import android.widget.Toast;
 		     buttonLoadImage.setOnClickListener(myClickListener);
 		     
 		     
+		     
+		     location = (ToggleButton) findViewById(R.id.toggleLocationBtn); 
+		     location.setOnClickListener(myClickListener);
+		     
 		     mHttpClient = new DefaultHttpClient();
 			 mHttpContext = new BasicHttpContext();
 			 mCookieStore      = new BasicCookieStore();        
-			mHttpContext.setAttribute(ClientContext.COOKIE_STORE, mCookieStore);
+			 mHttpContext.setAttribute(ClientContext.COOKIE_STORE, mCookieStore);
 			
-			loc = new MyLocListener();
+			
+			 loc = new MyLocListener();
 
+			 myManager = (LocationManager) this.getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
+
+			 myManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, loc );
 			
 			
-			
-			
-			myManager = (LocationManager) this.getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
-			
-			
-			myManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, loc );
-			
-			
-			 groupID = "2";
-			 apiKey = "f3f0f6dbc5e442f6afc6687e59912f23"; //android
+			 //groupID = "2";
+			// apiKey = "f3f0f6dbc5e442f6afc6687e59912f23"; //android
 			 
 			
 		     
@@ -345,8 +374,11 @@ import android.widget.Toast;
 				                    Time chosenDate = new Time();        
 				                    chosenDate.set(dayOfMonth, monthOfYear, year);
 				                    long dtDob = chosenDate.toMillis(true);
-				                    CharSequence strDate = DateFormat.format("MMMM dd, yyyy", dtDob);
-				                   startDateTxt.setText(strDate);
+				                    //strDate = DateFormat.format("MMMM dd, yyyy", dtDob);
+				                    CharSequence strDate = DateFormat.format("yyyy-MM-dd kk:mm", dtDob);
+				                    
+				                    startDateTxt.setText(strDate);
+				                    strDateTxt = strDate.toString();
 				                    Toast.makeText(context, 
 				                         "START Date picked: " + strDate, Toast.LENGTH_SHORT).show();
 				        }
@@ -366,7 +398,8 @@ import android.widget.Toast;
 				                    Time chosenDate = new Time();        
 				                    chosenDate.set(dayOfMonth, monthOfYear, year);
 				                    long dtDob = chosenDate.toMillis(true);
-				                    CharSequence strDate = DateFormat.format("MMMM dd, yyyy", dtDob);
+				                    //CharSequence strDate = DateFormat.format("MMMM dd, yyyy", dtDob);
+				                    CharSequence strDate = DateFormat.format("MM/dd/yy h:mmaa", dtDob);
 				                    endDateTxt.setText(strDate);
 				                    Toast.makeText(context, 
 				                         "END Date picked: " + strDate, Toast.LENGTH_SHORT).show();
