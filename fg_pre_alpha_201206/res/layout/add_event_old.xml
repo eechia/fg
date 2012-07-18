@@ -3,20 +3,18 @@
 		android:layout_width="fill_parent" 
 		android:layout_height="fill_parent"
 		android:fadingEdgeLength="0sp"		>
- 
-
+ 
  <RelativeLayout
      android:layout_width="fill_parent"
      android:layout_height="fill_parent"
      android:layout_gravity="center" >
-     
+
      <Button
-        android:id="@+id/backButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Back" 
-        />
-
+         android:id="@+id/backButton"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:text="Back" />
+
      <EditText
          android:id="@+id/eventCapTxt"
          android:layout_width="fill_parent"
@@ -43,9 +41,8 @@
          android:layout_height="wrap_content"
          android:layout_alignParentLeft="false"
          android:layout_below="@+id/toggleLocationEvent"
-         android:src="@drawable/default_userpic"
          android:layout_toRightOf="@+id/uploadImgBtnEvent"
-          />
+         android:src="@drawable/default_userpic" />
 
      <Button
          android:id="@+id/uploadImgBtnEvent"
@@ -62,7 +59,7 @@
          android:layout_alignParentLeft="true"
          android:layout_below="@+id/eventImg"
          android:text="Start Date" />
-
+
      <Button
          android:id="@+id/endDateBtn"
          android:layout_width="wrap_content"
@@ -86,9 +83,9 @@
          android:layout_height="wrap_content"
          android:layout_alignBaseline="@+id/startDateBtn"
          android:layout_alignBottom="@+id/startDateBtn"
+         android:layout_below="@+id/eventImg"
          android:layout_toRightOf="@+id/startDateBtn"
          android:text="Start Date"
-         android:layout_below="@+id/eventImg"
          android:textAppearance="?android:attr/textAppearanceLarge" />
 
      <TextView
@@ -110,6 +107,33 @@
          android:text="Geotagged"
          android:textAppearance="?android:attr/textAppearanceLarge" />
 
-</RelativeLayout>
+     <LinearLayout
+         android:id="@+id/linearLayout1"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentLeft="true"
+         android:layout_below="@+id/submitEventBtn"
+         android:layout_marginLeft="16dp"
+         android:layout_marginTop="22dp"
+         android:orientation="vertical" >
+     </LinearLayout>
+
+     <Button
+         android:id="@+id/button2"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignLeft="@+id/linearLayout1"
+         android:layout_alignParentBottom="true"
+         android:text="Button" />
+
+     <Button
+         android:id="@+id/button1"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_below="@+id/submitEventBtn"
+         android:layout_toLeftOf="@+id/endDateEventTxt"
+         android:text="Button" />
+
+ </RelativeLayout>
 
 </FrameLayout>

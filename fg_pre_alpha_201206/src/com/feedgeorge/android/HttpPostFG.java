@@ -780,7 +780,7 @@ public class HttpPostFG {
 		  */
 		 
 		 public void AddPost(String groupID, String lng, String lat, Bitmap photo, String caption, 
-				 int option, String eventDate, String survey) throws Exception {
+				 int option, String eventDate, String[] survey) throws Exception {
 				
 				
 				//String lng, lat, ;
@@ -837,6 +837,29 @@ public class HttpPostFG {
 					}else if(option == Constant.ADD_POST){
 						httppost = new HttpPost(
 								"http://developer.feedgeorge.com/content/addpost");
+						
+					}else if(option == Constant.ADD_SURVEY){
+						
+						Log.i(TAG, "add SURVEY");
+						httppost = new HttpPost(
+								"http://developer.feedgeorge.com/content/addsurvey");
+						
+						int size = survey.length;
+						
+						String start = "[";
+						for(int i=0;i<size;i++){
+							
+							if(i<size-1)
+								start = start + survey[i] + ",";
+							else
+								start = start +survey[i]+"]";
+						}
+						
+						Log.i(TAG,"survey string: "+start);
+						
+						reqEntity.addPart("choices", new StringBody(start));
+						
+						
 					}
 					
 					
@@ -863,7 +886,7 @@ public class HttpPostFG {
 					
 				} catch (Exception e) {
 					// handle exception here
-					Log.e(e.getClass().getName(), e.getMessage());
+					Log.e(e.getClass().getName(),"error:" +e.getMessage());
 				}
 			}
 		 
