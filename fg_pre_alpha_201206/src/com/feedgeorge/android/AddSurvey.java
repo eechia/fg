@@ -90,8 +90,14 @@ import android.widget.ToggleButton;
 		EditText surveyEdit;
 		
 		int surveyCount=0;
+		int delbtnCount=0;
 		
-		ArrayList<CheckBox> surveyCheckBoxList;
+		boolean first = false;
+		
+		ArrayList<CheckBox> surveyCheckBoxList,selectedCheckboxList;
+		ArrayList<Button> surveyDeleteBtnList,selectedDeleteList;
+		
+		
 		
 		View linearlayout;
 		
@@ -146,30 +152,52 @@ import android.widget.ToggleButton;
     	 private OnClickListener myClickListener = new OnClickListener() {
     			public void onClick(View v) {
     				
-    				/*if(v.equals(mSendBtn)){
-    					
-    					//addPost();
-    					
-    					groupID = Constant.defaultGroupID;
-    					
-    					
-    					lat = loc.getLat();
-    					lng = loc.getLong();
-    					
-    					Log.i(TAG, "lat: " +lat + "  lng:"+lng);
-    					
-    					caption = captionText.getText().toString();
     				
-    					try {
-							//executeMultipartPost();
-    						httppostFG.AddPost(groupID, lng, lat, bitmap, caption);
+    				
+    				Log.i(TAG,"view ID: "+v.getId());
+    				
+    				
+    				
+    				if(first){
+	    				selectedCheckboxList =  new ArrayList<CheckBox>();
+	    				selectedDeleteList =  new ArrayList<Button>();
+	    				
+	    				selectedCheckboxList = surveyCheckBoxList;
+	    				selectedDeleteList = surveyDeleteBtnList;
+	    				
+	    				
+	    				first = false;
+	    			}
+    				
+    				int count = selectedDeleteList.size();
+    				//count = selectedDeleteList
+    				
+    				if(count!=0){
     					
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+    					for(int i=0;i<count;i++){
+    						
+    						Log.i(TAG,"****i: "+i+"surveyDeleteBtnList: "+surveyDeleteBtnList.size());
+    						
+    						if(v.equals(surveyDeleteBtnList.get(i))){
+    							
+    							CheckBox selected = surveyCheckBoxList.get(i);
+    							selected.setVisibility(View.GONE);
+    							Button selectedBtn = surveyDeleteBtnList.get(i);
+    							selectedBtn.setVisibility(View.GONE);
+    							selectedCheckboxList.remove(i);
+    							selectedDeleteList.remove(i);
+    							
+    							break;
+    						}
+    						
+    					}
     					
-    				}else*/
+    					
+    					
+    				}
+    				
+    				
+    				
     				if(v.equals(buttonLoadImage)){
     							
     					Intent intent = new Intent(Intent.ACTION_PICK,
@@ -190,12 +218,12 @@ import android.widget.ToggleButton;
     					groupID = Constant.defaultGroupID;
     					caption = captionText.getText().toString();
     					
-    					int size = surveyCheckBoxList.size();
+    					int size = selectedCheckboxList.size();
     					String[] survey = new String[size];
     					//String start = ""
     					
     					for(int i=0;i<size;i++){
-    						survey[i] =surveyCheckBoxList.get(i).getText().toString();
+    						survey[i] =selectedCheckboxList.get(i).getText().toString();
     					}
     					
     						try {
@@ -218,76 +246,46 @@ import android.widget.ToggleButton;
     					
     				}else if(v.equals(addSurveyBtn)){
     					
+    					
+    					
     					if(surveyCount==0){
     						Log.i(TAG, "ADD SURVEY BUTTON");
     					
     						RelativeLayout.LayoutParams relativeParams = new RelativeLayout.LayoutParams(
     				                LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
     					
-    						CheckBox tv=new CheckBox(getApplicationContext());
-       				        tv.setText(surveyEdit.getText());
-       				        
-       				        relativeParams.addRule(RelativeLayout.BELOW,addSurveyBtn.getId() );
-       				        /*
-       				        linearlayout.setLayoutParams(new LayoutParams(1, LayoutParams.FILL_PARENT));
-       				     ((ViewGroup) linearlayout).addView(tv);
-       				        */
-       				        
-       				        surveyCheckBoxList.add(tv);
-       				        
-       				        layout.addView(tv, relativeParams);
-       				        
-       				        surveyCount++;
-       				        tv.setId(surveyCount);
-       				     Log.i(TAG, "IF: SurveyCount: "+surveyCount);
-       				        
-       				        
-    					}else{
-    						
-    						Log.i(TAG, "ELSE: SurveyCount: "+surveyCount);
-    						Log.i(TAG, "surveyCheckBoxList size: "+surveyCheckBoxList.size());
-    					
-    						/*
-    						
-    						LinearLayout.LayoutParams relativeParams = new LinearLayout.LayoutParams(
+    						RelativeLayout.LayoutParams delBtnParams = new RelativeLayout.LayoutParams(
     				                LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-    					
-    						
-    						//RelativeLayout.LayoutParams relativeParams1 = (LayoutParams) layout.getLayoutParams(); 
     						
     						CheckBox tv=new CheckBox(getApplicationContext());
        				        tv.setText(surveyEdit.getText());
        				        
-       				       // relativeParams.addRule(RelativeLayout.BELOW, surveyCheckBoxList.get(surveyCount-1).getId() );
-       				        //relativeParams.addRule(RelativeLayout., addSurveyBtn.getId() );
+       				        Button delBtn = new Button(getApplicationContext());
+       				        delBtn.setOnClickListener(myClickListener);
+       				        delBtn.setText("Delete");
+       				        
+       				        delBtnParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
        				       
-       				     //linearlayout.setLayoutParams(new LayoutParams(1, LayoutParams.FILL_PARENT));
-       				  ((ViewGroup) linearlayout).addView(tv);
-       				       // surveyCheckBoxList.add(tv);
-       				        //surveyCount++;
-       				        tv.setId(surveyCount);
-    					*/	
-    						
-    					//}
-    					
-    					
-    					if(surveyCount==0){
-    						Log.i(TAG, "ADD SURVEY BUTTON");
-    					
-    						RelativeLayout.LayoutParams relativeParams = new RelativeLayout.LayoutParams(
-    				                LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-    					
-    						CheckBox tv=new CheckBox(getApplicationContext());
-       				        tv.setText(surveyEdit.getText());
+    				        delBtnParams.addRule(RelativeLayout.BELOW, addSurveyBtn.getId() );
+       				        //
        				        
-       				        //relativeParams.addRule(RelativeLayout.BELOW,addSurveyBtn.getId() );
+       				        relativeParams.addRule(RelativeLayout.BELOW, addSurveyBtn.getId() );
+       				        
        				        layout.addView(tv, relativeParams);
-       				        surveyCheckBoxList.add(tv);
+       				        layout.addView(delBtn, delBtnParams);
+       				        
+       				        
        				        
        				        
        				        
        				        surveyCount++;
        				        tv.setId(surveyCount);
+       				        surveyCheckBoxList.add(tv);
+       				        
+       				        delbtnCount++;
+       				        delBtn.setId(delbtnCount);
+       				        surveyDeleteBtnList.add(delBtn);
+       				       
        				     Log.i(TAG, "IF: SurveyCount: "+surveyCount);
        				        
        				        
@@ -300,21 +298,37 @@ import android.widget.ToggleButton;
     						RelativeLayout.LayoutParams relativeParams = new RelativeLayout.LayoutParams(
     				                LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
     					
+    						RelativeLayout.LayoutParams delBtnParams = new RelativeLayout.LayoutParams(
+    				                LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
     						
     						//RelativeLayout.LayoutParams relativeParams1 = (LayoutParams) layout.getLayoutParams(); 
     						
     						CheckBox tv=new CheckBox(getApplicationContext());
        				        tv.setText(surveyEdit.getText());
+       				        Button delBtn = new Button(getApplicationContext());
+       				        delBtn.setText("Delete");
+    				        delBtn.setOnClickListener(myClickListener);
+    				        
+    				        
        				        
        				        relativeParams.addRule(RelativeLayout.BELOW, surveyCheckBoxList.get(surveyCount-1).getId() );
-       				       // relativeParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM ,0);
+       				        delBtnParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+       				        delBtnParams.addRule(RelativeLayout.BELOW, surveyCheckBoxList.get(surveyCount-1).getId());
+       				        // relativeParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM ,0);
        				        
        				        //relativeParams.addRule(RelativeLayout., addSurveyBtn.getId() );
        				        layout.addView(tv, relativeParams);
-       				        surveyCheckBoxList.add(tv);
+       				        
+       				        
+       				        layout.addView(delBtn, delBtnParams);
+       				        
        				        surveyCount++;
        				        tv.setId(surveyCount);
-    						
+       				        surveyCheckBoxList.add(tv);	
+       				        
+       				        delbtnCount++;
+    				        delBtn.setId(delbtnCount);
+    				        surveyDeleteBtnList.add(delBtn);
     						
     					}
     					
@@ -322,7 +336,7 @@ import android.widget.ToggleButton;
     					
     					
     				
-    			}
+    			
 
 				
     		}
@@ -342,6 +356,8 @@ import android.widget.ToggleButton;
 		     
 		     setContentView(R.layout.add_survey);
 		     
+		     first = true;
+		     
 		     //------------------------------
 		     LayoutInflater inflater = this.getLayoutInflater();
 		     
@@ -355,7 +371,7 @@ import android.widget.ToggleButton;
 		     //----------------------------------
 		     
 		     surveyCheckBoxList = new ArrayList<CheckBox>();
-		    
+		     surveyDeleteBtnList = new ArrayList<Button>();
 		     
 		     
 		 

@@ -2,33 +2,43 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
-
+    android:orientation="vertical" 
+    
+    >
+<!--  android:background="#FFFFFF" -->
+
     <Button
         android:id="@+id/AddPostBtn"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="88dp"
-        android:text="Post  " />
+        
+        
+        android:background="@drawable/post_type_place"
+        />
 
     <Button
         android:id="@+id/AddEventBtn"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/AddPostBtn"
         android:layout_below="@+id/AddPostBtn"
         android:layout_marginTop="42dp"
-        android:text="Event" />
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/post_type_event"
+        />
 
     <Button
         android:id="@+id/AddSurveyBtn"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/AddEventBtn"
         android:layout_below="@+id/AddEventBtn"
         android:layout_marginTop="39dp"
-        android:text="Survey" />
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/post_type_survey"
+        />
 
 </RelativeLayout>

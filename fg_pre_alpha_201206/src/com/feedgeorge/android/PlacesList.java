@@ -18,6 +18,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
 
 public class PlacesList extends ListActivity implements OnItemSelectedListener{
@@ -104,9 +105,18 @@ public class PlacesList extends ListActivity implements OnItemSelectedListener{
        */
         
         httpPostFG.getNearbyGroup();
+        
         nearbyGroupList = httpPostFG.getNearbyGroupsList();
-        setListAdapter(new PlacesListMainAdapter(this, R.layout.nearby_grouprow, nearbyGroupList));
-        ((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+        
+        if(nearbyGroupList != null){
+        	setListAdapter(new PlacesListMainAdapter(this, R.layout.nearby_grouprow, nearbyGroupList));
+            ((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+        
+        }else{
+        	Toast.makeText(this, "Server is down", Toast.LENGTH_LONG).show();
+        }
+        
+        
         
        
        

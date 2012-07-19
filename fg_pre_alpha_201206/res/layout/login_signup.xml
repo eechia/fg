@@ -3,6 +3,13 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
+    
+    <RelativeLayout
+        android:id="@+id/topbar"
+        android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:background="#F59153"    
+   >
 
     <Button
         android:id="@+id/btnCancel"
@@ -12,12 +19,14 @@
         android:layout_alignParentTop="true"
         android:text="Cancel" />
 
+    </RelativeLayout>
+    
     <TextView
         android:id="@+id/txtEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/btnCancel"
+        android:layout_below="@+id/topbar"
         android:text="Email"
         android:textAppearance="?android:attr/textAppearanceLarge"
          android:layout_marginTop="15dp" />

@@ -782,49 +782,34 @@ public class HttpPostFG {
 		 public void AddPost(String groupID, String lng, String lat, Bitmap photo, String caption, 
 				 int option, String eventDate, String[] survey) throws Exception {
 				
-				
-				//String lng, lat, ;
-				
-				
-				
-				//groupID = "2";
-				
-				
-				
-				//lat = "3.137875";
-				//lng = "101.68644";
-				
+
 				
 				Log.i(TAG, "lat: " +lat + "  lng:"+lng + " groupID: "+groupID +" caption: "+caption);
 				
 				//caption = captionText.getText().toString();
+				HttpPost httppost = null;
+				MultipartEntity reqEntity = new MultipartEntity(
+						HttpMultipartMode.BROWSER_COMPATIBLE);
 				
 				try {
 					ByteArrayOutputStream bos = new ByteArrayOutputStream();
 					
-					photo.compress(CompressFormat.JPEG, 75, bos);
+					if(photo != null){
+						Log.i(TAG,"PHOTO != NULL");
+						photo.compress(CompressFormat.JPEG, 75, bos);
+						byte[] data = bos.toByteArray();
+						ByteArrayBody bab = new ByteArrayBody(data, "test.jpg");
+						reqEntity.addPart("photo", bab);
+					}else{
+						Log.i(TAG,"PHOTO == NULL");
+					}
 					
+			
 					
-					//bitmap.compress(CompressFormat.PNG , 100, bos);
-					
-					byte[] data = bos.toByteArray();
-					
-					//HttpClient httpClient = new DefaultHttpClient();
-					
-					HttpPost httppost = null;
-					
-					//postRequest.setHeader("Set-Cookie", securitykey);
-					
-					ByteArrayBody bab = new ByteArrayBody(data, "test.jpg");
-					
-					// File file= new File("/mnt/sdcard/forest.png");
-					// FileBody bin = new FileBody(file);
-					MultipartEntity reqEntity = new MultipartEntity(
-							HttpMultipartMode.BROWSER_COMPATIBLE);
 					reqEntity.addPart("groupId", new StringBody(groupID));
 					reqEntity.addPart("lng", new StringBody(lng));
 					reqEntity.addPart("lat", new StringBody(lat));
-					reqEntity.addPart("photo", bab);
+					
 					reqEntity.addPart("text", new StringBody(caption));
 					reqEntity.addPart(Constant.API_KEY, new StringBody(Constant.apiKey_value));
 					
@@ -846,19 +831,12 @@ public class HttpPostFG {
 						
 						int size = survey.length;
 						
-						String start = "[";
+												
 						for(int i=0;i<size;i++){
 							
-							if(i<size-1)
-								start = start + survey[i] + ",";
-							else
-								start = start +survey[i]+"]";
+							reqEntity.addPart("choices[]", new StringBody(survey[i]));
+						
 						}
-						
-						Log.i(TAG,"survey string: "+start);
-						
-						reqEntity.addPart("choices", new StringBody(start));
-						
 						
 					}
 					
