@@ -3,7 +3,15 @@ package com.feedgeorge.android;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import java.security.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+
+import org.ocpsoft.pretty.time.PrettyTime;
 
 import android.content.Context;
 import android.database.DataSetObserver;
@@ -54,6 +62,35 @@ public class postListAdapter extends ArrayAdapter<Post> {
 		//timestampTxt.setText(postQueue.get(position).getAuthorName()); 
 		authorTxt.setText("Posted by " +postQueue.get(position).getAuthorName()); 
 		commentsTxt.setText(postQueue.get(position).getCommentCount() + " comments");
+		
+		String timestamp = postQueue.get(position).getLastUpdate();
+		
+		SimpleDateFormat curFormater = new SimpleDateFormat("yyyy-MM-dd k:mm:ss"); 
+		Date dateObj = null;
+		
+		try {
+			dateObj = (Date) curFormater.parse(timestamp);
+			//converting date to timestamp
+			java.sql.Timestamp timeStampDate = new java.sql.Timestamp(dateObj.getTime());
+			
+			
+			Log.i(TAG,"timestamp: "+dateObj.getTime());
+			
+			//converting timestamp to date
+			//Date date = new Date(timeStampDate.getTime());
+			Date date = new Date(dateObj.getTime());
+			
+			
+			String prettyTimeString = new PrettyTime(new Locale("")).format(date);
+			
+			timestampTxt.setText(prettyTimeString);
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} 
+		
+		
+		
 		
 		
 		

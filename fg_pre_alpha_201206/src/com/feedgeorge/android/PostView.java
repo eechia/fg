@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 import android.widget.TextView;
 
 public class PostView extends Activity {
@@ -122,8 +123,8 @@ public class PostView extends Activity {
         showMapBtn.setOnClickListener(myBtnClickListener);
         
         
-        commentBtn = (Button) findViewById(R.id.commentPostBtn);
-        commentBtn.setOnClickListener(myBtnClickListener);
+        //commentBtn = (Button) findViewById(R.id.commentPostBtn);
+        //commentBtn.setOnClickListener(myBtnClickListener);
         
         
         postCommentBtn = (Button) findViewById(R.id.postCommentBtn);
@@ -151,6 +152,7 @@ public class PostView extends Activity {
 				newurl = new URL(photo_url);
 				Bitmap mIcon_val = BitmapFactory.decodeStream(newurl.openConnection().getInputStream()); 
 				imagePost.setImageBitmap(mIcon_val);
+				imagePost.setScaleType(ScaleType.FIT_XY);
 			}
 			
 		} catch (MalformedURLException e) {

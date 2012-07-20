@@ -10,7 +10,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:src="@android:drawable/alert_dark_frame" />
+        android:src="@android:drawable/alert_dark_frame" 
+        android:paddingTop="2dip"
+        android:paddingLeft="2dip"
+        android:paddingRight="2dip"
+        />
 
     <TextView
         android:id="@+id/postText"
@@ -27,7 +31,9 @@
         android:layout_below="@+id/imagePost"
         android:layout_marginTop="2dp"
         android:text="Timestamp"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceSmall" 
+        android:paddingBottom="2dip"
+        />
 
     <TextView
         android:id="@+id/commentPostTxt"

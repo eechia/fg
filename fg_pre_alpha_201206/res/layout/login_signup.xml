@@ -2,34 +2,37 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="#FFFFFF"
     android:orientation="vertical" >
-    
+
     <RelativeLayout
         android:id="@+id/topbar"
         android:layout_width="fill_parent"
-    	android:layout_height="wrap_content"
-    	android:background="#F59153"    
-   >
-
-    <Button
-        android:id="@+id/btnCancel"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:text="Cancel" />
+        android:background="#F59153"
+        android:paddingBottom="5dip"
+        android:paddingTop="5dip" >
 
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/orangebutton"
+            android:text="Cancel"
+            android:textColor="#FFFFFF" />
     </RelativeLayout>
-    
+
     <TextView
         android:id="@+id/txtEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/topbar"
+        android:layout_marginTop="15dp"
         android:text="Email"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-         android:layout_marginTop="15dp" />
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <EditText
         android:id="@+id/editEmail"
@@ -37,9 +40,8 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/txtEmail"
         android:layout_alignBottom="@+id/txtEmail"
-        android:layout_marginLeft="15dp"
-        android:layout_toRightOf="@+id/txtEmail"
-         android:layout_alignParentRight="true"
+        android:layout_alignLeft="@+id/editPassword"
+        android:layout_alignRight="@+id/editPassword"
         android:ems="10"
         android:inputType="textEmailAddress" >
 
@@ -52,27 +54,30 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/editEmail"
-        android:text="Password"
         android:layout_marginTop="18dp"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:text="Password"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <EditText
         android:id="@+id/editPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/editEmail"
+        android:layout_marginTop="15dp"
         android:layout_toRightOf="@+id/textPassword"
         android:ems="10"
-        android:inputType="textPassword"
-        android:layout_marginTop="15dp"
-        android:layout_alignBaseline="@+id/textPassword" />
+        android:inputType="textPassword" />
 
     <Button
         android:id="@+id/btnLogin"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editPassword"
+        android:layout_alignRight="@+id/editPassword"
         android:layout_below="@+id/editPassword"
-        android:text="Login" />
+        android:background="@drawable/orangebutton"
+        android:text="Login"
+        android:textColor="#FFFFFF" />
 
     <TextView
         android:id="@+id/txtScreenName"
@@ -80,71 +85,67 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/btnLogin"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="5dp"
         android:text="Screen Name"
-        android:textAppearance="?android:attr/textAppearanceLarge" 
-        />
-
-   
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <EditText
         android:id="@+id/editScreenName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/txtScreenName"
-       
-        android:layout_toRightOf="@+id/txtScreenName"
-        android:layout_alignBaseline="@+id/txtScreenName"
         
+       
+        android:layout_alignTop="@+id/txtScreenName"
+        android:layout_toRightOf="@+id/txtScreenName"
+        android:layout_below="@id/btnLogin"
         android:ems="10" />
 
-     <TextView
-         android:id="@+id/txtEmailSU"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_below="@+id/editScreenName"
-         android:layout_toLeftOf="@+id/editEmail"
-         android:text="Email"
-         android:textAppearance="?android:attr/textAppearanceLarge" />
+    <TextView
+        android:id="@+id/txtEmailSU"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/editScreenName"
+        android:text="Email"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
-     <EditText
-         android:id="@+id/editEmailSU"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_alignBaseline="@+id/txtEmailSU"
-         android:layout_alignBottom="@+id/txtEmailSU"
-         android:layout_alignLeft="@+id/editEmail"
-         android:ems="10"
-         android:inputType="textEmailAddress" />
+    <EditText
+        android:id="@+id/editEmailSU"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        
+       android:layout_below="@+id/editScreenName"
+        android:layout_toRightOf="@+id/txtScreenName"
+        android:ems="10"
+        android:inputType="textEmailAddress" />
 
-     <TextView
-         android:id="@+id/textPassworSU"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_below="@+id/editEmailSU"
-         android:layout_toLeftOf="@+id/editPassword"
-         android:text="Password"
-         android:textAppearance="?android:attr/textAppearanceLarge" 
-          android:layout_marginTop="20dp"/>
+    <Button
+        android:id="@+id/btnSignUp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editPasswordSU"
+        android:layout_alignRight="@+id/editPasswordSU"
+        android:layout_below="@+id/editPasswordSU"
+        android:background="@drawable/orangebutton"
+        android:text="Sign Up"
+        android:textColor="#FFFFFF" />
 
-     <EditText
-         android:id="@+id/editPasswordSU"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_alignParentRight="true"
-         android:layout_below="@+id/editEmailSU"
-         android:ems="10"
-         android:inputType="textPassword" 
-         android:layout_alignBaseline="@+id/textPassworSU"/>
+    <EditText
+        android:id="@+id/editPasswordSU"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editEmailSU"
+        android:layout_below="@+id/editEmailSU"
+        android:ems="10"
+        android:inputType="textPassword" />
 
-     <Button
-         android:id="@+id/btnSignUp"
-         android:layout_width="fill_parent"
-         android:layout_height="wrap_content"
-         android:layout_alignParentLeft="true"
-         android:layout_below="@+id/editPasswordSU"
-         android:layout_marginTop="26dp"
-         android:text="Sign Up" />
-   
+    <TextView
+        android:id="@+id/textPassworSU"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editEmailSU"
+        
+        android:text="Password"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
 </RelativeLayout>

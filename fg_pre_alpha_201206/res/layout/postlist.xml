@@ -2,17 +2,47 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
-
-	<Button
+    android:orientation="vertical" 
+    android:background="#FFFFFF">
+    
+    <RelativeLayout
+        android:id="@+id/topbar"
+        android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:background="#F59153" 
+    	android:paddingTop="5dip"
+    	android:paddingBottom="5dip"   
+   >
+   
+        
+        <Button
         android:id="@+id/Map"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="14dp"
         android:text="Map"
+        android:background="@drawable/orangebutton"
+        android:textColor="#FFFFFF"
+        
         
          
         />
+        
+        
+        <Spinner
+        android:id="@+id/filterSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true" 
+       >
+
+   </Spinner>
+   
+        
+     </RelativeLayout>>
+
+	
     
 
     <ListView
@@ -20,26 +50,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/groupIconImg" >
+        android:layout_below="@+id/groupIconImg" 
+        android:background="#FFFFFF"
+        
+        >
 
     </ListView>
 
 
 
-    <Spinner
-        android:id="@+id/filterSpinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true" />
-
-   
+    
     <ImageView
         android:id="@+id/groupIconImg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/Map"
+        android:layout_below="@+id/topbar"
         android:src="@drawable/default_userpic" />
 
     <TextView
@@ -58,7 +84,8 @@
         android:layout_alignLeft="@+id/groupNameTxt"
         android:layout_below="@+id/groupNameTxt"
         android:text="by wecare.my"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        />
 
+    <!-- android:textAppearance="?android:attr/textAppearanceSmall"  -->
 
 </RelativeLayout>

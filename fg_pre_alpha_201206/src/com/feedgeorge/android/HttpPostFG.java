@@ -514,17 +514,18 @@ public class HttpPostFG {
 									 
 									 Constant.LOGGED_IN = true;
 									 
+									 /*
 									 if(newSignedUp)
 									 {
 		 
-										  Intent intent = new Intent();
-										  intent.setClass(this.context ,PlacesList.class);
-										  intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-										  context.startActivity(intent);
-										  newSignedUp = false;
+										  Intent intent1 = new Intent();
+										  intent1.setClass(this.context ,PlacesList.class);
+										  intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+										  context.startActivity(intent1);
+										  //newSignedUp = false;
 			 
 									 }
-									 
+									 */
 									 break;
 									  
 						

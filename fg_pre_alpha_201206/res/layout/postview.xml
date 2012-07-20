@@ -2,29 +2,45 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+     android:background="#FFFFFF">
+     
+    <RelativeLayout
+        android:id="@+id/topbar"
+        android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"	  
+    	android:paddingTop="5dip"
+    	android:paddingBottom="5dip"
+    	android:background="#F59153"  
+   >
 
     <Button
         android:id="@+id/backBtn"
-        style="?android:attr/buttonStyleSmall"
+        
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Back" />
+        android:text="Back" 
+        android:background="@drawable/orangebutton"
+        android:textColor="#FFFFFF"/>
 
     <Button
         android:id="@+id/shareBtn"
-        style="?android:attr/buttonStyleSmall"
+        
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:text="Share" />
+        android:text="Share" 
+        android:background="@drawable/orangebutton"
+        android:textColor="#FFFFFF"/>
 
+    </RelativeLayout>
+    
     <ImageView
         android:id="@+id/postImage"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/backBtn"
+        android:layout_below="@+id/topbar"
         android:src="@drawable/default_userpic" />
 
     <TextView
@@ -58,20 +74,15 @@
 
     <Button
         android:id="@+id/mapPostBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/descPostTxt"
-        android:text="Show Map" />
+        android:text="Show on Map" 
+        android:background="@drawable/orangebutton"
+        android:textColor="#FFFFFF"/>
 
-    <Button
-        android:id="@+id/commentPostBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/mapPostBtn"
-        android:layout_alignBottom="@+id/mapPostBtn"
-        android:layout_toRightOf="@+id/postImage"
-        android:text="Comments" />
+   
 
     <TextView
         android:id="@+id/commentLabel"
@@ -80,7 +91,8 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:text="Comment"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textAppearance="?android:attr/textAppearanceLarge" 
+        android:layout_below="@+id/mapPostBtn"/>
 
     <ImageView
         android:id="@+id/userAvatarPost"
@@ -96,6 +108,7 @@
         android:layout_alignTop="@+id/userAvatarPost"
         android:layout_toRightOf="@+id/userAvatarPost"
         android:text="Name"
+        
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
@@ -142,6 +155,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/editComment"
-        android:text="Post" />
+        android:text="Post" 
+        android:background="@drawable/orangebutton"
+        android:textColor="#FFFFFF"/>
 
 </RelativeLayout>

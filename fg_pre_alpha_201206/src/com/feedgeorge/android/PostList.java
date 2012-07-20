@@ -58,7 +58,7 @@ public class PostList extends TabGroupActivity  implements OnItemSelectedListene
 	 List<Post> postQueue = new ArrayList<Post>();
 	 
 	 String[] filterByStr = {"All", "Posts","Events","Surveys"};
-	 Button homeBtn, placesBtn, addBtn, searchBtn, settingsBtn;
+	 Button mapBtn;
 	 Spinner filterSpin;
 	  Context context;
 	  TextView groupNameTxt ;
@@ -84,11 +84,22 @@ public class PostList extends TabGroupActivity  implements OnItemSelectedListene
 			
 			Log.i(TAG,">>> myBtnClickListener!!!!!!: onClick");
 			 
-			if(v.equals(homeBtn)){
+			if(v.equals(mapBtn)){
 				
-				Log.i(TAG,">>> homeBtn");
+				Log.i(TAG,">>> mapBtn");
+				final CharSequence[] items = {"Red", "Green", "Blue"};
+
+				AlertDialog.Builder builder = new AlertDialog.Builder(PostList.this);
+				builder.setTitle("Pick a color");
+				builder.setItems(items, new DialogInterface.OnClickListener() {
+				    public void onClick(DialogInterface dialog, int item) {
+				        Toast.makeText(context, items[item], Toast.LENGTH_SHORT).show();
+				    }
+				});
 				
-			}else if(v.equals(placesBtn)){
+			} 
+			/*
+			else if(v.equals(placesBtn)){
 				
 				Log.i(TAG,">>> placesBtn");
 				
@@ -122,6 +133,8 @@ public class PostList extends TabGroupActivity  implements OnItemSelectedListene
 				
 			}
 			
+			*/
+			
 			}
 
 	
@@ -145,8 +158,8 @@ public class PostList extends TabGroupActivity  implements OnItemSelectedListene
 	        context = this.getApplicationContext();
 	        httppostFG = HttpPostFG.getInstance();
 	        
-	        filterSpin = (Spinner) findViewById(R.id.filterSpinner);
-	        filterSpin.setOnItemSelectedListener(this);
+	        //filterSpin = (Spinner) findViewById(R.id.filterSpinner);
+	        //filterSpin.setOnItemSelectedListener(this);
 	        
 	       
 	        groupNameTxt = (TextView) findViewById(R.id.groupNameTxt);
@@ -154,8 +167,10 @@ public class PostList extends TabGroupActivity  implements OnItemSelectedListene
 	        
 	        
 	        
-
-			@SuppressWarnings({ "rawtypes", "unchecked" })
+	        mapBtn = (Button) findViewById(R.id.Map);
+	        mapBtn.setOnClickListener(myBtnClickListener);
+	        
+			/*
 			ArrayAdapter aa = new ArrayAdapter(
 					this,
 					android.R.layout.simple_spinner_item, 
@@ -164,7 +179,7 @@ public class PostList extends TabGroupActivity  implements OnItemSelectedListene
 			aa.setDropDownViewResource(
 			   android.R.layout.simple_spinner_dropdown_item);
 			filterSpin.setAdapter(aa);
-	        
+	        */
 			readPost();
 			
 			postListview = (ListView) findViewById(android.R.id.list);

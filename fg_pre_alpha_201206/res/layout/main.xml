@@ -3,22 +3,29 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" 
+    android:background="#FFFFFF"
     >
 
     <RelativeLayout
         android:id="@+id/topbar"
         android:layout_width="fill_parent"
-    	android:layout_height="wrap_content"
+    	android:layout_height="wrap_content"	  
+    	android:paddingTop="5dip"
+    	android:paddingBottom="5dip"
     	android:background="#F59153"  
-    	android:paddingTop="5dip"  
    >
     
+        <!-- android:background="#F59153" -->
+        
     <Button
         android:id="@+id/loginSignUpBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Login or Sign up" 
         android:layout_alignParentRight="true"
+        
+        android:background="@drawable/orangebutton"
+        android:textColor="#FFFFFF"
     />
     
     </RelativeLayout>
@@ -27,6 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" 
         android:layout_below="@+id/topbar"
+         android:background="#FFFFFF"
         >
         
     </ListView>
