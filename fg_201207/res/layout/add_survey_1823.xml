@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <RelativeLayout
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="fill_parent"
+     android:layout_height="fill_parent"
+     android:layout_gravity="center" 
+    >
+    
+     <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+		android:fillViewport="true"       
+         >
+     
+     <RelativeLayout
+     android:layout_width="fill_parent"
+     android:layout_height="fill_parent"
+     android:layout_gravity="center" 
+     
+    >
+     
+     
+     <Button
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back" 
+        />
+
+   
+
+    <EditText
+        android:id="@+id/txtCaption"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" 
+        android:layout_below = "@+id/backButton"
+         >
+
+        <requestFocus />
+    </EditText>
+
+    
+
+    <Button
+        android:id="@+id/loadimage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Upload Image from Gallery" 
+        android:layout_below = "@+id/toggleLocationBtn"
+       />
+
+    <ImageView
+        android:id="@+id/targetimage"
+        android:layout_width="132dp"
+        android:layout_height="122dp"
+        android:layout_weight="0.38" 
+        android:layout_below = "@+id/toggleLocationBtn" 
+         android:layout_toRightOf="@+id/loadimage">
+        
+    </ImageView>"
+
+    
+
+    <Button
+        android:id="@+id/submitBtn"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Submit" 
+        android:layout_alignParentBottom="true" />
+
+    <TextView
+        android:id="@+id/locationTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtCaption"
+        android:layout_alignParentLeft="true"
+        android:layout_alignBaseline="@+id/toggleButton1"
+        android:text="Location"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ToggleButton
+        android:id="@+id/toggleLocationBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtCaption"
+        android:layout_toRightOf="@+id/locationTxt"
+        android:text="ToggleButton" />
+
+    <EditText
+        android:id="@+id/editSurvey1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/targetimage"
+        android:ems="10"
+        android:text="+ Add Answer" />
+
+    <Button
+        android:id="@+id/btnAddSurvey"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/editSurvey1"
+        android:text="Add" />
+    
+     <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+		android:fillViewport="true"       
+         >
+        
+         <LinearLayout
+		     android:layout_width="wrap_content"
+		     android:layout_height="wrap_content"
+		     android:layout_gravity="center" 
+		      android:id="@+id/my_layout"
+	    >
+
+    
+
+        </LinearLayout>
+   </ScrollView>
+
+	</RelativeLayout>
+	 </ScrollView>
+  </RelativeLayout>

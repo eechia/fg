@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+     android:background="#FFFFFF" >
+
+    <RelativeLayout
+        android:id="@+id/topbar"
+        android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"	  
+    	android:paddingTop="5dip"
+    	android:paddingBottom="5dip"
+    	android:background="#F59153"  
+   >
+    
+    <Button
+        android:id="@+id/addPlaceBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="Add new place" 
+        android:background="@drawable/orangebutton"/>
+
+    <Button
+        android:id="@+id/backBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="Back" 
+        android:background="@drawable/orangebutton"
+        />
+    
+    </RelativeLayout>>
+
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/topbar" 
+        android:background="#FFFFFF">
+    </ListView>
+
+    
+
+</RelativeLayout>

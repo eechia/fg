@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" 
+    android:background="#FFFFFF">
+    
+    <RelativeLayout
+        android:id="@+id/topbar"
+        android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:background="#F59153" 
+    	android:paddingTop="5dip"
+    	android:paddingBottom="5dip"   
+   >
+   
+        
+        <Button
+        android:id="@+id/Map"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="14dp"
+        android:text="Map"
+        android:background="@drawable/orangebutton"
+        android:textColor="#FFFFFF"
+        
+        
+         
+        />
+        
+        
+        <Spinner
+        android:id="@+id/filterSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true" 
+       >
+
+   </Spinner>
+   
+        
+     </RelativeLayout>>
+
+	
+    
+
+    <ListView
+        android:id="@android:id/list" 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/groupIconImg" 
+        android:background="#FFFFFF"
+        
+        >
+
+    </ListView>
+
+
+
+    
+    <ImageView
+        android:id="@+id/groupIconImg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/topbar"
+        android:src="@drawable/default_userpic" />
+
+    <TextView
+        android:id="@+id/groupNameTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/groupIconImg"
+        android:layout_toRightOf="@+id/groupIconImg"
+        android:text="Group Name"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/wecareTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/groupNameTxt"
+        android:layout_below="@+id/groupNameTxt"
+        android:text="by wecare.my"
+        />
+
+    <!-- android:textAppearance="?android:attr/textAppearanceSmall"  -->
+
+</RelativeLayout>

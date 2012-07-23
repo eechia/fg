@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_width="fill_parent" 
+		android:layout_height="fill_parent"
+		android:fadingEdgeLength="0sp"		>
+ 
+ <RelativeLayout
+     android:layout_width="fill_parent"
+     android:layout_height="fill_parent"
+     android:layout_gravity="center" >
+     
+     <Button
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back" 
+        />
+
+    <TextView
+        android:id="@+id/feedMeText"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Feed Me" 
+        android:layout_below = "@+id/backButton"
+        
+        />
+
+    <TextView
+        android:id="@+id/targeturi"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" 
+         android:layout_below = "@+id/feedMeText"/>
+
+    <EditText
+        android:id="@+id/txtCaption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" 
+        android:layout_below = "@+id/targeturi"
+         >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/txtLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Location" 
+        android:layout_below = "@+id/txtCaption"/>
+
+    <Button
+        android:id="@+id/loadimage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Image" 
+        android:layout_below = "@+id/txtLocation"
+       />
+
+    <ImageView
+        android:id="@+id/targetimage"
+        android:layout_width="132dp"
+        android:layout_height="122dp"
+        android:layout_weight="0.38" 
+        android:layout_below = "@+id/txtLocation" 
+         android:layout_toRightOf="@+id/loadimage">
+        
+    </ImageView>"
+
+    <DatePicker
+        android:id="@+id/datePicker1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" 
+        android:layout_below = "@+id/targetimage"/>
+
+    <Button
+        android:id="@+id/shareBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Share" 
+        android:layout_below = "@+id/datePicker1"/>
+
+    <Button
+        android:id="@+id/sendBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/datePicker1"
+        android:layout_toRightOf="@+id/shareBtn"
+        android:text="Done" />
+
+	</RelativeLayout>
+
+</FrameLayout>

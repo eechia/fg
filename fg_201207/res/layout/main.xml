@@ -1,12 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    android:background="#FFFFFF"
+    >
 
-    <TextView
+    <RelativeLayout
+        android:id="@+id/topbar"
         android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"	  
+    	android:paddingTop="5dip"
+    	android:paddingBottom="5dip"
+    	android:background="@drawable/headerbackground"  
+   >
+    
+        <!-- android:background="#F59153" -->
+        
+    <Button
+        android:id="@+id/loginSignUpBtn"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello" />
+        android:text="Login or Sign up" 
+        android:layout_alignParentRight="true"
+        
+        android:background="@drawable/orangebutton"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:layout_marginRight ="5dip"
+    />
+    
+    </RelativeLayout>
 
-</LinearLayout>
+    <ListView        
+        
+        android:id="@android:id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" 
+        android:layout_below="@+id/topbar"
+         android:background="#FFFFFF"
+         android:cacheColorHint="#00000000"
+        >
+        
+    </ListView>
+
+</RelativeLayout>
