@@ -61,7 +61,7 @@ public class PostList extends TabGroupActivity  implements OnItemSelectedListene
 	 Button mapBtn;
 	 Spinner filterSpin;
 	  Context context;
-	  TextView groupNameTxt ;
+	  TextView groupNameTxt, groupNameLabel ;
 	  
 	  ListView postListview;
 	  ListActivity postListAct;
@@ -165,7 +165,8 @@ public class PostList extends TabGroupActivity  implements OnItemSelectedListene
 	        groupNameTxt = (TextView) findViewById(R.id.groupNameTxt);
 	        groupNameTxt.setText(Constant.currentGroupName);
 	        
-	        
+	        groupNameLabel = (TextView) findViewById(R.id.groupNameLabel);
+	        groupNameLabel.setText(Constant.currentGroupName);
 	        
 	        mapBtn = (Button) findViewById(R.id.Map);
 	        mapBtn.setOnClickListener(myBtnClickListener);

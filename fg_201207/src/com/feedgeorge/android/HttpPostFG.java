@@ -243,8 +243,8 @@ public class HttpPostFG {
 			 	//email = "a@b.com";
 		    	//password = "abc";
 		    	
-			 	email = "apple@b.com";
-		    	password = "abc";
+			 	//email = "apple@b.com";
+		    	//password = "abc";
 			 
 		    	//apiKey = "f8343c8ebd00438983353f03a4ada999";;
 				

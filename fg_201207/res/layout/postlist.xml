@@ -8,10 +8,10 @@
     <RelativeLayout
         android:id="@+id/topbar"
         android:layout_width="fill_parent"
-    	android:layout_height="wrap_content"
-    	android:background="#F59153" 
+    	android:layout_height="wrap_content"	  
     	android:paddingTop="5dip"
-    	android:paddingBottom="5dip"   
+    	android:paddingBottom="5dip"
+    	android:background="@drawable/headerbackground"  
    >
    
         
@@ -27,20 +27,33 @@
         
          
         />
+
+        <TextView
+            android:id="@+id/groupNameLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            
+            android:layout_centerInParent="true"
+            android:textStyle="bold"
+            android:textSize="15dip"
+            android:text="Group name"
+            android:textColor="@color/header" />
         
         
-        <Spinner
-        android:id="@+id/filterSpinner"
+        <Button
+        android:id="@+id/spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginRight="14dp"
+        android:text="Show All"
+        android:background="@drawable/orangebutton"
+        android:textColor="#FFFFFF"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true" 
-       >
 
-   </Spinner>
-   
+		/>        
+		
         
-     </RelativeLayout>>
+     </RelativeLayout>
 
 	
     
@@ -52,21 +65,20 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/groupIconImg" 
         android:background="#FFFFFF"
+        android:cacheColorHint="#00000000"
         
         >
 
     </ListView>
 
-
-
-    
     <ImageView
         android:id="@+id/groupIconImg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dip"
+        android:layout_height="50dip"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/topbar"
-        android:src="@drawable/default_userpic" />
+        android:src="@drawable/default_userpic"
+        android:layout_margin="10dip" />
 
     <TextView
         android:id="@+id/groupNameTxt"
@@ -75,7 +87,9 @@
         android:layout_alignTop="@+id/groupIconImg"
         android:layout_toRightOf="@+id/groupIconImg"
         android:text="Group Name"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textSize="15dip"
+        
+     />
 
     <TextView
         android:id="@+id/wecareTxt"
@@ -84,8 +98,17 @@
         android:layout_alignLeft="@+id/groupNameTxt"
         android:layout_below="@+id/groupNameTxt"
         android:text="by wecare.my"
-        />
+    />
 
     <!-- android:textAppearance="?android:attr/textAppearanceSmall"  -->
+
+    <ImageView
+        android:id="@+id/arrowImg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/wecareTxt"
+        android:layout_alignParentRight="true"
+        android:paddingRight="5dip"
+        android:src="@drawable/arrow_right" />
 
 </RelativeLayout>

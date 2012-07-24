@@ -5,11 +5,28 @@
     android:background="#FFFFFF"
     android:orientation="vertical" >
 
+   
+
     <EditText
-        android:id="@+id/editEmail"
+        android:id="@+id/editScreenName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        
+        android:ems="10"
         android:layout_below="@+id/loginText"
+        android:text="SCREENNAME" 
+        android:layout_centerHorizontal="true"
+        android:padding="5dip"
+        >
+
+        <requestFocus />
+    </EditText>
+
+	<EditText
+        android:id="@+id/editEmailSU"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editScreenName"
         android:ems="10"
         android:inputType="textEmailAddress"
         android:text="USERNAME / E-MAIL" 
@@ -22,12 +39,12 @@
 
     
     <EditText
-        android:id="@+id/editPassword"
+        android:id="@+id/editPasswordSU"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
       
         
-        android:layout_below="@+id/editEmail"
+        android:layout_below="@+id/editEmailSU"
         android:ems="10"
         
         android:text=" PASSWORD "
@@ -35,20 +52,7 @@
         android:padding="5dip"
         />
 
-    <Button
-        android:id="@+id/btnLogin"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editPassword"
-        android:layout_alignRight="@+id/editPassword"
-        android:layout_below="@+id/editPassword"
-        
-        android:text="Login"
-        android:textColor="#FFFFFF" 
-        android:layout_centerHorizontal="true"
-        android:padding="5dip"
-        
-        />
+    
 
     <ImageView
         android:id="@+id/loginLogo"
@@ -69,7 +73,7 @@
         android:layout_height="wrap_content"
        
         android:layout_below="@+id/loginLogo"
-        android:text="Login to Feedgeorge"
+        android:text="Sign up to Feedgeorge"
         android:layout_centerHorizontal="true" 
         android:textStyle="bold"
         android:padding="5dip"
@@ -86,31 +90,30 @@
         android:background="@null"
         />
 
-    <Button
-        android:id="@+id/btnGoSignUp"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/btnLogin"
-        
-        android:layout_alignRight="@+id/btnLogin"
-        
-        android:text="Sign Up"
-        android:textColor="#FFFFFF" 
-        android:layout_below="@+id/signUpText"/>
-
     <TextView
         android:id="@+id/signUpText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnLogin"
+        android:layout_below="@+id/editPasswordSU"
         android:layout_centerHorizontal="true"
-        android:text="Do not have a Feedgeorge account?" 
+        android:text="By signing up, you agree with FG TC" 
         android:textStyle="bold"
         
-        android:layout_marginTop="50dip"
+        android:layout_marginTop="30dip"
         android:layout_marginBottom="5dip"
         
          android:textSize="12dip"
         />
+    
+    <Button
+        android:id="@+id/btnSignUp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editPasswordSU"
+        android:layout_alignRight="@+id/editPasswordSU"
+        android:layout_below="@+id/signUpText"
+        android:padding="5dip"
+        android:text="Sign Up!"
+        android:textColor="#FFFFFF" />
 
 </RelativeLayout>

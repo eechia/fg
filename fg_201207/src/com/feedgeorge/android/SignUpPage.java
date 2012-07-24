@@ -16,14 +16,14 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class LoginSignUpPage extends Activity {
+public class SignUpPage extends Activity {
 
 	
-	Button mLoginBtn, mSignUpBtn, mGoSignUpBtn;
+	Button mSignUpBtn;
 	
 	ImageButton mCancelBtn;
-	TextView mEmailTxt, mPwdTxt, mScreenNameTxt, mEmailSUTxt, mPwdSUTxt; 
-	EditText mEmailEdit, mPwdEdit, mScreenNameEdit, mEmailSUEdit, mPwdSUEdit;
+	
+	EditText mScreenNameEdit, mEmailSUEdit, mPwdSUEdit;
 	HttpPostFG httpPostFG;
 	
 	ImageView logo;
@@ -33,20 +33,13 @@ public class LoginSignUpPage extends Activity {
 	private RelativeLayout layoutToAdd;
 	
 	public static String  TAG = "FG-1";
-	boolean clearEmailLogin = true, clearPwdLogin = true;
+	boolean clearEmailSignUp = true, clearPwdSignUp = true;
+	boolean clearScreenName = true;
 	
 	private OnClickListener myClickListener = new OnClickListener() {
 		public void onClick(View v) {
 			
-			if(v.equals(mLoginBtn)){
-				
-				//addPost();
-				httpPostFG.postLogin(mEmailEdit.getText().toString(), mPwdEdit.getText().toString());
-				//httpPostFG.postLogin("test","test");
-				
-				
-			}
-			else if(v.equals(mSignUpBtn)){
+			 if(v.equals(mSignUpBtn)){
 				
 				httpPostFG.postAddUser(mEmailSUEdit.getText().toString(),mPwdSUEdit.getText().toString());
 				
@@ -65,38 +58,40 @@ public class LoginSignUpPage extends Activity {
 				
 				onBackPressed();
 				
-			}else if(v.equals(mEmailEdit)){
+			}else if(v.equals(mEmailSUEdit)){
 				
-				if(clearEmailLogin){
-					mEmailEdit.setText("");
-					clearEmailLogin = false;
+				if(clearEmailSignUp){
+					mEmailSUEdit.setText("");
+					clearEmailSignUp = false;
 				}
 				
 				
 				
-			}else if(v.equals(mPwdEdit)){
+			}else if(v.equals(mPwdSUEdit)){
 				
-				if(clearPwdLogin){
-					mPwdEdit.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-					mPwdEdit.setText("");
-					clearPwdLogin = false;
+				if(clearPwdSignUp){
+					mPwdSUEdit.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+					mPwdSUEdit.setText("");
+					clearPwdSignUp = false;
 					
 				}
 				
-			}else if(v.equals(logo)){
-				mEmailEdit.setText("apple@b.com");
-				mPwdEdit.setText("abc");
+			}else if(v.equals(mScreenNameEdit)){
+				
+				if(clearScreenName){
+					
+					mScreenNameEdit.setText("");
+					clearScreenName = false;
+					
+				}
+				
+			}
+			else if(v.equals(logo)){
+				mEmailSUEdit.setText("apple@b.com");
+				mPwdSUEdit.setText("abc");
 				
 				
-			}else if(v.equals(mGoSignUpBtn)){
-				
-				
-				Intent intent = new Intent();
-			    intent.setClass(context, SignUpPage.class);
-			    startActivity(intent);
-				
-				
-			} 
+			}
 			
 			
 			
@@ -106,23 +101,12 @@ public class LoginSignUpPage extends Activity {
 	};
 	
 	
-	private OnClickListener SignUPClickListener = new OnClickListener() {
-		public void onClick(View v) {
-			
-			if(v.equals(mSignUpBtn)){
-				
-				Log.i(TAG,"signup pressed");
-				//httpPostFG.postAddUser(mEmailSUEdit.getText().toString(),mPwdSUEdit.getText().toString());
-				
-			}
-		
-		}
-		};
+	
 		
 	
 	 public void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
-	        setContentView(R.layout.login_signup);
+	        setContentView(R.layout.signup);
 	        
 	        //layoutToAdd = (RelativeLayout) findViewById(R.layout.login_signup);
 	        
@@ -135,34 +119,36 @@ public class LoginSignUpPage extends Activity {
 	        logo = (ImageView) this.findViewById(R.id.loginLogo);
 	        logo.setOnClickListener(myClickListener);
 	        
-	        mLoginBtn = (Button) this.findViewById(R.id.btnLogin);
+	        mSignUpBtn = (Button) findViewById(R.id.btnSignUp);
+            mSignUpBtn.setOnClickListener(myClickListener);
+	        
+	       
 	        
 	        mCancelBtn = (ImageButton) this.findViewById(R.id.btnCancel);
 	        
 	        
-	        mGoSignUpBtn = (Button) this.findViewById(R.id.btnGoSignUp);
+	       
 	        
-	        mLoginBtn.setOnClickListener(myClickListener);
+	       
 	        
 	        mCancelBtn.setOnClickListener(myClickListener);
-	        mGoSignUpBtn.setOnClickListener(myClickListener);
+	       
 	        
 	        
-	        mEmailTxt = (TextView) this.findViewById(R.id.txtEmail);
+	      
 	        
-	        mPwdTxt = (TextView) this.findViewById(R.id.textPassword);
-	        mScreenNameTxt = (TextView) this.findViewById(R.id.txtScreenName);
-	        mEmailSUTxt = (TextView) this.findViewById(R.id.txtEmailSU);
-	        mPwdSUTxt = (TextView) this.findViewById(R.id.textPassworSU);
 	        
-	        mEmailEdit = (EditText) this.findViewById(R.id.editEmail);
-	        mPwdEdit = (EditText) this.findViewById(R.id.editPassword);
+	       
+	        
+	     
 	        mScreenNameEdit = (EditText) this.findViewById(R.id.editScreenName);
 	        mEmailSUEdit = (EditText) this.findViewById(R.id.editEmailSU);
 	        mPwdSUEdit = (EditText) this.findViewById(R.id.editPasswordSU);
 	        
-	        mEmailEdit.setOnClickListener(myClickListener);
-	        mPwdEdit.setOnClickListener(myClickListener);
+	       
+	        mScreenNameEdit.setOnClickListener(myClickListener);
+	        mEmailSUEdit.setOnClickListener(myClickListener);
+	        mPwdSUEdit.setOnClickListener(myClickListener);
 	        
 	        
 	        context = getApplicationContext();

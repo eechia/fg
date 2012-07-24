@@ -3,14 +3,14 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" 
-    android:background="#F26107">
+    android:background="@color/app_background">
 
     <Button
         android:id="@+id/Map"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="14dp"
-        android:text="Map" />
+        android:text="Map View" />
 
     <ListView
         android:id="@android:id/list"
