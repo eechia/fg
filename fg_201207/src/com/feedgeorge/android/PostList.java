@@ -56,9 +56,14 @@ public class PostList extends TabGroupActivity  implements OnItemSelectedListene
 	
 	static //populate content
 	 List<Post> postQueue = new ArrayList<Post>();
+	
+	public static String POST_SELECTION = "all";
+	
+	
+	final CharSequence[] items = {"All", "Posts","Events","Surveys"};
 	 
 	 String[] filterByStr = {"All", "Posts","Events","Surveys"};
-	 Button mapBtn;
+	 Button mapBtn, spinnerBtn;
 	 Spinner filterSpin;
 	  Context context;
 	  TextView groupNameTxt, groupNameLabel ;
@@ -82,22 +87,33 @@ public class PostList extends TabGroupActivity  implements OnItemSelectedListene
 		
 		public void onClick(View v) {
 			
-			Log.i(TAG,">>> myBtnClickListener!!!!!!: onClick");
+			
 			 
 			if(v.equals(mapBtn)){
 				
-				Log.i(TAG,">>> mapBtn");
-				final CharSequence[] items = {"Red", "Green", "Blue"};
-
-				AlertDialog.Builder builder = new AlertDialog.Builder(PostList.this);
-				builder.setTitle("Pick a color");
-				builder.setItems(items, new DialogInterface.OnClickListener() {
-				    public void onClick(DialogInterface dialog, int item) {
-				        Toast.makeText(context, items[item], Toast.LENGTH_SHORT).show();
-				    }
-				});
+				/*
+				Log.i(TAG,">>> mapBtn <<<<");
 				
+				Intent intent = new Intent(getParent(), SelectionView.class);
+				 
+				
+				 
+		         TabGroupActivity parentActivity = (TabGroupActivity)getParent();
+		         parentActivity.startChildActivity("SelectionView", intent);
+		         */
 			} 
+			else if(v.equals(spinnerBtn)){
+				
+				Log.i(TAG,">>> spinnerBtn <<<<");
+				
+				Intent intent = new Intent(getParent(), SelectionView.class);
+				 
+				
+				 
+		         TabGroupActivity parentActivity = (TabGroupActivity)getParent();
+		         parentActivity.startChildActivity("SelectionView", intent);
+			}
+			
 			/*
 			else if(v.equals(placesBtn)){
 				
@@ -170,6 +186,11 @@ public class PostList extends TabGroupActivity  implements OnItemSelectedListene
 	        
 	        mapBtn = (Button) findViewById(R.id.Map);
 	        mapBtn.setOnClickListener(myBtnClickListener);
+	        
+	        spinnerBtn = (Button) findViewById(R.id.spinnerBtn);
+	        spinnerBtn.setOnClickListener(myBtnClickListener);
+	        
+	        
 	        
 			/*
 			ArrayAdapter aa = new ArrayAdapter(
@@ -443,10 +464,14 @@ public class PostList extends TabGroupActivity  implements OnItemSelectedListene
 		@Override
 		public void onBackPressed () {
 		int length = mIdList.size();
-		if ( length > 1) {
-		Activity current = getLocalActivityManager().getActivity(mIdList.get(length-1));
-		current.finish();
-		}
+			if ( length > 1) {
+			Activity current = getLocalActivityManager().getActivity(mIdList.get(length-1));
+			current.finish();
+			Log.i(TAG,"!!!!!selection: "+POST_SELECTION);
+			Toast.makeText(PlacesList.getAppContext(),
+					"selection: "+POST_SELECTION, Toast.LENGTH_SHORT).show();
+			
+			}
 		}
 		
 		/*

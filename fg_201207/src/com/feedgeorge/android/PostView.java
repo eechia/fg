@@ -16,6 +16,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -144,15 +146,28 @@ public class PostView extends Activity {
         imagePost = (ImageView) findViewById(R.id.postImage);
 		//String photo_url = photo;
         
-		
+		Log.i(TAG,"^^PHOTO URL: "+photo_url);
 		
 		try {
 						
 			if(photo_url != null){
 				newurl = new URL(photo_url);
 				Bitmap mIcon_val = BitmapFactory.decodeStream(newurl.openConnection().getInputStream()); 
-				imagePost.setImageBitmap(mIcon_val);
-				imagePost.setScaleType(ScaleType.FIT_XY);
+				//imagePost.setImageBitmap(mIcon_val);
+				//imagePost.setScaleType(ScaleType.CENTER_INSIDE);
+				
+				imagePost = transformImage(mIcon_val, imagePost);
+				
+				
+				//final double viewWidthToBitmapWidthRatio = (double)imagePost.getWidth() / (double)mIcon_val.getWidth();
+				//imagePost.getLayoutParams().height = (int) (mIcon_val.getHeight() * viewWidthToBitmapWidthRatio);
+				
+				/*
+				 int width=360;
+				 int height=320;
+				 Bitmap resizedbitmap=Bitmap.createScaledBitmap(mIcon_val, width, height, true);
+				 imagePost.setImageBitmap(resizedbitmap);
+				 */
 			}
 			
 		} catch (MalformedURLException e) {
@@ -206,4 +221,47 @@ public class PostView extends Activity {
 		
 		httppostFG.postToServer(Constant.GET_COMMENTS, keyList, valueList);
 	}
+	
+	public ImageView transformImage(Bitmap bitmapOrg, ImageView imageView)
+	{
+		  
+	        
+	        int width = bitmapOrg.getWidth();
+	        int height = bitmapOrg.getHeight();
+	        int newWidth = 600;
+	        int newHeight = 400;
+	        
+	        // calculate the scale - in this case = 0.4f
+	        float scaleWidth = ((float) newWidth) / width;
+	        float scaleHeight = ((float) newHeight) / height;
+	        
+	        // createa matrix for the manipulation
+	        Matrix matrix = new Matrix();
+	        // resize the bit map
+	        matrix.postScale(scaleWidth, scaleHeight);
+	        // rotate the Bitmap
+	       // matrix.postRotate(45);
+
+	        // recreate the new Bitmap
+	        Bitmap resizedBitmap = Bitmap.createBitmap(bitmapOrg, 0, 0, 
+	                          width, height, matrix, true); 
+	    
+	        // make a Drawable from Bitmap to allow to set the BitMap 
+	        // to the ImageView, ImageButton or what ever
+	        BitmapDrawable bmd = new BitmapDrawable(resizedBitmap);
+	        
+	       
+	        
+	        // set the Drawable on the ImageView
+	        imageView.setImageDrawable(bmd);
+	     
+	        // center the Image
+	        imageView.setScaleType(ScaleType.CENTER);
+	        
+	        return imageView;
+		 
+	 }
+	
 }
+
+ 	

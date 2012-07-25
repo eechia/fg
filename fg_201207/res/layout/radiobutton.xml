@@ -1,0 +1,102 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/rounded_bg_option" >
+
+    <RadioGroup
+        android:id="@+id/radioSelection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        
+        android:layout_below="@+id/selectText"
+        android:layout_centerHorizontal="true"
+        android:padding="5dip"
+        
+        
+         >
+ 
+        <RadioButton
+            android:id="@+id/radioAll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="All" 
+            android:textColor="@color/radio_post"
+            android:checked="true"
+           
+            
+            />
+ 
+        <RadioButton
+            android:id="@+id/radioPost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+             android:textColor="@color/radio_post"
+            android:text="Post" />
+        
+        <RadioButton
+            android:id="@+id/radioEvent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+             android:textColor="@color/radio_post"
+            android:text="Event" 
+             />
+ 
+        <RadioButton
+            android:id="@+id/radioSurvey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+             android:textColor="@color/radio_post"
+            android:text="Survey" />
+        
+ 
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/OkBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/divider"
+        android:layout_below="@+id/radioSelection"
+        android:layout_alignBaseline="@+id/radioSelection"
+        android:text="   Ok   " />
+
+    <TextView
+        android:id="@+id/divider"
+        android:layout_width="0dip"
+        android:layout_height="0dip"
+        android:layout_centerHorizontal="true"
+    />
+    
+    
+    <Button
+        android:id="@+id/CancelBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/divider"
+        android:layout_below="@+id/radioSelection"
+        android:text="Cancel" />
+
+    <ImageView
+        android:id="@+id/FGlogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        
+        android:layout_centerHorizontal="true"
+        android:layout_margin="15dp"
+        
+        android:src="@drawable/login_logo" />
+    
+    <TextView
+        android:id="@+id/selectText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+       
+        android:layout_below="@+id/FGlogo"
+        android:text="Which would you like to view?"
+        android:layout_centerHorizontal="true" 
+        android:textStyle="bold"
+        
+        android:textSize="15dip"
+        />
+
+</RelativeLayout>

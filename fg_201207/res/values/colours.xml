@@ -4,4 +4,5 @@
         <color name="post_listing">#576996</color>
         <color name="header">#ffffff</color>
         <color name="app_background">#ffffff</color>
+        <color name="radio_post">#000000</color>
 </resources>

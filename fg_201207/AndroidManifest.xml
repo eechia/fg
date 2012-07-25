@@ -43,6 +43,8 @@
         <activity android:name=".AddEvent"/>
         <activity android:name=".AddSurvey"/>
         <activity android:name=".SignUpPage"/>
+        <activity android:name=".SelectionView"/>
+        
         
         
         

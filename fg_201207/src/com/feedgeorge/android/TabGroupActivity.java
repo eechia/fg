@@ -6,6 +6,8 @@ import java.util.Map;
 
 import android.app.Activity;
 import android.app.ActivityGroup;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.app.LocalActivityManager;
 import android.content.Intent;
 import android.os.Bundle;
@@ -201,4 +203,6 @@ public class TabGroupActivity extends ActivityGroup {
 			current.finish();
 		}
 	}
+
+	
 }

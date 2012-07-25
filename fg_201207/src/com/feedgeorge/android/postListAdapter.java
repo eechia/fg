@@ -60,8 +60,14 @@ public class postListAdapter extends ArrayAdapter<Post> {
 		TextView commentsTxt = (TextView)rowView.findViewById(R.id.commentPostTxt);
 		
 		//timestampTxt.setText(postQueue.get(position).getAuthorName()); 
-		authorTxt.setText("Posted by " +postQueue.get(position).getAuthorName()); 
-		commentsTxt.setText(postQueue.get(position).getCommentCount() + " comments");
+		authorTxt.setText(" by " +postQueue.get(position).getAuthorName()); 
+		
+		String commentCount = postQueue.get(position).getCommentCount();
+		
+		if(commentCount.equals("0") || commentCount.equals("1"))
+			commentsTxt.setText( commentCount + " comment");
+		else
+			commentsTxt.setText( commentCount + " comments");
 		
 		String timestamp = postQueue.get(position).getLastUpdate();
 		
@@ -106,10 +112,18 @@ public class postListAdapter extends ArrayAdapter<Post> {
 	
 			
 			if(photo_url.contains("http")){
-				//Log.i(TAG, "@@@@@ TRUE: "+ photo_url);
+			Log.i(TAG, "@@@@@ TRUE: "+ photo_url);
 				newurl = new URL(photo_url);
 				Bitmap mIcon_val = BitmapFactory.decodeStream(newurl.openConnection().getInputStream()); 
-				imagePost.setImageBitmap(mIcon_val);
+				//imagePost.setImageBitmap(mIcon_val);
+				
+				
+			    int width=120;
+			    int height=100;
+			    Bitmap resizedbitmap=Bitmap.createScaledBitmap(mIcon_val, width, height, true);
+			    imagePost.setImageBitmap(resizedbitmap);
+				
+			    
 			}
 			
 			/*
