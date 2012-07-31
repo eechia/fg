@@ -43,7 +43,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	
 	public static String  TAG = "FG-1";
 	
-	public static final String DBNAME = "feedgeorge";
+	public static final String DBNAME = "feedgeorge123";
 	
 	
 	public static final int DATABASE_VERSION = 1;
@@ -86,7 +86,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		     
 	         Constant.IMAGE_FULL  + " TEXT);"; 
 	 
-	 private static final String MKINI_CONTENT_TABLE_CREATE =
+	 private static final String FG_USER_TABLE_CREATE =
 	                "CREATE TABLE " + MKINI_INFO_TABLE_NAME + " (" +
 	                LASTDATE + " TEXT, "+
 	                USERNAME + " TEXT);";

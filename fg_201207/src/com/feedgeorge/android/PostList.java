@@ -112,9 +112,6 @@ public class PostList extends TabGroupActivity  implements OnItemSelectedListene
 				
 				
 				Intent intent = new Intent(getParent(), SelectionView.class);
-				 
-				
-				 
 		         parentActivity = (TabGroupActivity)getParent();
 		         parentActivity.startChildActivity("SelectionView", intent);
 			}
@@ -332,8 +329,14 @@ public class PostList extends TabGroupActivity  implements OnItemSelectedListene
 			
 			//parentActivity.onBackPressed();
 			Log.i(TAG,"POSTLIST: onBackPressed () "+POST_SELECTION);
+			httppostFG.viewContentListFrDB(POST_SELECTION);
 		
-		
+			/*
+			PLAdapter = new postListAdapter(this,R.layout.postrow, postQueue);
+			
+			postListview.setAdapter(PLAdapter);
+			PLAdapter.setNotifyOnChange(true);
+			*/
 			
 		}
 		

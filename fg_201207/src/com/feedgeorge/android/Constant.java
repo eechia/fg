@@ -30,7 +30,9 @@ public class Constant {
 	
 //static final String GROUP_ID = "groupId";
 	
-	static public String FG_CONTENT_TABLE_NAME = "feedgeorgev2";
+	static public String FG_CONTENT_TABLE_NAME = "contenttable";
+	static public String FG_USER_TABLE_NAME = "usertable";
+	static public String FG_MD5_tracker = "md5tracker";
 	
 	
 	

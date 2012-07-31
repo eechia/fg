@@ -705,6 +705,7 @@ public class HttpPostFG {
 				     					
 				     					cv.put(Constant.ID, item.getString(Constant.ID) );
 				     					cv.put(Constant.AUTHOR_ID, item.getString(Constant.AUTHOR_ID));
+				     					cv.put(Constant.AUTHOR_NAME, item.getString(Constant.AUTHOR_NAME));
 				     					cv.put(Constant.GROUP_ID,item.getString(Constant.GROUP_ID));
 				     					cv.put(Constant.IMAGE,item.getString(Constant.IMAGE));
 				     					cv.put(Constant.LAST_UPDATE,item.getString(Constant.LAST_UPDATE));
@@ -944,7 +945,95 @@ public class HttpPostFG {
 			}
 		 
 		 
-		 public void viewContentListFrDB(String option){
+		 public void viewContentListFrDB(String choice){
+			 
+			 postQueue.clear();
+			 boolean selectAll= false;
+			 String queryAll;
+			 
+			 if(choice.equals(Constant.POST)){
+				 
+				 choice = Constant.POST;
+			
+			 }else if(choice.equals(Constant.EVENT)){
+				 choice = Constant.EVENT;
+				 
+			 }else if(choice.equals(Constant.SURVEY)){
+				 choice = Constant.SURVEY;
+				 
+			 }else{
+				 
+				 selectAll = true;
+			 }
+			 
+
+			 if(selectAll){
+
+				 queryAll = "SELECT * "+
+							" FROM "+ Constant.FG_CONTENT_TABLE_NAME+ 
+									 " order by "+Constant.LAST_UPDATE + " DESC";
+
+			 }else{
+				 
+				 queryAll = "SELECT * "+
+							" FROM "+ Constant.FG_CONTENT_TABLE_NAME+ " where type ='"  +choice +"' " +
+									 " order by "+Constant.LAST_UPDATE + " DESC";
+
+			 }
+			 
+			 Log.i(TAG,"viewContentListFrDB | query:" +queryAll);
+			 
+			 db = dbHelper.getWritableDatabase();
+			 
+			 Post currentPost; 
+			 
+			 //SELECT * FROM feedgeorgev2 where type = '3' order by lastUpdate DESC;
+			 /*
+			 queryAll = "SELECT * "+
+						" FROM "+ Constant.FG_CONTENT_TABLE_NAME+ " where type ='"  +choice +"' " +
+								 " order by "+Constant.LAST_UPDATE + " DESC";
+			 */
+			 Cursor readCursor = db.rawQuery(queryAll, null);
+			 
+			 int readCount = readCursor.getCount();
+			 
+			 String id, author, text, authorId, lat, lng, lastUpdate, commentCount, image;
+			 
+			 if(readCount >0){
+				 
+				 
+				 while(readCursor.moveToNext()){
+					 
+					 currentPost = new Post();
+					 id = readCursor.getString(readCursor.getColumnIndex(Constant.ID));
+					 author = readCursor.getString(readCursor.getColumnIndex(Constant.AUTHOR_NAME));
+					 text = readCursor.getString(readCursor.getColumnIndex(Constant.TEXT));
+					 authorId = readCursor.getString(readCursor.getColumnIndex(Constant.AUTHOR_ID));
+					 lat = readCursor.getString(readCursor.getColumnIndex(Constant.LAT));
+					 lng = readCursor.getString(readCursor.getColumnIndex(Constant.LNG));
+					 lastUpdate = readCursor.getString(readCursor.getColumnIndex(Constant.LAST_UPDATE));
+					 commentCount = readCursor.getString(readCursor.getColumnIndex(Constant.COMMENT_COUNT));
+					 image = readCursor.getString(readCursor.getColumnIndex(Constant.IMAGE));
+					 
+					 Log.i(TAG,"viewContentListFrDB | text:" +text);
+					 
+					 currentPost.setId(id);
+					 currentPost.setAuthorId(authorId);
+					 currentPost.setAuthorId(author);
+					 currentPost.setImage(image);
+					 currentPost.setText(text);
+					 currentPost.setLastUpdate(lastUpdate);
+					 currentPost.setLat(lat);
+					 currentPost.setLng(lng);
+					 currentPost.setCommentCount(commentCount);
+					 
+					 postQueue.add(currentPost);
+				 }
+				 
+			 }
+			 
+			 db.close();
+			 PostList.setPostQueue(postQueue);
 			 
 			 
 		 }
