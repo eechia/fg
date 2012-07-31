@@ -33,14 +33,27 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.util.Log;
 import android.widget.Toast;
 
 public class HttpPostFG {
+	
+	
+	//for database
+	private SQLiteDatabase db = null;
+	private SQLiteDatabase db1 = null;
+	//private Cursor taskCursor = null;
+	private ContentValues cv = null;
+	private DatabaseHelper dbHelper = null;	
+	
+	
 	
 	private static HttpPostFG instance = null;
 	
@@ -64,22 +77,45 @@ public class HttpPostFG {
 	 //pupulate nearby groups
 	 public static ArrayList<Group> nearbyGroupsList, joinedGroupList;
 	
-	protected HttpPostFG(){
+	protected HttpPostFG(PlacesList placesListContext){
 		
 		mHttpClient = new DefaultHttpClient();
 		mHttpContext = new BasicHttpContext();
 		mCookieStore      = new BasicCookieStore();        
 		mHttpContext.setAttribute(ClientContext.COOKIE_STORE, mCookieStore);
-		context = PlacesList.getAppContext();
-		Log.i(TAG,"creating instance: HttpPostFG()");
+		//context = PlacesList.getAppContext();
+		
+		context = (PlacesList) placesListContext;
+		instance = this;
+		
+		Log.i(TAG,"!!!!!!creating instance: HttpPostFG()");
+		
+		
+		if((dbHelper == null) || db == null){
+			
+			dbHelper = new DatabaseHelper(placesListContext,db);
+			
+			Log.i(TAG,"!!!!!!HttpPostFG() : create dbHelper");
+			//b = dbHelper.getWritableDatabase();
+			cv = new ContentValues();
+			
+		}
+		
 		
 	}
 	
 	public static HttpPostFG getInstance() {
+		
+		return instance;
+		
+		/*
+		Log.i(TAG,"!!!!!! HttpPostFG getInstance()");
+		
 	      if(instance == null) {
 	         instance = new HttpPostFG();
 	      }
 	      return instance;
+	      */
 	   }
 	
 	
@@ -407,6 +443,10 @@ public class HttpPostFG {
 		        		case Constant.ADD_COMMENT:
 		        			httppost = new HttpPost(Constant.URL_CONTENT+"addcomment");
 		        			break;
+		        			
+		        		case Constant.GET_FULLCONTENT:
+		        			httppost = new HttpPost(Constant.URL_CONTENT+"get");
+		        			break;
 						    
 				            
 				           
@@ -617,6 +657,7 @@ public class HttpPostFG {
 									
 									break;
 							
+								//>>>>>> GET CONTENT LIST
 								case Constant.GET_GRP_CONTENT:
 	
 				        			 Log.i(TAG, " RESPONSE : GET_GRP_CONTENT: ");
@@ -629,9 +670,17 @@ public class HttpPostFG {
 				     				
 				     				//JSONObject contentObject = new JSONObject(content);
 				     				
-				     				 contentArray = new JSONArray(content);
+				     				contentArray = new JSONArray(content);
 				     				postQueue.clear();
 				     				String title;
+				     				
+				     				//ADD DATE TO DB
+				     				db = dbHelper.getWritableDatabase();
+				     				
+				     				//Cursor taskCursor = db.rawQuery(query, null);
+				     				//messageList.startManagingCursor(taskCursor);
+				     				
+				     				//--------------------------
 				     				
 				     				for(int i=0; i<contentArray.length();i++)
 				     				{
@@ -652,12 +701,36 @@ public class HttpPostFG {
 				     					currentPost.setCommentCount(item.getString(Constant.COMMENT_COUNT));
 				     					
 				     					
-				     					Log.i(TAG, "title: "+item.getString(Constant.TEXT));
+				     					//------------ database --------------
 				     					
+				     					cv.put(Constant.ID, item.getString(Constant.ID) );
+				     					cv.put(Constant.AUTHOR_ID, item.getString(Constant.AUTHOR_ID));
+				     					cv.put(Constant.GROUP_ID,item.getString(Constant.GROUP_ID));
+				     					cv.put(Constant.IMAGE,item.getString(Constant.IMAGE));
+				     					cv.put(Constant.LAST_UPDATE,item.getString(Constant.LAST_UPDATE));
+				     					cv.put(Constant.LAT,item.getString(Constant.LAT));
+				     					cv.put(Constant.LNG,item.getString(Constant.LNG));
+				     					cv.put(Constant.TEXT,item.getString(Constant.TEXT));
+				     					
+				     					cv.put(Constant.TYPE,item.getString(Constant.TYPE));
+				     					cv.put(Constant.COMMENT_COUNT,item.getString(Constant.COMMENT_COUNT));
+				     					
+				     					db.insert(Constant.FG_CONTENT_TABLE_NAME, Constant.ID, cv);
+				     					
+				     					//------------ database --------------
+				     					
+				     					Log.i(TAG, "title: "+item.getString(Constant.TEXT));
+				     					Log.i(TAG, "+++++++++++++++++++++++++++++++++++++++++");
 										postQueue.add(currentPost);
 				     					
 				     				
 				     				}
+				     				
+				     				
+				     				
+				     				
+				     				
+				     				
 				     				PostList.setPostQueue(postQueue);
 				     				
 				     				 Intent intent = new Intent();
@@ -666,7 +739,8 @@ public class HttpPostFG {
 									  intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 									  context.startActivity(intent);
 									  
-									 
+									  //db.close();
+									  
 									 break;
 							
 								case Constant.ADD_POST:
@@ -868,6 +942,12 @@ public class HttpPostFG {
 					Log.e(e.getClass().getName(),"error:" +e.getMessage());
 				}
 			}
+		 
+		 
+		 public void viewContentListFrDB(String option){
+			 
+			 
+		 }
 		 
 }
 				

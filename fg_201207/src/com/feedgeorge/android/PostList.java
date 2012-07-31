@@ -50,9 +50,9 @@ public class PostList extends TabGroupActivity  implements OnItemSelectedListene
 //ActivityGroup implements OnItemSelectedListener {
 //ListActivity implements OnItemSelectedListener {
 	
+	public static PostList instance;
 	
-	
-	public static String  TAG = "FG-1-PostList";
+	public static String  TAG = "FG-1";
 	
 	static //populate content
 	 List<Post> postQueue = new ArrayList<Post>();
@@ -77,6 +77,9 @@ public class PostList extends TabGroupActivity  implements OnItemSelectedListene
 	  ArrayList<String> keyList, valueList;
 	  String postID;
 	  HttpPostFG httppostFG;
+	  
+	  
+	  TabGroupActivity parentActivity;
 	
 	/*
 	 * Listen to the option selected by the users.
@@ -106,50 +109,17 @@ public class PostList extends TabGroupActivity  implements OnItemSelectedListene
 				
 				Log.i(TAG,">>> spinnerBtn <<<<");
 				
+				
+				
 				Intent intent = new Intent(getParent(), SelectionView.class);
 				 
 				
 				 
-		         TabGroupActivity parentActivity = (TabGroupActivity)getParent();
+		         parentActivity = (TabGroupActivity)getParent();
 		         parentActivity.startChildActivity("SelectionView", intent);
 			}
 			
-			/*
-			else if(v.equals(placesBtn)){
-				
-				Log.i(TAG,">>> placesBtn");
-				
-				
-				final CharSequence[] items = {"Red", "Green", "Blue"};
-
-				AlertDialog.Builder builder = new AlertDialog.Builder(PostList.this);
-				builder.setTitle("Pick a color");
-				builder.setItems(items, new DialogInterface.OnClickListener() {
-				    public void onClick(DialogInterface dialog, int item) {
-				        Toast.makeText(getApplicationContext(), items[item], Toast.LENGTH_SHORT).show();
-				    }
-				});
-				
-				
-				AlertDialog alert = builder.create();
-				//alert.setOwnerActivity(context.ACTIVITY_SERVICE);
-				alert.show();
-				
-			}else if(v.equals(addBtn)){
-				
-				Log.i(TAG,">>> addBtn");
-				
-			}else if(v.equals(searchBtn)){
-				
-				Log.i(TAG,">>> searchBtn");
-				
-			}else if(v.equals(settingsBtn)){
-				
-				Log.i(TAG,">>> settingsBtn");
-				
-			}
 			
-			*/
 			
 			}
 
@@ -212,6 +182,8 @@ public class PostList extends TabGroupActivity  implements OnItemSelectedListene
 			postListview.setAdapter(PLAdapter);
 			PLAdapter.setNotifyOnChange(true);
 			
+			SelectionView.setPostList(this);
+			
 			/*
 	       setListAdapter(new postListAdapter(this,R.layout.postrow, postQueue));
 			
@@ -257,31 +229,6 @@ public class PostList extends TabGroupActivity  implements OnItemSelectedListene
 				//Toast.makeText(this, "TITLE:" +postQueue.get(position).getText(), Toast.LENGTH_LONG).show();
 				
 				
-				/*
-				Intent intent = new Intent();
-			    
-				intent.setClass(context,postView.class);
-			    
-			    
-			    intent.putExtra(Constant.LAT, postQueue.get(position).getLat());
-			    intent.putExtra(Constant.LNG, postQueue.get(position).getLng());
-			    intent.putExtra(Constant.TEXT, postQueue.get(position).getText());
-			    intent.putExtra(Constant.AUTHOR_NAME, postQueue.get(position).getAuthorName());
-			    
-			   // startActivity(intent);
-			    replaceContentView("activity3", intent);
-				*/
-				
-				/*
-				 Intent intent = new Intent(getParent(), PostMapView.class);
-				 
-				 intent.putExtra(Constant.LAT, postQueue.get(position).getLat());
-				 intent.putExtra(Constant.LNG, postQueue.get(position).getLng());
-				 intent.putExtra(Constant.TEXT, postQueue.get(position).getText());
-				    
-		         TabGroupActivity parentActivity = (TabGroupActivity)getParent();
-		         parentActivity.startChildActivity("ViewPost", intent);
-		         */
 				postID = postQueue.get(position).getId();
 				getComments();
 				
@@ -309,6 +256,20 @@ public class PostList extends TabGroupActivity  implements OnItemSelectedListene
 			Log.i(TAG, "POSTid: "+postID);
 			keyList.add("contentId");
 			valueList.add(postID);
+			
+			
+			httppostFG.postToServer(Constant.GET_FULLCONTENT, keyList, valueList);
+		}
+		
+		
+		public void getFullContent(){
+			
+			keyList = new ArrayList<String>();
+			valueList = new ArrayList<String>();
+			
+			Log.i(TAG, "POSTid: "+postID);
+			keyList.add("contentId");
+			valueList.add(postID);
 			keyList.add("page");
 			valueList.add("1");
 			
@@ -320,30 +281,7 @@ public class PostList extends TabGroupActivity  implements OnItemSelectedListene
 		
 		
 		
-		/*
-		protected void onListItemClick(ListView l, View v, int position, long id) {
-			super.onListItemClick(l, v, position, id);
-			Log.i(TAG,"--TITLE:" +postQueue.get(position).getText() + "long:  "+postQueue.get(position).getLng()
-					+ "lat: "+postQueue.get(position).getLat());
-			
-			Toast.makeText(this, "TITLE:" +postQueue.get(position).getText(), Toast.LENGTH_LONG).show();
-			
-			Intent intent = new Intent();
-		    
-			intent.setClass(this,postView.class);
-		    
-		    
-		    intent.putExtra(Constant.LAT, postQueue.get(position).getLat());
-		    intent.putExtra(Constant.LNG, postQueue.get(position).getLng());
-		    intent.putExtra(Constant.TEXT, postQueue.get(position).getText());
-		    intent.putExtra(Constant.AUTHOR_NAME, postQueue.get(position).getAuthorName());
-		    
-		    startActivity(intent);
-			
-			
-			//Toast.makeText(this, "TITLE:" +postQueue.get(position).getText(), Toast.LENGTH_LONG).show();
-		}	
-		*/
+		
 		
 		public void onItemSelected(AdapterView<?> parent, View v, int position,
 				long id) {
@@ -362,79 +300,6 @@ public class PostList extends TabGroupActivity  implements OnItemSelectedListene
 		}
 		
 		
-		public void replaceContentView(String id, Intent newIntent) {
-			View view1 = getLocalActivityManager().startActivity
-					(id,newIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)) .getDecorView(); this.setContentView(view1);
-					//(id,newIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)) .getDecorView(); this.setContentView(view);
-		
-			/*
-			View view = ((ActivityGroup) context)
-					.getLocalActivityManager()
-					.startActivity(id,
-					newIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
-					.getDecorView();
-					((Activity) context).setContentView(view);
-	*/
-		
-		}   
-		
-		/*
-		@Override
-		public void onBackPressed() {
-		// TODO Auto-generated method stub
-		super.onBackPressed();
-		if (MathHelper.SHOW_DETAILS) {
-		Log.e("back", "pressed accepted");
-		Constants.LIST_ACTIVITY = 1;
-		Constants.SHOW_DETAILS = false;
-		Intent intent = new Intent(this, Tab_widget.class);
-		startActivity(intent);
-		finish();
-		}
-		
-		}
-		*/
-		
-		
-		/**
-		* This is called when a child activity of this one calls its finish method.
-		* This implementation calls {@link LocalActivityManager#destroyActivity} on the child activity
-		* and starts the previous activity.
-		* If the last child activity just called finish(),this activity (the parent),
-		* calls finish to finish the entire group.
-		*/
-		/*
-		@Override
-		public void finishFromChild(Activity child) {
-		LocalActivityManager manager = getLocalActivityManager();
-		int index = mIdList.size()-1;
-
-		if (index < 1) {
-		finish();
-		return;
-		}
-		
-			 
-		}
-		*/
-
-		/**
-		* Starts an Activity as a child Activity to this.
-		* @param Id Unique identifier of the activity to be started.
-		* @param intent The Intent describing the activity to be started.
-		* @throws android.content.ActivityNotFoundException.
-		*/
-		/*
-		public void startChildActivity(String Id, Intent intent) {
-		Window window = getLocalActivityManager().startActivity(Id,intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-		if (window != null) {
-		mIdList.add(Id);
-		setContentView(window.getDecorView());
-		}
-		}
-		*/
-		
-		
 		 @Override
 		    public boolean onKeyDown(int keyCode, KeyEvent event) {
 		        if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -451,8 +316,8 @@ public class PostList extends TabGroupActivity  implements OnItemSelectedListene
 		@Override
 		public boolean onKeyUp(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-		onBackPressed();
-		return true;
+			onBackPressed();
+			return true;
 		}
 		return super.onKeyUp(keyCode, event);
 		}
@@ -463,23 +328,15 @@ public class PostList extends TabGroupActivity  implements OnItemSelectedListene
 		*/
 		@Override
 		public void onBackPressed () {
-		int length = mIdList.size();
-			if ( length > 1) {
-			Activity current = getLocalActivityManager().getActivity(mIdList.get(length-1));
-			current.finish();
-			Log.i(TAG,"!!!!!selection: "+POST_SELECTION);
-			Toast.makeText(PlacesList.getAppContext(),
-					"selection: "+POST_SELECTION, Toast.LENGTH_SHORT).show();
 			
-			}
+			
+			//parentActivity.onBackPressed();
+			Log.i(TAG,"POSTLIST: onBackPressed () "+POST_SELECTION);
+		
+		
+			
 		}
 		
-		/*
-		@Override
-		public void onBackPressed() {
-		TabGroupActivity parentActivity = (TabGroupActivity)getParent();
-		parentActivity.onBackPressed();
-		}
-		*/
+		
 
 }

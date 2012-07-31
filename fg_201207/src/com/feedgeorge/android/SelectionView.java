@@ -21,6 +21,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -31,12 +32,18 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+
 public class SelectionView  extends Activity {
 	protected static final String TAG = "FG-1";
 
 	Button okBtn, cancelBtn;
 	RadioButton selectionRadioBtn;
 	RadioGroup selectionRadioGrp;
+	
+	public static PostList postlist = null;
+	
+	
 	
 	
 	private OnClickListener myBtnClickListener = new OnClickListener() {
@@ -55,7 +62,14 @@ public class SelectionView  extends Activity {
 					//	selectionRadioBtn.getText(), Toast.LENGTH_SHORT).show();
 				
 				PostList.POST_SELECTION = selectionRadioBtn.getText().toString();
-				onBackPressed();
+				//KeyEvent.KEYCODE_BACK
+				
+				//doInjectKeyEvent(new KeyEvent(KeyEvent.KEYCODE_BACK, KeyCode));
+				
+				
+				postlist.onBackPressed();
+						
+				//onBackPressed();
 			
 			}else if(v.equals(cancelBtn)){
 				onBackPressed();
@@ -72,11 +86,17 @@ public class SelectionView  extends Activity {
 	    
 	    okBtn = (Button) findViewById(R.id.OkBtn);
 	    cancelBtn = (Button) findViewById(R.id.CancelBtn);
+	    okBtn.performClick();
 	    
 	    okBtn.setOnClickListener(myBtnClickListener);
 	    cancelBtn.setOnClickListener(myBtnClickListener);
 	    
 	    selectionRadioGrp = (RadioGroup) findViewById(R.id.radioSelection);
+	}
+	
+	public static void setPostList(PostList instance){
+		
+		postlist = instance;
 	}
 }
 

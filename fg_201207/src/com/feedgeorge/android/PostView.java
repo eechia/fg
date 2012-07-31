@@ -64,6 +64,7 @@ public class PostView extends Activity {
 				
 			}else if(v.equals(backBtn)){
 
+				onBackPressed();
 				
 			}else if(v.equals(shareBtn)){
 				
@@ -153,10 +154,10 @@ public class PostView extends Activity {
 			if(photo_url != null){
 				newurl = new URL(photo_url);
 				Bitmap mIcon_val = BitmapFactory.decodeStream(newurl.openConnection().getInputStream()); 
-				//imagePost.setImageBitmap(mIcon_val);
+				imagePost.setImageBitmap(mIcon_val);
 				//imagePost.setScaleType(ScaleType.CENTER_INSIDE);
 				
-				imagePost = transformImage(mIcon_val, imagePost);
+				//imagePost = transformImage(mIcon_val, imagePost);
 				
 				
 				//final double viewWidthToBitmapWidthRatio = (double)imagePost.getWidth() / (double)mIcon_val.getWidth();

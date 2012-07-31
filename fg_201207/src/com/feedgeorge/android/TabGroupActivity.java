@@ -11,6 +11,7 @@ import android.app.AlertDialog.Builder;
 import android.app.LocalActivityManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Window;
 import android.view.animation.AccelerateInterpolator;
@@ -31,6 +32,8 @@ import android.view.animation.TranslateAnimation;
  *
  */
 public class TabGroupActivity extends ActivityGroup {
+	
+	public static String  TAG = "FG-1";
 
 	private ArrayList<String> mIdList;
 
@@ -196,6 +199,9 @@ public class TabGroupActivity extends ActivityGroup {
 	 */
 	@Override
 	public void onBackPressed() {
+		
+		Log.i(TAG, "TAB GROUP ACTIVITY - onBackPressed()");
+		
 		int length = mIdList.size();
 		if (length > 1) {
 			Activity current = getLocalActivityManager().getActivity(

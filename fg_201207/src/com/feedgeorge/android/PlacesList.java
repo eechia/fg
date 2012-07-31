@@ -4,8 +4,10 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.app.ListActivity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,7 +33,12 @@ public class PlacesList extends ListActivity implements OnItemSelectedListener{
 	Button loginAndSignUpBtn;
 	static Context context;
 	
-	
+	//for database
+		private SQLiteDatabase db = null;
+		private SQLiteDatabase db1 = null;
+		//private Cursor taskCursor = null;
+		private ContentValues cv = null;
+		private DatabaseHelper dbHelper = null;	
 	
 	public static String  TAG = "FG-1";
 	
@@ -86,7 +93,18 @@ public class PlacesList extends ListActivity implements OnItemSelectedListener{
        
         //allPlaceslist = (ListView) findViewById( R.id);
         
-        
+        /*
+        if((dbHelper == null) || db == null){
+			
+			dbHelper = new DatabaseHelper(this,db);
+			
+			Log.i(TAG,"!!!!!!HttpPostFG() : create dbHelper");
+			db = dbHelper.getWritableDatabase();
+			cv = new ContentValues();
+			Log.i(TAG,"---------------------------------");
+			
+		}
+		*/
         
         loginAndSignUpBtn = (Button) findViewById(R.id.loginSignUpBtn);
         loginAndSignUpBtn.setOnClickListener(myClickListener);
@@ -95,6 +113,9 @@ public class PlacesList extends ListActivity implements OnItemSelectedListener{
         	loginAndSignUpBtn.setVisibility(View.GONE);
         
         context = this.getApplicationContext();
+        
+        
+        httpPostFG = new HttpPostFG(this);
         
         httpPostFG.getApplicationContext(context);
         

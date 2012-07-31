@@ -30,6 +30,9 @@ public class Constant {
 	
 //static final String GROUP_ID = "groupId";
 	
+	static public String FG_CONTENT_TABLE_NAME = "feedgeorgev2";
+	
+	
 	
 	static public String defaultGroupID = null;
 	static public String currentGroupName = null;
@@ -47,6 +50,11 @@ public class Constant {
 	static final String URL_CONTENT= "http://developer.feedgeorge.com/content/";
 	//
 	
+	//POST TYPE:
+	static final String POST= "1";
+	static final String EVENT = "2";
+	static final String SURVEY = "3";
+	
 	//POST 
 	static final int LOGIN = 0;
 	static final int SIGN_UP = 1;
@@ -58,6 +66,9 @@ public class Constant {
 	static final int ADD_COMMENT = 7;
 	static final int ADD_EVENT = 8;
 	static final int ADD_SURVEY = 9;
+	static final int GET_FULLCONTENT = 10;
+	
+	
 	//POST MESSAG
 	static final String NO_ERROR = "200";
 	
@@ -84,8 +95,31 @@ public class Constant {
 	static final String LAT = "lat";
 	static final String LNG = "lng";
 	static final String LAST_UPDATE = "lastUpdate";
-	
 	static final String COMMENT_COUNT = "commentCount";
+	
+	//extras for all Posts :report, event, survey
+	static final String IMAGE_FULL = "imageFull";
+	
+	//extras for EVENT
+	static final String EVENT_DATE = "eventDate";
+	
+	//extras for SURVEY
+	//static final String USER_ANSWER = "userAnswer";
+	static final String OPTION = "options";
+	
+	//extras for db
+	static final String FULL_CONTENT = "fullContent";
+	
+	//COMMENT
+	static final String eventDate = "eventDate";
+	
+	//SURVEY
+	static final String OPTIONS = "options";
+	static final String SURVEY_ID = "idSurvey";
+	static final String SURVEY_DESC = "description";
+	static final String SURVEY_COUNT = "count";
+	static final String USER_ANSWER = "userAnswer";
+	
 	
 	//group
 	static final String GROUPS = "groups";
