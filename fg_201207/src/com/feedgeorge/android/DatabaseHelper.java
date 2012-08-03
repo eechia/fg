@@ -91,9 +91,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	                LASTDATE + " TEXT, "+
 	                USERNAME + " TEXT);";
 	 
-	 private static final String MKINI_TEST_TABLE_CREATE =
-         "CREATE TABLE " + MKINI_TEST_TABLE_NAME + " (" +
-         LASTDATE + " TEXT);";
+	 private static final String FG_MD5_TABLE_CREATE =
+         "CREATE TABLE " + Constant.FG_MD5_TABLE_NAME + " (" +
+         Constant.MD5 + " TEXT);";
 
 	 
 	 
@@ -120,8 +120,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		//db.execSQL("CREATE TABLE tasks (_id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, details TEXT);");
-		//db.
+		
 		Log.i(TAG,">>>>>>>>> DBHELPER: onCreate table: " +Constant.FG_CONTENT_TABLE_NAME);
 		
 		if(!tableExists(Constant.FG_CONTENT_TABLE_NAME, db)){
@@ -130,13 +129,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			Log.i(TAG,">>>>>>>>> DBHELPER:" +Constant.FG_CONTENT_TABLE_NAME+ " created!");
 		
 		}
-		/*
-		else if(!tableExists(Constant.MKINI_USER_TABLE_NAME, db)){
-			
-			db.execSQL(MKINI_USER_TABLE_CREATE);
-			Log.i("comment","creating user table...");
 		
-		} */
+		if(!tableExists(Constant.FG_MD5_TABLE_NAME, db)){
+			
+			db.execSQL(FG_MD5_TABLE_CREATE);
+			Log.i(TAG,"!!!!!!!!! creating MD5 table: " +Constant.FG_MD5_TABLE_NAME);
+		
+		} 
 		
 		 //db.close();
 		
@@ -208,12 +207,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		
 		 String checkTable = "SELECT name FROM sqlite_master WHERE type='table' AND name='"  
 			 +tableName + "';";
-		 Log.i("sync","tableName: "+tableName);
+		 Log.i(TAG,"tableName: "+tableName);
 		 
 		 Cursor taskCursor = db.rawQuery(checkTable, null);
 		 int size = taskCursor.getCount();
 		 taskCursor.close();
-		 Log.i("sync","size: "+size);
+		 Log.i(TAG,"size: "+size);
 		 
 		 
 		 if(size<1)

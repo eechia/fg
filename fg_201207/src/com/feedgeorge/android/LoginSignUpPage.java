@@ -42,6 +42,7 @@ public class LoginSignUpPage extends Activity {
 				
 				//addPost();
 				httpPostFG.postLogin(mEmailEdit.getText().toString(), mPwdEdit.getText().toString());
+				finish();
 				//httpPostFG.postLogin("test","test");
 				
 				

@@ -5,8 +5,17 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+
+
 
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
@@ -17,20 +26,32 @@ import org.apache.http.client.CookieStore;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.protocol.ClientContext;
+import org.apache.http.conn.ClientConnectionManager;
+import org.apache.http.conn.params.ConnManagerPNames;
+import org.apache.http.conn.params.ConnPerRouteBean;
+import org.apache.http.conn.scheme.PlainSocketFactory;
+import org.apache.http.conn.scheme.Scheme;
+import org.apache.http.conn.scheme.SchemeRegistry;
+import org.apache.http.conn.ssl.SSLSocketFactory;
+import org.apache.http.conn.ssl.X509HostnameVerifier;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.ByteArrayBody;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.conn.SingleClientConnManager;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.CoreProtocolPNames;
 import org.apache.http.params.HttpParams;
+import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.protocol.BasicHttpContext;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.byarger.exchangeit.EasySSLSocketFactory;
 
 import android.app.Activity;
 import android.content.ContentValues;
@@ -45,6 +66,7 @@ import android.widget.Toast;
 
 public class HttpPostFG {
 	
+	public static String MD5tracker = null;
 	
 	//for database
 	private SQLiteDatabase db = null;
@@ -76,13 +98,42 @@ public class HttpPostFG {
 	
 	 //pupulate nearby groups
 	 public static ArrayList<Group> nearbyGroupsList, joinedGroupList;
+	 
+	 
+	 
+	/// X509TrustManager trustManager;
+	// SSLContext SSL_context;
 	
 	protected HttpPostFG(PlacesList placesListContext){
+		
+		
+		//------------- HTTPS
+		/*
+		SchemeRegistry schemeRegistry = new SchemeRegistry();
+		schemeRegistry.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
+		schemeRegistry.register(new Scheme("https", new EasySSLSocketFactory(), 443));
+		 
+		HttpParams params = new BasicHttpParams();
+		params.setParameter(ConnManagerPNames.MAX_TOTAL_CONNECTIONS, 30);
+		params.setParameter(ConnManagerPNames.MAX_CONNECTIONS_PER_ROUTE, new ConnPerRouteBean(30));
+		params.setParameter(HttpProtocolParams.USE_EXPECT_CONTINUE, false);
+		HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
+		 
+		ClientConnectionManager cm = new SingleClientConnManager(params, schemeRegistry);
+		mHttpClient = new DefaultHttpClient(cm, params);
+		 */
+		//----------------------
+		
+		
+		
 		
 		mHttpClient = new DefaultHttpClient();
 		mHttpContext = new BasicHttpContext();
 		mCookieStore      = new BasicCookieStore();        
 		mHttpContext.setAttribute(ClientContext.COOKIE_STORE, mCookieStore);
+		
+		
+	
 		//context = PlacesList.getAppContext();
 		
 		context = (PlacesList) placesListContext;
@@ -94,10 +145,10 @@ public class HttpPostFG {
 		if((dbHelper == null) || db == null){
 			
 			dbHelper = new DatabaseHelper(placesListContext,db);
-			
+			//db = dbHelper.getWritableDatabase();
 			Log.i(TAG,"!!!!!!HttpPostFG() : create dbHelper");
-			//b = dbHelper.getWritableDatabase();
-			cv = new ContentValues();
+			
+			
 			
 		}
 		
@@ -125,7 +176,7 @@ public class HttpPostFG {
 	
 	
 	 /*
-		 * list joined groups 
+		 * list of all groups 
 		 */
 		
 		 public void getNearbyGroup(){
@@ -468,10 +519,66 @@ public class HttpPostFG {
 			            
 			            
 	      
-			            Log.i(TAG, ">>>>>>>>>>>>>>>>>>>>>>>");
+			            
 
 			            //inputStreamToString(response.getEntity().getContent());
 			            String post = inputStreamToString(response.getEntity().getContent());
+			            
+			            if(action == Constant.GET_GRP_CONTENT){
+			            	MD5tracker = MD5(post);
+			            	
+			            	
+			            	Log.i(TAG, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+			            	Log.i(TAG, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+			            	Log.i(TAG, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+			            	
+			            	Log.i(TAG,"MD5tracker: "+MD5tracker);
+			            	cv = new ContentValues();
+			            	
+			            	
+			            	
+			            	if(isMD5TableEmpty()){
+			            		//insert into db straight
+			            		Log.i(TAG,"table is EMPTY!!!!");
+			            		db = dbHelper.getWritableDatabase();
+			            		cv.put(Constant.MD5, MD5tracker);
+			            		db.insert(Constant.FG_MD5_TABLE_NAME, Constant.MD5, cv);
+			            		
+			            		//String q = "Insert into " + Constant.FG_MD5_TABLE_NAME + "("+Constant.MD5 +") values ('" +MD5tracker +"')";
+			            		
+			            		//Log.i(TAG,"q: "+q);
+			            		
+			            		//db.rawQuery(q, null);
+			            		
+			            		
+			            	}else{
+			            		//read fr db and compare
+			            		db = dbHelper.getWritableDatabase();
+			            		String lastMD5;
+			            		
+			            		String query = "SELECT * FROM " + Constant.FG_MD5_TABLE_NAME +" where rowid=1";
+			            		Log.i(TAG,"query: "+query);
+			            		
+			            		Cursor cursor = db.rawQuery(query, null);
+			            		cursor.moveToFirst();
+			            		lastMD5 = cursor.getString(cursor.getColumnIndex(Constant.MD5));
+			            		
+			            		if(lastMD5.equals(MD5tracker)){
+			            			Log.i(TAG,"DATA IS STILL THE SAME, DON'T ADD INTO DB");
+			            			Constant.addContentToDB = false;
+			            		}else{
+			            			Log.i(TAG,"ADDING NEW DATA INTO DB");
+			            			Constant.addContentToDB = true;
+			            		}
+			            			
+			            	}
+			            	
+			            	db.close();
+			            	Log.i(TAG, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+			            	Log.i(TAG, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+			            	Log.i(TAG, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+			            }
+			            
 			            parseResponse(action, post);
 		            
 		           
@@ -585,6 +692,8 @@ public class HttpPostFG {
 								case Constant.GET_JOINED_GROUP:  
 									Log.i(TAG, ">>>> GET_JOINED_GROUP");
 									
+								
+									
 									String groups = resultObject.getString(Constant.GROUPS);
 									
 									//JSONObject contentObject = new JSONObject(content);
@@ -674,71 +783,93 @@ public class HttpPostFG {
 				     				postQueue.clear();
 				     				String title;
 				     				
-				     				//ADD DATE TO DB
-				     				db = dbHelper.getWritableDatabase();
 				     				
-				     				//Cursor taskCursor = db.rawQuery(query, null);
-				     				//messageList.startManagingCursor(taskCursor);
 				     				
-				     				//--------------------------
-				     				
-				     				for(int i=0; i<contentArray.length();i++)
-				     				{
-				     					currentPost = new Post();
-				     					JSONObject item = contentArray.getJSONObject(i);
+				     				if(Constant.addContentToDB){
+				     					//ADD DATE TO DB
+					     				
 				     					
+					     			
+				     					deleteAllRecords();
 				     					
-				     					currentPost.setId(item.getString(Constant.ID));
-				     					currentPost.setAuthorId(item.getString(Constant.AUTHOR_ID));
-				     					currentPost.setAuthorName(item.getString(Constant.AUTHOR_NAME));
-				     					currentPost.setGroupId(item.getString(Constant.GROUP_ID));
-				     					currentPost.setImage(item.getString(Constant.IMAGE));
-				     					currentPost.setLastUpdate(item.getString(Constant.LAST_UPDATE));
-				     					currentPost.setLat(item.getString(Constant.LAT)); 
-				     					currentPost.setLng(item.getString(Constant.LNG));				
-				     					currentPost.setText(item.getString(Constant.TEXT));
-				     					currentPost.setType(item.getString(Constant.TYPE));
-				     					currentPost.setCommentCount(item.getString(Constant.COMMENT_COUNT));
-				     					
-				     					
-				     					//------------ database --------------
-				     					
-				     					cv.put(Constant.ID, item.getString(Constant.ID) );
-				     					cv.put(Constant.AUTHOR_ID, item.getString(Constant.AUTHOR_ID));
-				     					cv.put(Constant.AUTHOR_NAME, item.getString(Constant.AUTHOR_NAME));
-				     					cv.put(Constant.GROUP_ID,item.getString(Constant.GROUP_ID));
-				     					cv.put(Constant.IMAGE,item.getString(Constant.IMAGE));
-				     					cv.put(Constant.LAST_UPDATE,item.getString(Constant.LAST_UPDATE));
-				     					cv.put(Constant.LAT,item.getString(Constant.LAT));
-				     					cv.put(Constant.LNG,item.getString(Constant.LNG));
-				     					cv.put(Constant.TEXT,item.getString(Constant.TEXT));
-				     					
-				     					cv.put(Constant.TYPE,item.getString(Constant.TYPE));
-				     					cv.put(Constant.COMMENT_COUNT,item.getString(Constant.COMMENT_COUNT));
-				     					
-				     					db.insert(Constant.FG_CONTENT_TABLE_NAME, Constant.ID, cv);
-				     					
-				     					//------------ database --------------
-				     					
-				     					Log.i(TAG, "title: "+item.getString(Constant.TEXT));
-				     					Log.i(TAG, "+++++++++++++++++++++++++++++++++++++++++");
-										postQueue.add(currentPost);
-				     					
+					     				//--------------------------
+					     				
+					     				
+				     					db = dbHelper.getWritableDatabase();
+				     					cv = new ContentValues();
+					     				 
+					     				for(int i=0; i<contentArray.length();i++)
+					     				{
+					     					currentPost = new Post();
+					     					JSONObject item = contentArray.getJSONObject(i);
+					     					
+					     					
+					     					currentPost.setId(item.getString(Constant.ID));
+					     					currentPost.setAuthorId(item.getString(Constant.AUTHOR_ID));
+					     					currentPost.setAuthorName(item.getString(Constant.AUTHOR_NAME));
+					     					currentPost.setGroupId(item.getString(Constant.GROUP_ID));
+					     					currentPost.setImage(item.getString(Constant.IMAGE));
+					     					currentPost.setLastUpdate(item.getString(Constant.LAST_UPDATE));
+					     					currentPost.setLat(item.getString(Constant.LAT)); 
+					     					currentPost.setLng(item.getString(Constant.LNG));				
+					     					currentPost.setText(item.getString(Constant.TEXT));
+					     					currentPost.setType(item.getString(Constant.TYPE));
+					     					currentPost.setCommentCount(item.getString(Constant.COMMENT_COUNT));
+					     					
+					     					
+					     					//------------ database --------------
+					     					
+					     					cv.put(Constant.ID, item.getString(Constant.ID) );
+					     					cv.put(Constant.AUTHOR_ID, item.getString(Constant.AUTHOR_ID));
+					     					cv.put(Constant.AUTHOR_NAME, item.getString(Constant.AUTHOR_NAME));
+					     					cv.put(Constant.GROUP_ID,item.getString(Constant.GROUP_ID));
+					     					cv.put(Constant.IMAGE,item.getString(Constant.IMAGE));
+					     					cv.put(Constant.LAST_UPDATE,item.getString(Constant.LAST_UPDATE));
+					     					cv.put(Constant.LAT,item.getString(Constant.LAT));
+					     					cv.put(Constant.LNG,item.getString(Constant.LNG));
+					     					cv.put(Constant.TEXT,item.getString(Constant.TEXT));
+					     					
+					     					cv.put(Constant.TYPE,item.getString(Constant.TYPE));
+					     					cv.put(Constant.COMMENT_COUNT,item.getString(Constant.COMMENT_COUNT));
+					     					
+					     					
+					     					
+					     					db.insert(Constant.FG_CONTENT_TABLE_NAME, Constant.ID, cv);
+					     					
+					     					//------------ database --------------
+					     					
+					     					Log.i(TAG, "title: "+item.getString(Constant.TEXT));
+					     					Log.i(TAG, "+++++++++++++++++++++++++++++++++++++++++");
+					     					
+											postQueue.add(currentPost);
+					     					
+					     				
+					     				}
+					     				db.close();
+					     				PostList.setPostQueue(postQueue);
+					     				
+					     				Intent intent = new Intent();
+					     				 intent.setClass(context ,FGDashboard.class);
+										 
+										 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+										 context.startActivity(intent);
+					     				
+									}else{
+										
+										viewContentListFrDB(Constant.ALL);
+										
+									}
 				     				
-				     				}
 				     				
 				     				
 				     				
 				     				
 				     				
 				     				
-				     				PostList.setPostQueue(postQueue);
 				     				
-				     				 Intent intent = new Intent();
-				     				 intent.setClass(context ,FGDashboard.class);
-									 // intent.setClass(this.context ,PostList.class);
-									  intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-									  context.startActivity(intent);
+				     				
+				     				
+				     				 
 									  
 									  //db.close();
 									  
@@ -951,14 +1082,14 @@ public class HttpPostFG {
 			 boolean selectAll= false;
 			 String queryAll;
 			 
-			 if(choice.equals(Constant.POST)){
+			 if(choice.equals("Post")){
 				 
 				 choice = Constant.POST;
 			
-			 }else if(choice.equals(Constant.EVENT)){
+			 }else if(choice.equals("Event")){
 				 choice = Constant.EVENT;
 				 
-			 }else if(choice.equals(Constant.SURVEY)){
+			 }else if(choice.equals("Survey")){
 				 choice = Constant.SURVEY;
 				 
 			 }else{
@@ -984,6 +1115,7 @@ public class HttpPostFG {
 			 Log.i(TAG,"viewContentListFrDB | query:" +queryAll);
 			 
 			 db = dbHelper.getWritableDatabase();
+			 cv = new ContentValues();
 			 
 			 Post currentPost; 
 			 
@@ -1035,9 +1167,99 @@ public class HttpPostFG {
 			 db.close();
 			 PostList.setPostQueue(postQueue);
 			 
+			 Intent intent = new Intent();
+			 intent.setClass(context ,FGDashboard.class);
+			 
+			 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			 context.startActivity(intent);
+			 
 			 
 		 }
 		 
+		 
+		 public String MD5(String md5) {
+	    	   try {
+	    	        java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
+	    	        byte[] array = md.digest(md5.getBytes());
+	    	        StringBuffer sb = new StringBuffer();
+	    	        for (int i = 0; i < array.length; ++i) {
+	    	          sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1,3));
+	    	       }
+	    	        return sb.toString();
+	    	    } catch (java.security.NoSuchAlgorithmException e) {
+	    	    }
+	    	    return null;
+	    	}
+		 
+		 
+		 boolean isMD5TableEmpty(){
+				
+				db = dbHelper.getWritableDatabase();
+				
+				
+				Cursor cur = db.rawQuery("SELECT * FROM " +Constant.FG_MD5_TABLE_NAME, null);
+				
+					
+				//Cursor cur = db.rawQuery("SELECT COUNT(*) FROM " +Constant.MKINI_USER_TABLE_NAME, null);
+					
+					Log.i(TAG, "count: "+cur.getCount());
+					
+					if(cur.getCount()==0){
+						cur.requery();
+						cur.close();
+						db.close();
+						
+						return true;
+						
+					}else{
+						cur.requery();
+						cur.close();
+						db.close();
+						return false;
+					
+					}
+
+				
+			}
+		 
+		 
+		 /*
+		     * This function deletes all records in the 
+		     * database.
+		     */
+		    public void deleteAllRecords(){
+		    	
+		    	
+		    	db = dbHelper.getWritableDatabase();
+ 				String deleteQuery = "select * from " + Constant.FG_CONTENT_TABLE_NAME;
+ 				
+ 				Cursor readCursor = db.rawQuery(deleteQuery, null);
+ 				 
+ 				 int tableSize = readCursor.getCount();
+ 				 
+ 				 if(tableSize>1){
+ 					
+ 			    	db.delete(Constant.FG_CONTENT_TABLE_NAME , null, null);
+ 			    	
+ 				 }
+		    	
+		    	
+ 				db.close();
+		    	
+		    	//Log.i("sync","records deleted!");
+		    }
+		    
+		    
+		   public void editMD5tracker(){
+			   
+			 db = dbHelper.getWritableDatabase();
+			 cv = new ContentValues();
+       		 cv.put(Constant.MD5, "0");
+
+       		 db.update(Constant.FG_MD5_TABLE_NAME, cv, null , null);
+       		   
+       		 db.close();
+		   }
 }
 				
 							 

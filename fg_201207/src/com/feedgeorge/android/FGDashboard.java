@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -128,5 +129,22 @@ public class FGDashboard extends TabActivity implements OnTabChangeListener{
 		// TODO Auto-generated method stub
 		
 	}
+	
+	
+	protected void onActivityResult(int requestCode, int resultCode,Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        Log.i(TAG,"^^^return from SPINNER!: ");
+        
+        if(requestCode == 0){
+        	
+        	if(resultCode == 1){
+        		
+        		String name = intent.getStringExtra("selected");
+        		Log.i(TAG,"return from SPINNER!: "+name);
+        
+        	
+        	}
+        }
+    }
 
 }

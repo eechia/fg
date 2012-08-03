@@ -143,7 +143,7 @@ public class MyGroupPage extends ListActivity implements OnItemSelectedListener{
 			
 			keys.add(Constant.GROUP_ID);
 			values.add(gid);
-				
+			httppostFG.editMD5tracker();	
 			httppostFG.postToServer(Constant.GET_GRP_CONTENT, keys, values);
 		 
 		/*

@@ -80,7 +80,7 @@ public class postListAdapter extends ArrayAdapter<Post> {
 			java.sql.Timestamp timeStampDate = new java.sql.Timestamp(dateObj.getTime());
 			
 			
-			Log.i(TAG,"timestamp: "+dateObj.getTime());
+			//Log.i(TAG,"timestamp: "+dateObj.getTime());
 			
 			//converting timestamp to date
 			//Date date = new Date(timeStampDate.getTime());
@@ -112,7 +112,7 @@ public class postListAdapter extends ArrayAdapter<Post> {
 	
 			
 			if(photo_url.contains("http")){
-			Log.i(TAG, "@@@@@ TRUE: "+ photo_url);
+			//Log.i(TAG, "@@@@@ TRUE: "+ photo_url);
 				newurl = new URL(photo_url);
 				Bitmap mIcon_val = BitmapFactory.decodeStream(newurl.openConnection().getInputStream()); 
 				//imagePost.setImageBitmap(mIcon_val);

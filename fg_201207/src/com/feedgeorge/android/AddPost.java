@@ -135,8 +135,8 @@ import android.widget.TextView;
     				}else if(v.equals(buttonLoadImage)){
     							
     					Intent intent = new Intent(Intent.ACTION_PICK,
-    						    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-    							startActivityForResult(intent, 0);
+    					android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+    					startActivityForResult(intent, 0);
     					
     				}else if(v.equals(mShareBtn)){
     					

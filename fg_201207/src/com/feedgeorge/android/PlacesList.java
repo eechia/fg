@@ -53,6 +53,7 @@ public class PlacesList extends ListActivity implements OnItemSelectedListener{
 			    intent.setClass(context,LoginSignUpPage.class);
 			    
 			    startActivityForResult(intent, Constant.LOGIN);
+			    finish();
 			   
 			   // startActivity(intent);
 				/*
@@ -109,9 +110,15 @@ public class PlacesList extends ListActivity implements OnItemSelectedListener{
         loginAndSignUpBtn = (Button) findViewById(R.id.loginSignUpBtn);
         loginAndSignUpBtn.setOnClickListener(myClickListener);
         
+        /*
+         * IMPORTANT!!!!!!!!!!!!!!!!!!!!!!!!
+         * REMOVE THE COMMENT AFTER TESTING DB
+         */
+        
+        /*
         if(Constant.LOGGED_IN )
         	loginAndSignUpBtn.setVisibility(View.GONE);
-        
+        */
         context = this.getApplicationContext();
         
         

@@ -46,6 +46,8 @@ public class SelectionView  extends Activity {
 	
 	
 	
+	//public static String selection;
+	
 	private OnClickListener myBtnClickListener = new OnClickListener() {
 
 		
@@ -61,14 +63,56 @@ public class SelectionView  extends Activity {
 				//Toast.makeText(PlacesList.getAppContext(),
 					//	selectionRadioBtn.getText(), Toast.LENGTH_SHORT).show();
 				
-				PostList.POST_SELECTION = selectionRadioBtn.getText().toString();
+				String selected = selectionRadioBtn.getText().toString();
+				PostList.POST_SELECTION = selected;
+				
+				//Constant.READ_FR_DB = true;
+				//Constant.SELECTED_CONTENT_TYPE = selected;
+				
+				HttpPostFG.getInstance().viewContentListFrDB(selected);
+				
 				//KeyEvent.KEYCODE_BACK
 				
 				//doInjectKeyEvent(new KeyEvent(KeyEvent.KEYCODE_BACK, KeyCode));
 				
 				
-				postlist.onBackPressed();
-						
+				//postlist.onBackPressed();
+				
+				/*
+				Intent returnIntent = new Intent();
+			    returnIntent.putExtra("selected",selectionRadioBtn.getText().toString());
+			    
+			    
+			    
+			    if (getParent() == null) {
+			        setResult(Activity.RESULT_OK, returnIntent);
+			    } else {
+			        getParent().setResult(Activity.RESULT_OK, returnIntent);
+			    }
+			    finish();
+			    
+			    
+				setResult(1,returnIntent);
+				*/
+				
+				/*
+				Intent intent = new Intent();
+				 intent.setClass(PlacesList.getAppContext() ,FGDashboard.class);
+				 // intent.setClass(this.context ,PostList.class);
+				  intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				  PlacesList.getAppContext().startActivity(intent);
+				*/
+				
+				/*
+				HttpPostFG.getInstance().viewContentListFrDB(selected);
+				Intent postlist = new Intent(getParent(), PostList.class);
+				startActivity(postlist);
+				*/
+				//TabGroupActivity parentActivity = (TabGroupActivity)getParent();
+		        //parentActivity.startChildActivity("SelectionView", postlist);
+				
+				
+				finish();
 				//onBackPressed();
 			
 			}else if(v.equals(cancelBtn)){

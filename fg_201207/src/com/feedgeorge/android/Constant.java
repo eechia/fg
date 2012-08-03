@@ -25,16 +25,19 @@ public class Constant {
  */
 	
 	
-	
+	static public boolean READ_FR_DB = false;
+	static public String SELECTED_CONTENT_TYPE = "all";
 	
 	
 //static final String GROUP_ID = "groupId";
 	
 	static public String FG_CONTENT_TABLE_NAME = "contenttable";
 	static public String FG_USER_TABLE_NAME = "usertable";
-	static public String FG_MD5_tracker = "md5tracker";
+	static public String FG_MD5_TABLE_NAME = "md5tracker";
 	
+	static public String MD5 = "md5";
 	
+	static public boolean addContentToDB = true;
 	
 	static public String defaultGroupID = null;
 	static public String currentGroupName = null;
@@ -53,6 +56,7 @@ public class Constant {
 	//
 	
 	//POST TYPE:
+	static final String ALL= "0";
 	static final String POST= "1";
 	static final String EVENT = "2";
 	static final String SURVEY = "3";

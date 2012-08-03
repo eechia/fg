@@ -46,7 +46,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class PostList extends TabGroupActivity  implements OnItemSelectedListener {
+public class PostList extends ListActivity  implements OnItemSelectedListener {
+//public class PostList extends TabGroupActivity  implements OnItemSelectedListener {
 //ActivityGroup implements OnItemSelectedListener {
 //ListActivity implements OnItemSelectedListener {
 	
@@ -112,8 +113,10 @@ public class PostList extends TabGroupActivity  implements OnItemSelectedListene
 				
 				
 				Intent intent = new Intent(getParent(), SelectionView.class);
-		         parentActivity = (TabGroupActivity)getParent();
-		         parentActivity.startChildActivity("SelectionView", intent);
+		        parentActivity = (TabGroupActivity)getParent();
+		        //parentActivity.startChildActivity("SelectionView", intent);
+		        parentActivity.startActivityForResult(intent,0);
+		        finish();
 			}
 			
 			
@@ -159,16 +162,14 @@ public class PostList extends TabGroupActivity  implements OnItemSelectedListene
 	        
 	        
 	        
-			/*
-			ArrayAdapter aa = new ArrayAdapter(
-					this,
-					android.R.layout.simple_spinner_item, 
-					filterByStr);
-
-			aa.setDropDownViewResource(
-			   android.R.layout.simple_spinner_dropdown_item);
-			filterSpin.setAdapter(aa);
-	        */
+			if(Constant.READ_FR_DB){
+				
+			}else{
+				
+			}
+			
+	        
+	        
 			readPost();
 			
 			postListview = (ListView) findViewById(android.R.id.list);
@@ -229,6 +230,7 @@ public class PostList extends TabGroupActivity  implements OnItemSelectedListene
 				postID = postQueue.get(position).getId();
 				getComments();
 				
+				/*
 				Intent intent = new Intent(getParent(), PostView.class);
 				 
 				 intent.putExtra(Constant.LAT, postQueue.get(position).getLat());
@@ -238,8 +240,24 @@ public class PostList extends TabGroupActivity  implements OnItemSelectedListene
 				 intent.putExtra(Constant.IMAGE, postQueue.get(position).getImage());
 				 intent.putExtra(Constant.ID,postID );
 				 
-		         TabGroupActivity parentActivity = (TabGroupActivity)getParent();
-		         parentActivity.startChildActivity("ViewPost", intent);
+				 TabGroupActivity parentActivity = (TabGroupActivity)getParent();
+		         
+			     parentActivity.startChildActivity("ViewPost", intent);
+				 */
+				 
+				 Intent intent = new Intent();
+				 
+				 intent.setClass(context, PostView.class);
+				 intent.putExtra(Constant.LAT, postQueue.get(position).getLat());
+				 intent.putExtra(Constant.LNG, postQueue.get(position).getLng());
+				 intent.putExtra(Constant.TEXT, postQueue.get(position).getText());
+				 intent.putExtra(Constant.AUTHOR_NAME, postQueue.get(position).getAuthorName());
+				 intent.putExtra(Constant.IMAGE, postQueue.get(position).getImage());
+				 intent.putExtra(Constant.ID,postID );
+				 startActivity(intent);
+				 
+				 
+		        
 			}
 			
 		};
@@ -297,6 +315,40 @@ public class PostList extends TabGroupActivity  implements OnItemSelectedListene
 		}
 		
 		
+		protected void onActivityResult(int requestCode, int resultCode,Intent intent) {
+	        super.onActivityResult(requestCode, resultCode, intent);
+	        Log.i(TAG,"^^^ PostList : return from SPINNER!: ");
+	        if(requestCode == 0){
+	        	
+	        	if(resultCode == 1){
+	        		
+	        		String name = intent.getStringExtra("selected");
+	        		Log.i(TAG,"return from SPINNER!: "+name);
+	        
+	        	
+	        	}
+	        }
+	    }
+		
+		/*
+		public void onBackPressed () {
+			
+			
+			//parentActivity.onBackPressed();
+			Log.i(TAG,"POSTLIST: onBackPressed () : "+POST_SELECTION);
+			httppostFG.viewContentListFrDB(POST_SELECTION);
+		
+			/*
+			PLAdapter = new postListAdapter(this,R.layout.postrow, postQueue);
+			
+			postListview.setAdapter(PLAdapter);
+			PLAdapter.setNotifyOnChange(true);
+			*/
+			
+		//}
+		
+		
+		/*
 		 @Override
 		    public boolean onKeyDown(int keyCode, KeyEvent event) {
 		        if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -310,7 +362,9 @@ public class PostList extends TabGroupActivity  implements OnItemSelectedListene
 		* Overrides the default implementation for KeyEvent.KEYCODE_BACK
 		* so that all systems call onBackPressed().
 		*/
+		/*
 		@Override
+		
 		public boolean onKeyUp(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			onBackPressed();
@@ -318,11 +372,14 @@ public class PostList extends TabGroupActivity  implements OnItemSelectedListene
 		}
 		return super.onKeyUp(keyCode, event);
 		}
+		*/
+		
 		
 		/**
 		* If a Child Activity handles KeyEvent.KEYCODE_BACK.
 		* Simply override and add this method.
 		*/
+		/*
 		@Override
 		public void onBackPressed () {
 			
@@ -338,8 +395,8 @@ public class PostList extends TabGroupActivity  implements OnItemSelectedListene
 			PLAdapter.setNotifyOnChange(true);
 			*/
 			
-		}
+		//}
 		
-		
+	
 
 }
